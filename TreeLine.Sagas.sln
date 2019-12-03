@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Sagas", "TreeLine.Sagas\TreeLine.Sagas.csproj", "{8A9C180E-176B-4CD3-A0C2-C277A6E1A1AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas", "TreeLine.Sagas\TreeLine.Sagas.csproj", "{8A9C180E-176B-4CD3-A0C2-C277A6E1A1AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Sagas.DependencyInjection", "TreeLine.Sagas.DependencyInjection\TreeLine.Sagas.DependencyInjection.csproj", "{E197F11F-D602-40D3-8E80-F644DD252A31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.DependencyInjection", "TreeLine.Sagas.DependencyInjection\TreeLine.Sagas.DependencyInjection.csproj", "{E197F11F-D602-40D3-8E80-F644DD252A31}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.DependencyInjection.Tests", "TreeLine.Sagas.DependencyInjection.Tests\TreeLine.Sagas.DependencyInjection.Tests.csproj", "{3973E33F-BE6D-47AD-B180-1B87380E8B18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Sagas.Tests", "TreeLine.Sagas.Tests\TreeLine.Sagas.Tests.csproj", "{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{E197F11F-D602-40D3-8E80-F644DD252A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E197F11F-D602-40D3-8E80-F644DD252A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E197F11F-D602-40D3-8E80-F644DD252A31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3973E33F-BE6D-47AD-B180-1B87380E8B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3973E33F-BE6D-47AD-B180-1B87380E8B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3973E33F-BE6D-47AD-B180-1B87380E8B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3973E33F-BE6D-47AD-B180-1B87380E8B18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
