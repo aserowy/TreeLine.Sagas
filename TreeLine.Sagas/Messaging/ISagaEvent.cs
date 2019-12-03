@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace TreeLine.Sagas
+namespace TreeLine.Sagas.Messaging
 {
-    public interface ISagaCommand
+    public interface ISagaEvent
     {
         Guid ReferenceId { get; }
         Guid TransactionId { get; }

@@ -1,31 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Messaging;
 
-namespace TreeLine.Sagas
+namespace TreeLine.Sagas.Processor
 {
     public interface ISagaProcessor
     {
-        void Add(IEnumerable<Type> events, ISagaStep sagaStep);
+        void AddSteps(IList<ISagaStepConfiguration> configurations);
+
         Task RunAsync(ISagaEvent sagaEvent);
     }
 
     internal sealed class SagaProcessor : ISagaProcessor
     {
+        private readonly ISagaServiceProvider _provider;
         private readonly ISagaProcess _process;
-        private readonly IList<(IEnumerable<Type> Trigger, ISagaStep Step)> _steps;
 
-        public SagaProcessor(ISagaProcess process)
+        private IList<ISagaStepConfiguration> _steps;
+
+        public SagaProcessor(
+            ISagaServiceProvider provider,
+            ISagaProcess process)
         {
+            _provider = provider;
             _process = process;
 
-            _steps = new List<(IEnumerable<Type> Trigger, ISagaStep Step)>();
+            _steps = new List<ISagaStepConfiguration>();
         }
 
-        public void Add(IEnumerable<Type> events, ISagaStep sagaStep)
+        public void AddSteps(IList<ISagaStepConfiguration> configurations)
         {
-            _steps.Add((events, sagaStep));
+            _steps = configurations;
         }
 
         public Task RunAsync(ISagaEvent sagaEvent)
@@ -37,11 +44,11 @@ namespace TreeLine.Sagas
 
         private ISagaStep ResolveStep(ISagaEvent sagaEvent)
         {
-            foreach (var (trigger, step) in _steps)
+            foreach (var configuration in _steps)
             {
-                if (trigger.Any(tp => tp.Equals(sagaEvent.GetType())))
+                if (configuration.IsResponsible(sagaEvent))
                 {
-                    return step;
+                    return configuration.Create(_provider);
                 }
             }
 

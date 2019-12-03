@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using TreeLine.Sagas.Messaging;
 
-namespace TreeLine.Sagas
+namespace TreeLine.Sagas.Processor
 {
     internal interface ISagaProcess
     {

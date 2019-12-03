@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using TreeLine.Sagas.Messaging;
+using TreeLine.Sagas.Processor;
 
-namespace TreeLine.Sagas
+namespace TreeLine.Sagas.Builder
 {
     public interface ISagaProcessorBuilder
     {
-        ISagaProcessorBuilder AddStep<TEvent, TSagaStep>()
+        ISagaProcessorBuilder AddStep<TEvent, TSagaStep>(Predicate<TEvent>? customValidation = null)
             where TEvent : ISagaEvent
             where TSagaStep : ISagaStep;
 
@@ -15,20 +17,20 @@ namespace TreeLine.Sagas
     internal sealed class SagaProcessorBuilder : ISagaProcessorBuilder
     {
         private readonly ISagaServiceProvider _serviceProvider;
-        private readonly IList<Action<ISagaProcessor>> _actions;
+        private readonly IList<ISagaStepConfiguration> _steps;
 
         public SagaProcessorBuilder(ISagaServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
 
-            _actions = new List<Action<ISagaProcessor>>();
+            _steps = new List<ISagaStepConfiguration>();
         }
 
-        public ISagaProcessorBuilder AddStep<TEvent, TSagaStep>()
+        public ISagaProcessorBuilder AddStep<TEvent, TSagaStep>(Predicate<TEvent>? customValidation = null)
             where TEvent : ISagaEvent
             where TSagaStep : ISagaStep
         {
-            _actions.Add(cnfg => cnfg.Add(new[] { typeof(TEvent) }, _serviceProvider.Resolve<TSagaStep>()));
+            _steps.Add(new SagaStepConfiguration<TEvent, TSagaStep>(customValidation));
 
             return this;
         }
@@ -36,10 +38,7 @@ namespace TreeLine.Sagas
         public ISagaProcessor Build()
         {
             var processor = _serviceProvider.ResolveProcessor();
-            foreach (var action in _actions)
-            {
-                action.Invoke(processor);
-            }
+            processor.AddSteps(_steps);
 
             return processor;
         }

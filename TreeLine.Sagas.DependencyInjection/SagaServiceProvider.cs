@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Processor;
 
 namespace TreeLine.Sagas.DependencyInjection
 {

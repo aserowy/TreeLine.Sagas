@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
+using TreeLine.Sagas.Messaging;
 
-namespace TreeLine.Sagas
+namespace TreeLine.Sagas.Processor
 {
     public interface ISagaCommandSender
     {
