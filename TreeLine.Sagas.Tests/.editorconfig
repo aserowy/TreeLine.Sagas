@@ -1,6 +1,12 @@
 ﻿[*.cs]
 
+# CA1063: IDisposable richtig implementieren
+dotnet_diagnostic.CA1063.severity = none
+
 # CA1707: Bezeichner dürfen keine Unterstriche enthalten
 dotnet_diagnostic.CA1707.severity = none
 
 dotnet_diagnostic.CA1812.severity = none
+
+# CA1816: Dispose-Methoden müssen SuppressFinalize aufrufen
+dotnet_diagnostic.CA1816.severity = none

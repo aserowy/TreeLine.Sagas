@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using TreeLine.Sagas.Builder;
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Processor;
@@ -27,6 +28,11 @@ namespace TreeLine.Sagas
 
         public Task RunAsync(ISagaEvent sagaEvent)
         {
+            if (sagaEvent is null)
+            {
+                throw new ArgumentNullException(nameof(sagaEvent));
+            }
+
             return GetOrCreateProcessor().RunAsync(sagaEvent);
         }
 
