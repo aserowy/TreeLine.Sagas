@@ -32,7 +32,7 @@ namespace TreeLine.Sagas.Processor
 
         public void AddSteps(IList<ISagaStepConfiguration> configurations)
         {
-            _steps = configurations;
+            _steps = configurations ?? throw new ArgumentNullException(nameof(configurations));
         }
 
         public Task RunAsync(ISagaEvent sagaEvent)
@@ -44,6 +44,16 @@ namespace TreeLine.Sagas.Processor
 
         private ISagaStep ResolveStep(ISagaEvent sagaEvent)
         {
+            if (sagaEvent == null)
+            {
+                throw new ArgumentNullException(nameof(sagaEvent));
+            }
+
+            if (_steps.Count.Equals(0))
+            {
+                throw new InvalidOperationException($"No steps for processor of event {sagaEvent.GetType().Name} configured.");
+            }
+
             foreach (var configuration in _steps)
             {
                 if (configuration.IsResponsible(sagaEvent))

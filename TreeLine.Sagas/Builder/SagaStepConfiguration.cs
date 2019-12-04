@@ -30,6 +30,14 @@ namespace TreeLine.Sagas.Builder
             return _customValidation?.Invoke(converted) ?? true;
         }
 
-        public ISagaStep Create(ISagaServiceProvider provider) => provider.Resolve<TStep>();
+        public ISagaStep Create(ISagaServiceProvider provider)
+        {
+            if (provider is null)
+            {
+                throw new ArgumentNullException(nameof(provider));
+            }
+
+            return provider.Resolve<TStep>();
+        }
     }
 }
