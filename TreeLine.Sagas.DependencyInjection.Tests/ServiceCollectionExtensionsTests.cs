@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using TreeLine.Sagas.Builder;
 using TreeLine.Sagas.Messaging;
-using TreeLine.Sagas.Processor;
 using Xunit;
 
 namespace TreeLine.Sagas.DependencyInjection.Tests
@@ -13,11 +12,11 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
     public class ServiceCollectionExtensionsTests
     {
         [Fact]
-        public void AddSagas_ProfileAndStepConfigured_AllDependenciesResolved()
+        public async Task AddSagas_ProfileAndStepConfigured_AllDependenciesResolved()
         {
             // Arrange
             var services = new ServiceCollection()
-                .AddSagas<SagaCommandSenderMock>()
+                .AddSagas()
                 .AddTransient<SagaProfileMock>()
                 .AddTransient<SagaStepMock>();
 
@@ -27,16 +26,12 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
                 .GetRequiredService<ISagaFactory>()
                 .Create<SagaProfileMock>();
 
-            // Assert
-            saga.RunAsync(new SagaEvent());
-        }
+            var commands = await saga
+                .RunAsync(new SagaEvent())
+                .ConfigureAwait(false);
 
-        private sealed class SagaCommandSenderMock : ISagaCommandSender
-        {
-            public Task SendAsync(params ISagaCommand[] commands)
-            {
-                return Task.CompletedTask;
-            }
+            // Assert
+            Assert.NotEmpty(commands);
         }
 
         private sealed class SagaProfileMock : ISagaProfile

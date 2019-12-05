@@ -10,7 +10,7 @@ namespace TreeLine.Sagas.Processor
     {
         void AddSteps(IList<ISagaStepConfiguration> configurations);
 
-        Task RunAsync(ISagaEvent sagaEvent);
+        Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent);
     }
 
     internal sealed class SagaProcessor : ISagaProcessor
@@ -35,7 +35,7 @@ namespace TreeLine.Sagas.Processor
             _steps = configurations ?? throw new ArgumentNullException(nameof(configurations));
         }
 
-        public Task RunAsync(ISagaEvent sagaEvent)
+        public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
         {
             var step = ResolveStep(sagaEvent);
 

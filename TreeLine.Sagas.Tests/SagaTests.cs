@@ -60,7 +60,7 @@ namespace TreeLine.Sagas.Tests
 
             _mockSagaProfile.Setup(prfl => prfl.Configure(It.IsAny<ISagaProcessorBuilder>()));
             _mockSagaProcessorBuilder.Setup(bldr => bldr.Build()).Returns(_mockSagaProcessor.Object);
-            _mockSagaProcessor.Setup(prcssr => prcssr.RunAsync(sagaEvent)).Returns(Task.CompletedTask);
+            _mockSagaProcessor.Setup(prcssr => prcssr.RunAsync(sagaEvent)).ReturnsAsync(new ArraySegment<ISagaCommand>());
 
             // Act
             await saga
@@ -77,7 +77,7 @@ namespace TreeLine.Sagas.Tests
 
             _mockSagaProfile.Setup(prfl => prfl.Configure(It.IsAny<ISagaProcessorBuilder>()));
             _mockSagaProcessorBuilder.Setup(bldr => bldr.Build()).Returns(_mockSagaProcessor.Object);
-            _mockSagaProcessor.Setup(prcssr => prcssr.RunAsync(sagaEvent)).Returns(Task.CompletedTask);
+            _mockSagaProcessor.Setup(prcssr => prcssr.RunAsync(sagaEvent)).ReturnsAsync(new ArraySegment<ISagaCommand>());
 
             // Act
             await saga
@@ -101,7 +101,7 @@ namespace TreeLine.Sagas.Tests
 
             _mockSagaProfile.Setup(prfl => prfl.Configure(It.IsAny<ISagaProcessorBuilder>()));
             _mockSagaProcessorBuilder.Setup(bldr => bldr.Build()).Returns(_mockSagaProcessor.Object);
-            _mockSagaProcessor.Setup(prcssr => prcssr.RunAsync(sagaEvent)).Returns(Task.CompletedTask);
+            _mockSagaProcessor.Setup(prcssr => prcssr.RunAsync(sagaEvent)).ReturnsAsync(new ArraySegment<ISagaCommand>());
 
             // Act
             await saga
@@ -125,7 +125,7 @@ namespace TreeLine.Sagas.Tests
 
             _mockSagaProfile.Setup(prfl => prfl.Configure(It.IsAny<ISagaProcessorBuilder>()));
             _mockSagaProcessorBuilder.Setup(bldr => bldr.Build()).Returns(_mockSagaProcessor.Object);
-            _mockSagaProcessor.Setup(prcssr => prcssr.RunAsync(sagaEvent)).Returns(Task.CompletedTask);
+            _mockSagaProcessor.Setup(prcssr => prcssr.RunAsync(sagaEvent)).ReturnsAsync(new ArraySegment<ISagaCommand>());
 
             // Act
             await saga

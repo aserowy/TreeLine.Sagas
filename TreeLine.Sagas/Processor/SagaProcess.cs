@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TreeLine.Sagas.Messaging;
 
@@ -6,19 +6,12 @@ namespace TreeLine.Sagas.Processor
 {
     internal interface ISagaProcess
     {
-        Task RunAsync(ISagaEvent sagaEvent, ISagaStep step);
+        Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent, ISagaStep step);
     }
 
     internal sealed class SagaProcess : ISagaProcess
     {
-        private readonly ISagaCommandSender _sender;
-
-        public SagaProcess(ISagaCommandSender sender)
-        {
-            _sender = sender;
-        }
-
-        public async Task RunAsync(ISagaEvent sagaEvent, ISagaStep step)
+        public async Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent, ISagaStep step)
         {
             // TODO: Persist event
 
@@ -26,11 +19,11 @@ namespace TreeLine.Sagas.Processor
                 .RunAsync(sagaEvent)
                 .ConfigureAwait(false);
 
+            // TODO: Validate commands (referenceId not null not empty)
+
             // TODO: Persist commands
 
-            await _sender
-                .SendAsync(commands.ToArray())
-                .ConfigureAwait(false);
+            return commands;
         }
     }
 }

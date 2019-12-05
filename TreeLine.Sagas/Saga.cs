@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TreeLine.Sagas.Builder;
 using TreeLine.Sagas.Messaging;
@@ -8,7 +9,7 @@ namespace TreeLine.Sagas
 {
     public interface ISaga<TProfile>
     {
-        Task RunAsync(ISagaEvent sagaEvent);
+        Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent);
     }
 
     internal sealed class Saga<TProfile> : ISaga<TProfile> where TProfile : ISagaProfile
@@ -26,7 +27,7 @@ namespace TreeLine.Sagas
             _processorBuilder = processorBuilder;
         }
 
-        public Task RunAsync(ISagaEvent sagaEvent)
+        public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
         {
             if (sagaEvent is null)
             {

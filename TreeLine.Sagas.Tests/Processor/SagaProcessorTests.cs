@@ -70,7 +70,7 @@ namespace TreeLine.Sagas.Tests.Processor
 
             _mockSagaProcess
                 .Setup(prcss => prcss.RunAsync(It.IsAny<ISagaEvent>(), It.IsAny<ISagaStep>()))
-                .Returns(Task.CompletedTask);
+                .ReturnsAsync(new ArraySegment<ISagaCommand>());
 
             var mockConfiguration01 = _mockRepository.Create<ISagaStepConfiguration>();
             mockConfiguration01

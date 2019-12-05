@@ -6,11 +6,9 @@ namespace TreeLine.Sagas.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddSagas<TSender>(this IServiceCollection services) where TSender : class, ISagaCommandSender
+        public static IServiceCollection AddSagas(this IServiceCollection services)
         {
-            services.AddSingleton<IServiceCollection>(services);
-
-            services.AddTransient<ISagaCommandSender, TSender>();
+            services.AddSingleton(services);
 
             services.AddTransient<ISagaFactory, SagaFactory>();
 
