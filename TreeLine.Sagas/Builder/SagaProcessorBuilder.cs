@@ -37,6 +37,11 @@ namespace TreeLine.Sagas.Builder
 
         public ISagaProcessor Build()
         {
+            if (_steps.Count.Equals(0))
+            {
+                throw new InvalidOperationException("No steps for processor configured.");
+            }
+
             var processor = _serviceProvider.ResolveProcessor();
             processor.AddSteps(_steps);
 

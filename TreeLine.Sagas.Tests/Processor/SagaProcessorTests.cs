@@ -79,7 +79,7 @@ namespace TreeLine.Sagas.Tests.Processor
 
             mockConfiguration01
                 .Setup(cnfg => cnfg.Create(It.IsAny<ISagaServiceProvider>()))
-                .Returns(new SagaStepMock());
+                .Returns(new SagaStep01Mock());
 
             var mockConfiguration02 = _mockRepository.Create<ISagaStepConfiguration>();
 

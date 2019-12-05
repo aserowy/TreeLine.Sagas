@@ -5,6 +5,8 @@ namespace TreeLine.Sagas.Builder
 {
     public interface ISagaStepConfiguration
     {
+        Type SagaStepType { get; }
+
         ISagaStep Create(ISagaServiceProvider provider);
         bool IsResponsible(ISagaEvent sagaEvent);
     }
@@ -14,6 +16,8 @@ namespace TreeLine.Sagas.Builder
         where TStep : ISagaStep
     {
         private readonly Predicate<TEvent>? _customValidation;
+
+        public Type SagaStepType => typeof(TStep);
 
         public SagaStepConfiguration(Predicate<TEvent>? customValidation)
         {

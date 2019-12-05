@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.DependencyIn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.DependencyInjection.Tests", "TreeLine.Sagas.DependencyInjection.Tests\TreeLine.Sagas.DependencyInjection.Tests.csproj", "{3973E33F-BE6D-47AD-B180-1B87380E8B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Sagas.Tests", "TreeLine.Sagas.Tests\TreeLine.Sagas.Tests.csproj", "{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Tests", "TreeLine.Sagas.Tests\TreeLine.Sagas.Tests.csproj", "{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C09CD499-1568-4AFF-8C73-EE7D275271C4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

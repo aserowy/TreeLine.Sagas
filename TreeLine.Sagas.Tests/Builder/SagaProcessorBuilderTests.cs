@@ -1,60 +1,91 @@
 using Moq;
 using System;
+using System.Collections.Generic;
 using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Processor;
+using TreeLine.Sagas.Tests.Mocks;
 using Xunit;
 
 namespace TreeLine.Sagas.Tests.Builder
 {
     public class SagaProcessorBuilderTests : IDisposable
     {
-        private MockRepository mockRepository;
-
-        private Mock<ISagaServiceProvider> mockSagaServiceProvider;
+        private readonly MockRepository _mockRepository;
+        private readonly Mock<ISagaServiceProvider> _mockSagaServiceProvider;
 
         public SagaProcessorBuilderTests()
         {
-            this.mockRepository = new MockRepository(MockBehavior.Strict);
+            _mockRepository = new MockRepository(MockBehavior.Strict);
 
-            this.mockSagaServiceProvider = this.mockRepository.Create<ISagaServiceProvider>();
+            _mockSagaServiceProvider = _mockRepository.Create<ISagaServiceProvider>();
         }
 
         public void Dispose()
         {
-            this.mockRepository.VerifyAll();
+            _mockRepository.VerifyAll();
         }
 
         private SagaProcessorBuilder CreateSagaProcessorBuilder()
         {
             return new SagaProcessorBuilder(
-                this.mockSagaServiceProvider.Object);
+                _mockSagaServiceProvider.Object);
         }
 
         [Fact]
-        public void AddStep_StateUnderTest_ExpectedBehavior()
+        public void Build_NoStepsAdded_ThrowInvalidOperation()
         {
             // Arrange
-            var sagaProcessorBuilder = this.CreateSagaProcessorBuilder();
-            Predicate<TEvent>? customValidation = null;
-
-            // Act
-            var result = sagaProcessorBuilder.AddStep(
-                customValidation);
+            var sagaProcessorBuilder = CreateSagaProcessorBuilder();
 
             // Assert
-            Assert.True(false);
+            Assert.Throws<InvalidOperationException>(() => sagaProcessorBuilder.Build());
         }
 
         [Fact]
-        public void Build_StateUnderTest_ExpectedBehavior()
+        public void Build_OneStepAdded_ProcessorContainsOneStep()
         {
             // Arrange
-            var sagaProcessorBuilder = this.CreateSagaProcessorBuilder();
+            var sagaProcessorBuilder = CreateSagaProcessorBuilder();
+            var mockProcessor = _mockRepository.Create<ISagaProcessor>();
+
+            _mockSagaServiceProvider
+                .Setup(prvdr => prvdr.ResolveProcessor())
+                .Returns(mockProcessor.Object);
+
+            mockProcessor.Setup(prcsr => prcsr.AddSteps(It.Is<IList<ISagaStepConfiguration>>(stps => stps.Count == 1)));
+
+            sagaProcessorBuilder.AddStep<SagaEvent, SagaStep01Mock>();
 
             // Act
-            var result = sagaProcessorBuilder.Build();
+            sagaProcessorBuilder.Build();
+        }
+
+        [Fact]
+        public void Build_TwoStepsAdded_ProcessorRetainsOrder()
+        {
+            // Arrange
+            var sagaProcessorBuilder = CreateSagaProcessorBuilder();
+            var mockProcessor = _mockRepository.Create<ISagaProcessor>();
+
+            _mockSagaServiceProvider
+                .Setup(prvdr => prvdr.ResolveProcessor())
+                .Returns(mockProcessor.Object);
+
+            var configurations = new List<ISagaStepConfiguration>();
+
+            mockProcessor
+                .Setup(prcsr => prcsr.AddSteps(It.Is<IList<ISagaStepConfiguration>>(stps => stps.Count == 2)))
+                .Callback<IList<ISagaStepConfiguration>>(cnfgrtns => configurations.AddRange(cnfgrtns));
+
+            sagaProcessorBuilder.AddStep<SagaEvent, SagaStep01Mock>();
+            sagaProcessorBuilder.AddStep<SagaEvent, SagaStep02Mock>();
+
+            // Act
+            sagaProcessorBuilder.Build();
 
             // Assert
-            Assert.True(false);
+            Assert.Equal(typeof(SagaStep01Mock), configurations[0].SagaStepType);
+            Assert.Equal(typeof(SagaStep02Mock), configurations[1].SagaStepType);
         }
     }
 }
