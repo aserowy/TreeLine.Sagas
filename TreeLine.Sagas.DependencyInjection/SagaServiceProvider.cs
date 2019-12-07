@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Processor;
 
 namespace TreeLine.Sagas.DependencyInjection
@@ -19,7 +20,9 @@ namespace TreeLine.Sagas.DependencyInjection
             return _serviceProvider.GetRequiredService<ISagaProcessor>();
         }
 
-        public ISagaStep Resolve<TSagaStep>() where TSagaStep : ISagaStep
+        public ISagaStep<TEvent> Resolve<TEvent, TSagaStep>()
+            where TEvent : ISagaEvent
+            where TSagaStep : ISagaStep<TEvent>
         {
             return _serviceProvider.GetRequiredService<TSagaStep>();
         }

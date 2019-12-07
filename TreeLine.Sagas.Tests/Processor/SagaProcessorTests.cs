@@ -69,7 +69,7 @@ namespace TreeLine.Sagas.Tests.Processor
             var sagaEvent = new SagaEvent();
 
             _mockSagaProcess
-                .Setup(prcss => prcss.RunAsync(It.IsAny<ISagaEvent>(), It.IsAny<ISagaStep>()))
+                .Setup(prcss => prcss.RunAsync(It.IsAny<ISagaEvent>(), It.IsAny<ISagaStepAdapter>()))
                 .ReturnsAsync(new ArraySegment<ISagaCommand>());
 
             var mockConfiguration01 = _mockRepository.Create<ISagaStepConfiguration>();
@@ -79,7 +79,7 @@ namespace TreeLine.Sagas.Tests.Processor
 
             mockConfiguration01
                 .Setup(cnfg => cnfg.Create(It.IsAny<ISagaServiceProvider>()))
-                .Returns(new SagaStep01Mock());
+                .Returns(new SagaStepAdapter<SagaEvent>(new SagaStep01Mock()));
 
             var mockConfiguration02 = _mockRepository.Create<ISagaStepConfiguration>();
 

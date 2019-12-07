@@ -4,8 +4,8 @@ using TreeLine.Sagas.Messaging;
 
 namespace TreeLine.Sagas
 {
-    public interface ISagaStep
+    public interface ISagaStep<TEvent> where TEvent : ISagaEvent
     {
-        public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent);
+        public Task<IEnumerable<ISagaCommand>> RunAsync(TEvent sagaEvent);
     }
 }

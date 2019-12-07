@@ -9,7 +9,7 @@ namespace TreeLine.Sagas.Builder
     {
         ISagaProcessorBuilder AddStep<TEvent, TSagaStep>(Predicate<TEvent>? customValidation = null)
             where TEvent : ISagaEvent
-            where TSagaStep : ISagaStep;
+            where TSagaStep : ISagaStep<TEvent>;
 
         ISagaProcessor Build();
     }
@@ -28,7 +28,7 @@ namespace TreeLine.Sagas.Builder
 
         public ISagaProcessorBuilder AddStep<TEvent, TSagaStep>(Predicate<TEvent>? customValidation = null)
             where TEvent : ISagaEvent
-            where TSagaStep : ISagaStep
+            where TSagaStep : ISagaStep<TEvent>
         {
             _steps.Add(new SagaStepConfiguration<TEvent, TSagaStep>(customValidation));
 

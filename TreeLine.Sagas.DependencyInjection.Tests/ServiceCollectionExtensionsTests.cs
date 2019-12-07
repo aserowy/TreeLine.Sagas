@@ -42,9 +42,9 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
             }
         }
 
-        private sealed class SagaStepMock : ISagaStep
+        private sealed class SagaStepMock : ISagaStep<SagaEvent>
         {
-            public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
+            public Task<IEnumerable<ISagaCommand>> RunAsync(SagaEvent sagaEvent)
             {
                 return Task.FromResult(new[] { new SagaCommand() }.AsEnumerable<ISagaCommand>());
             }

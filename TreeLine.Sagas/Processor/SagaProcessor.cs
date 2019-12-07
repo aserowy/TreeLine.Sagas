@@ -42,7 +42,7 @@ namespace TreeLine.Sagas.Processor
             return _process.RunAsync(sagaEvent, step);
         }
 
-        private ISagaStep ResolveStep(ISagaEvent sagaEvent)
+        private ISagaStepAdapter ResolveStep(ISagaEvent sagaEvent)
         {
             if (sagaEvent == null)
             {

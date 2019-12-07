@@ -66,27 +66,6 @@ namespace TreeLine.Sagas.Tests.Builder
         }
 
         [Fact]
-        public void Create_ServiceProviderReturnsStep_ReturnsSameStep()
-        {
-            // Arrange
-            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent, SagaStep01Mock>(null);
-
-            var mockSagaStep = new SagaStep01Mock();
-
-            var mockRepository = new MockRepository(MockBehavior.Strict);
-            var mockSagaServiceProvider = mockRepository.Create<ISagaServiceProvider>();
-            mockSagaServiceProvider
-                .Setup(prvdr => prvdr.Resolve<SagaStep01Mock>())
-                .Returns(mockSagaStep);
-
-            // Act
-            var result = sagaStepConfiguration.Create(mockSagaServiceProvider.Object);
-
-            // Assert
-            Assert.Same(mockSagaStep, result);
-        }
-
-        [Fact]
         public void Create_ServiceProviderIsNull_ThrowsArgumentNull()
         {
             // Arrange
