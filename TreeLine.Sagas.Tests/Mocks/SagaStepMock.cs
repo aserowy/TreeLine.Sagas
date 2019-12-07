@@ -5,17 +5,17 @@ using TreeLine.Sagas.Messaging;
 
 namespace TreeLine.Sagas.Tests.Mocks
 {
-    internal sealed class SagaStep01Mock : ISagaStep<SagaEvent>
+    internal sealed class SagaStep01Mock : ISagaStep<SagaEvent01>
     {
-        public Task<IEnumerable<ISagaCommand>> RunAsync(SagaEvent sagaEvent)
+        public Task<IEnumerable<ISagaCommand>> RunAsync(SagaEvent01 sagaEvent)
         {
             return Task.FromResult(new[] { new SagaCommand() }.AsEnumerable<ISagaCommand>());
         }
     }
 
-    internal sealed class SagaStep02Mock : ISagaStep<SagaEvent>
+    internal sealed class SagaStep02Mock : ISagaStep<SagaEvent01>
     {
-        public Task<IEnumerable<ISagaCommand>> RunAsync(SagaEvent sagaEvent)
+        public Task<IEnumerable<ISagaCommand>> RunAsync(SagaEvent01 sagaEvent)
         {
             return Task.FromResult(new[] { new SagaCommand() }.AsEnumerable<ISagaCommand>());
         }

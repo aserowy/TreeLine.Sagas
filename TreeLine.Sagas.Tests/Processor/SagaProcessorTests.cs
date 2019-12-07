@@ -66,7 +66,7 @@ namespace TreeLine.Sagas.Tests.Processor
         {
             // Arrange
             var sagaProcessor = CreateSagaProcessor();
-            var sagaEvent = new SagaEvent();
+            var sagaEvent = new SagaEvent01();
 
             _mockSagaProcess
                 .Setup(prcss => prcss.RunAsync(It.IsAny<ISagaEvent>(), It.IsAny<ISagaStepAdapter>()))
@@ -79,7 +79,7 @@ namespace TreeLine.Sagas.Tests.Processor
 
             mockConfiguration01
                 .Setup(cnfg => cnfg.Create(It.IsAny<ISagaServiceProvider>()))
-                .Returns(new SagaStepAdapter<SagaEvent>(new SagaStep01Mock()));
+                .Returns(new SagaStepAdapter<SagaEvent01>(new SagaStep01Mock()));
 
             var mockConfiguration02 = _mockRepository.Create<ISagaStepConfiguration>();
 
@@ -103,7 +103,7 @@ namespace TreeLine.Sagas.Tests.Processor
         {
             // Arrange
             var sagaProcessor = CreateSagaProcessor();
-            var sagaEvent = new SagaEvent();
+            var sagaEvent = new SagaEvent01();
 
             var mockConfiguration01 = _mockRepository.Create<ISagaStepConfiguration>();
             mockConfiguration01
@@ -132,7 +132,7 @@ namespace TreeLine.Sagas.Tests.Processor
         {
             // Arrange
             var sagaProcessor = CreateSagaProcessor();
-            var sagaEvent = new SagaEvent();
+            var sagaEvent = new SagaEvent01();
 
             // Assert
             await Assert
@@ -145,7 +145,7 @@ namespace TreeLine.Sagas.Tests.Processor
         {
             // Arrange
             var sagaProcessor = CreateSagaProcessor();
-            var sagaEvent = new SagaEvent();
+            var sagaEvent = new SagaEvent01();
 
             sagaProcessor.AddSteps(new List<ISagaStepConfiguration>());
 

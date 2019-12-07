@@ -6,7 +6,7 @@ namespace TreeLine.Sagas.Tests.Mocks
     {
         public void Configure(ISagaProcessorBuilder processorBuilder)
         {
-            processorBuilder.AddStep<SagaEvent, SagaStep01Mock>();
+            processorBuilder.AddStep<SagaEvent01, SagaStep01Mock>();
         }
     }
 }

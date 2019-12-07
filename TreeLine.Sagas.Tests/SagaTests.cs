@@ -56,7 +56,7 @@ namespace TreeLine.Sagas.Tests
         {
             // Arrange
             var saga = CreateSaga();
-            var sagaEvent = new SagaEvent();
+            var sagaEvent = new SagaEvent01();
 
             _mockSagaProfile.Setup(prfl => prfl.Configure(It.IsAny<ISagaProcessorBuilder>()));
             _mockSagaProcessorBuilder.Setup(bldr => bldr.Build()).Returns(_mockSagaProcessor.Object);
@@ -73,7 +73,7 @@ namespace TreeLine.Sagas.Tests
         {
             // Arrange
             var saga = CreateSaga();
-            var sagaEvent = new SagaEvent();
+            var sagaEvent = new SagaEvent01();
 
             _mockSagaProfile.Setup(prfl => prfl.Configure(It.IsAny<ISagaProcessorBuilder>()));
             _mockSagaProcessorBuilder.Setup(bldr => bldr.Build()).Returns(_mockSagaProcessor.Object);
@@ -97,7 +97,7 @@ namespace TreeLine.Sagas.Tests
         {
             // Arrange
             var saga = CreateSaga();
-            var sagaEvent = new SagaEvent();
+            var sagaEvent = new SagaEvent01();
 
             _mockSagaProfile.Setup(prfl => prfl.Configure(It.IsAny<ISagaProcessorBuilder>()));
             _mockSagaProcessorBuilder.Setup(bldr => bldr.Build()).Returns(_mockSagaProcessor.Object);
@@ -121,7 +121,7 @@ namespace TreeLine.Sagas.Tests
         {
             // Arrange
             var saga = CreateSaga();
-            var sagaEvent = new SagaEvent();
+            var sagaEvent = new SagaEvent01();
 
             _mockSagaProfile.Setup(prfl => prfl.Configure(It.IsAny<ISagaProcessorBuilder>()));
             _mockSagaProcessorBuilder.Setup(bldr => bldr.Build()).Returns(_mockSagaProcessor.Object);

@@ -54,7 +54,7 @@ namespace TreeLine.Sagas.Tests.Builder
 
             mockProcessor.Setup(prcsr => prcsr.AddSteps(It.Is<IList<ISagaStepConfiguration>>(stps => stps.Count == 1)));
 
-            sagaProcessorBuilder.AddStep<SagaEvent, SagaStep01Mock>();
+            sagaProcessorBuilder.AddStep<SagaEvent01, SagaStep01Mock>();
 
             // Act
             sagaProcessorBuilder.Build();
@@ -77,8 +77,8 @@ namespace TreeLine.Sagas.Tests.Builder
                 .Setup(prcsr => prcsr.AddSteps(It.Is<IList<ISagaStepConfiguration>>(stps => stps.Count == 2)))
                 .Callback<IList<ISagaStepConfiguration>>(cnfgrtns => configurations.AddRange(cnfgrtns));
 
-            sagaProcessorBuilder.AddStep<SagaEvent, SagaStep01Mock>();
-            sagaProcessorBuilder.AddStep<SagaEvent, SagaStep02Mock>();
+            sagaProcessorBuilder.AddStep<SagaEvent01, SagaStep01Mock>();
+            sagaProcessorBuilder.AddStep<SagaEvent01, SagaStep02Mock>();
 
             // Act
             sagaProcessorBuilder.Build();

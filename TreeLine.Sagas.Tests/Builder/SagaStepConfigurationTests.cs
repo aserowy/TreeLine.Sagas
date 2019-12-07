@@ -1,7 +1,5 @@
-using Moq;
 using System;
 using TreeLine.Sagas.Builder;
-using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Tests.Mocks;
 using Xunit;
 
@@ -13,8 +11,8 @@ namespace TreeLine.Sagas.Tests.Builder
         public void IsResponsible_EventTypeEqualPredicateNull_ReturnTrue()
         {
             // Arrange
-            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent, SagaStep01Mock>(null);
-            var sagaEvent = new SagaEvent();
+            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(null);
+            var sagaEvent = new SagaEvent01();
 
             // Act
             var result = sagaStepConfiguration.IsResponsible(sagaEvent);
@@ -27,8 +25,8 @@ namespace TreeLine.Sagas.Tests.Builder
         public void IsResponsible_EventTypeEqualPredicateReturnsFalse_ReturnFalse()
         {
             // Arrange
-            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent, SagaStep01Mock>(_ => false);
-            var sagaEvent = new SagaEvent();
+            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(_ => false);
+            var sagaEvent = new SagaEvent01();
 
             // Act
             var result = sagaStepConfiguration.IsResponsible(sagaEvent);
@@ -41,8 +39,8 @@ namespace TreeLine.Sagas.Tests.Builder
         public void IsResponsible_EventTypeNotEqualPredicateNull_ReturnFalse()
         {
             // Arrange
-            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent, SagaStep01Mock>(null);
-            var sagaEvent = new DifferentSagaEvent();
+            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(null);
+            var sagaEvent = new SagaEvent02();
 
             // Act
             var result = sagaStepConfiguration.IsResponsible(sagaEvent);
@@ -55,8 +53,8 @@ namespace TreeLine.Sagas.Tests.Builder
         public void IsResponsible_EventTypeNotEqualPredicateReturnsTrue_ReturnFalse()
         {
             // Arrange
-            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent, SagaStep01Mock>(_ => true);
-            var sagaEvent = new DifferentSagaEvent();
+            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(_ => true);
+            var sagaEvent = new SagaEvent02();
 
             // Act
             var result = sagaStepConfiguration.IsResponsible(sagaEvent);
@@ -69,17 +67,10 @@ namespace TreeLine.Sagas.Tests.Builder
         public void Create_ServiceProviderIsNull_ThrowsArgumentNull()
         {
             // Arrange
-            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent, SagaStep01Mock>(null);
+            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(null);
 
             // Assert
             Assert.Throws<ArgumentNullException>(() => sagaStepConfiguration.Create(null));
-        }
-
-        private sealed class DifferentSagaEvent : ISagaEvent
-        {
-            public Guid ReferenceId => Guid.Empty;
-
-            public Guid TransactionId => Guid.Empty;
         }
     }
 }
