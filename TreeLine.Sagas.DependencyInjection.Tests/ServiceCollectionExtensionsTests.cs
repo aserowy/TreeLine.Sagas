@@ -17,6 +17,7 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
             // Arrange
             var services = new ServiceCollection()
                 .AddSagas()
+                .AddLogging()
                 .AddTransient<SagaProfileMock>()
                 .AddTransient<SagaStepMock>();
 
