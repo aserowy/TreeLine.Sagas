@@ -38,7 +38,9 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
         {
             public void Configure(ISagaProcessorBuilder processorBuilder)
             {
-                processorBuilder.AddStep<SagaEvent, SagaStepMock>();
+                processorBuilder
+                    .AddVersion("1.0.0")
+                    .AddStep<SagaEvent, SagaStepMock>();
             }
         }
 

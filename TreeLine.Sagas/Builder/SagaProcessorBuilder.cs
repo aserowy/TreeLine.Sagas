@@ -1,49 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
-using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Processor;
+using TreeLine.Sagas.Versioning;
 
 namespace TreeLine.Sagas.Builder
 {
     public interface ISagaProcessorBuilder
     {
-        ISagaProcessorBuilder AddStep<TEvent, TSagaStep>(Predicate<TEvent>? customValidation = null)
-            where TEvent : ISagaEvent
-            where TSagaStep : ISagaStep<TEvent>;
+        ISagaVersionBuilder AddVersion(string version);
 
         ISagaProcessor Build();
     }
 
     internal sealed class SagaProcessorBuilder : ISagaProcessorBuilder
     {
+        private readonly ISagaVersionFactory _versionFactory;
         private readonly ISagaServiceProvider _serviceProvider;
-        private readonly IList<ISagaStepConfiguration> _steps;
+        private readonly IList<SagaVersionBuilder> _versionBuilders;
 
-        public SagaProcessorBuilder(ISagaServiceProvider serviceProvider)
+        public SagaProcessorBuilder(
+            ISagaVersionFactory versionFactory, 
+            ISagaServiceProvider serviceProvider)
         {
+            _versionFactory = versionFactory;
             _serviceProvider = serviceProvider;
 
-            _steps = new List<ISagaStepConfiguration>();
+            _versionBuilders = new List<SagaVersionBuilder>();
         }
 
-        public ISagaProcessorBuilder AddStep<TEvent, TSagaStep>(Predicate<TEvent>? customValidation = null)
-            where TEvent : ISagaEvent
-            where TSagaStep : ISagaStep<TEvent>
+        public ISagaVersionBuilder AddVersion(string version)
         {
-            _steps.Add(new SagaStepConfiguration<TEvent, TSagaStep>(customValidation));
+            var sagaVersion = _versionFactory.Create(version);
+            var versionBuilder = new SagaVersionBuilder(sagaVersion);
 
-            return this;
+            _versionBuilders.Add(versionBuilder);
+
+            return versionBuilder;
         }
 
         public ISagaProcessor Build()
         {
-            if (_steps.Count.Equals(0))
+            if (_versionBuilders.Count.Equals(0))
             {
-                throw new InvalidOperationException("No steps for processor configured.");
+                throw new InvalidOperationException("No version for processor configured.");
             }
 
             var processor = _serviceProvider.ResolveProcessor();
-            processor.AddSteps(_steps);
+            foreach (var versionBuilder in _versionBuilders)
+            {
+                processor.AddSteps(versionBuilder.Version, versionBuilder.Steps);
+            }
 
             return processor;
         }

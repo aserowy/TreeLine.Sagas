@@ -1,68 +1,82 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TreeLine.Sagas.Builder;
 using TreeLine.Sagas.Messaging;
+using TreeLine.Sagas.Versioning;
 
 namespace TreeLine.Sagas.Processor
 {
     public interface ISagaProcessor
     {
-        void AddSteps(IList<ISagaStepConfiguration> configurations);
+        void AddSteps(ISagaVersion version, IList<ISagaStepConfiguration> configurations);
 
         Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent);
     }
 
     internal sealed class SagaProcessor : ISagaProcessor
     {
+        private readonly ISagaVersionedStepResolver _resolver;
         private readonly ISagaServiceProvider _provider;
         private readonly ISagaProcess _process;
-
-        private IList<ISagaStepConfiguration> _steps;
+        private readonly ILogger<SagaProcessor> _logger;
+        private readonly IDictionary<ISagaVersion, IList<ISagaStepConfiguration>> _steps;
 
         public SagaProcessor(
+            ISagaVersionedStepResolver resolver,
             ISagaServiceProvider provider,
-            ISagaProcess process)
+            ISagaProcess process,
+            ILogger<SagaProcessor> logger)
         {
+            _resolver = resolver;
             _provider = provider;
             _process = process;
+            _logger = logger;
 
-            _steps = new List<ISagaStepConfiguration>();
+            _steps = new Dictionary<ISagaVersion, IList<ISagaStepConfiguration>>();
         }
 
-        public void AddSteps(IList<ISagaStepConfiguration> configurations)
+        public void AddSteps(ISagaVersion version, IList<ISagaStepConfiguration> configurations)
         {
-            _steps = configurations ?? throw new ArgumentNullException(nameof(configurations));
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+
+            if (configurations == null)
+            {
+                throw new ArgumentNullException(nameof(configurations));
+            }
+
+            if (_steps.ContainsKey(version))
+            {
+                _steps[version] = configurations;
+
+                _logger.LogWarning($"Version {version} was already added. The given configuration is now replaced.");
+            }
+            else
+            {
+                _steps.Add(version, configurations);
+            }
         }
 
-        public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
-        {
-            var step = ResolveStep(sagaEvent);
-
-            return _process.RunAsync(sagaEvent, step);
-        }
-
-        private ISagaStepAdapter ResolveStep(ISagaEvent sagaEvent)
+        public async Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
         {
             if (sagaEvent == null)
             {
                 throw new ArgumentNullException(nameof(sagaEvent));
             }
 
-            if (_steps.Count.Equals(0))
-            {
-                throw new InvalidOperationException($"No steps for processor of event {sagaEvent.GetType().Name} configured.");
-            }
+            var configuration = await _resolver
+                .ResolveAsync(sagaEvent, _steps)
+                .ConfigureAwait(false);
 
-            foreach (var configuration in _steps)
-            {
-                if (configuration.IsResponsible(sagaEvent))
-                {
-                    return configuration.Create(_provider);
-                }
-            }
+            var step = configuration.Create(_provider);
 
-            throw new ArgumentOutOfRangeException($"No step for event type {sagaEvent.GetType().Name} found.");
+            return await _process
+                .RunAsync(sagaEvent, step)
+                .ConfigureAwait(false);
         }
     }
 }

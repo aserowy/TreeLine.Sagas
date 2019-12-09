@@ -1,10 +1,12 @@
 ﻿using System;
 using TreeLine.Sagas.Messaging;
+using TreeLine.Sagas.Versioning;
 
 namespace TreeLine.Sagas.Builder
 {
     public interface ISagaStepConfiguration
     {
+        ISagaVersion Version { get; }
         Type SagaStepType { get; }
 
         bool IsResponsible(ISagaEvent sagaEvent);
@@ -17,12 +19,17 @@ namespace TreeLine.Sagas.Builder
     {
         private readonly Predicate<TEvent>? _customValidation;
 
-        public Type SagaStepType => typeof(TStep);
-
-        public SagaStepConfiguration(Predicate<TEvent>? customValidation)
+        public SagaStepConfiguration(ISagaVersion version, int index, Predicate<TEvent>? customValidation)
         {
+            Version = version ?? throw new ArgumentNullException(nameof(version));
+            Index = index;
+
             _customValidation = customValidation;
         }
+
+        public ISagaVersion Version { get; }
+        public Type SagaStepType => typeof(TStep);
+        public int Index { get; }
 
         public bool IsResponsible(ISagaEvent sagaEvent)
         {
@@ -41,7 +48,7 @@ namespace TreeLine.Sagas.Builder
                 throw new ArgumentNullException(nameof(provider));
             }
 
-            return new SagaStepAdapter<TEvent>(provider.Resolve<TEvent, TStep>());
+            return new SagaStepAdapter<TEvent>(Index, provider.Resolve<TEvent, TStep>());
         }
     }
 }

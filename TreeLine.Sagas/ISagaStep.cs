@@ -6,6 +6,6 @@ namespace TreeLine.Sagas
 {
     public interface ISagaStep<TEvent> where TEvent : ISagaEvent
     {
-        public Task<IEnumerable<ISagaCommand>> RunAsync(TEvent sagaEvent);
+        Task<IEnumerable<ISagaCommand>> RunAsync(TEvent sagaEvent);
     }
 }

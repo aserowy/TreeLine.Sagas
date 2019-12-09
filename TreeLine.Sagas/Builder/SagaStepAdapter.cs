@@ -14,10 +14,14 @@ namespace TreeLine.Sagas.Builder
     {
         private readonly ISagaStep<TEvent> _step;
 
-        public SagaStepAdapter(ISagaStep<TEvent> step)
+        public SagaStepAdapter(int index, ISagaStep<TEvent> step)
         {
+            Index = index;
+
             _step = step ?? throw new ArgumentNullException(nameof(step));
         }
+
+        public int Index { get; }
 
         public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
         {
