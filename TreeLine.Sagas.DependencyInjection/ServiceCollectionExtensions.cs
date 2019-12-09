@@ -40,7 +40,7 @@ namespace TreeLine.Sagas.DependencyInjection
             services.AddTransient<ISagaVersionFactory, SagaVersionFactory>();
 
             services.AddTransient<ISagaProcessor, SagaProcessor>();
-            services.AddTransient<ISagaVersionedStepResolver, SagaVersionedStepResolver>();
+            services.AddTransient<ISagaVersionStepResolver, SagaVersionStepResolver>();
             services.AddTransient<ISagaStepResolver, SagaStepResolver>();
             services.AddTransient<ISagaVersionResolver, SagaVersionResolver>();
 

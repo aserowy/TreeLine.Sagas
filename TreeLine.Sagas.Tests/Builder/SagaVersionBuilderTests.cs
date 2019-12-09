@@ -1,12 +1,34 @@
+using Moq;
 using System;
-using TreeLine.Sagas.Builder.Versioning;
+using TreeLine.Sagas.Builder;
 using TreeLine.Sagas.Tests.Mocks;
+using TreeLine.Sagas.Versioning;
 using Xunit;
 
-namespace TreeLine.Sagas.Tests.Builder.Versioning
+namespace TreeLine.Sagas.Tests.Builder
 {
-    public class SagaVersionBuilderTests
+    public class SagaVersionBuilderTests : IDisposable
     {
+        private readonly MockRepository _mockRepository;
+        private readonly Mock<ISagaVersion> _mockSagaVersion;
+
+        public SagaVersionBuilderTests()
+        {
+            _mockRepository = new MockRepository(MockBehavior.Strict);
+
+            _mockSagaVersion = _mockRepository.Create<ISagaVersion>();
+        }
+
+        public void Dispose()
+        {
+            _mockRepository.VerifyAll();
+        }
+
+        private SagaVersionBuilder CreateSagaVersionBuilder()
+        {
+            return new SagaVersionBuilder(_mockSagaVersion.Object);
+        }
+
         [Fact]
         public void Ctor_VersionIsNull_ThrowArgumentNull()
         {
@@ -18,7 +40,7 @@ namespace TreeLine.Sagas.Tests.Builder.Versioning
         public void Build_OneStepAdded_StepsContainsOne()
         {
             // Arrange
-            var sagaVersionBuilder = new SagaVersionBuilder("1");
+            var sagaVersionBuilder = CreateSagaVersionBuilder();
             sagaVersionBuilder.AddStep<SagaEvent01, SagaStep01Mock>();
 
             // Assert
@@ -29,7 +51,7 @@ namespace TreeLine.Sagas.Tests.Builder.Versioning
         public void Build_TwoStepsAdded_StepsContainsTwo()
         {
             // Arrange
-            var sagaVersionBuilder = new SagaVersionBuilder("1");
+            var sagaVersionBuilder = CreateSagaVersionBuilder();
             sagaVersionBuilder.AddStep<SagaEvent01, SagaStep01Mock>();
             sagaVersionBuilder.AddStep<SagaEvent01, SagaStep01Mock>();
 
@@ -41,11 +63,11 @@ namespace TreeLine.Sagas.Tests.Builder.Versioning
         public void Build_VersionSet_VersionIsUsedInConfiguration()
         {
             // Arrange
-            var sagaVersionBuilder = new SagaVersionBuilder("1");
+            var sagaVersionBuilder = CreateSagaVersionBuilder();
             sagaVersionBuilder.AddStep<SagaEvent01, SagaStep01Mock>();
 
             // Assert
-            Assert.Equal("1", sagaVersionBuilder.Steps[0].Version);
+            Assert.Equal(_mockSagaVersion.Object, sagaVersionBuilder.Steps[0].Version);
         }
     }
 }

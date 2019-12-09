@@ -28,14 +28,14 @@ namespace TreeLine.Sagas.Tests.Builder
 
         private SagaStepAdapter<SagaEvent01> CreateSagaStepAdapter()
         {
-            return new SagaStepAdapter<SagaEvent01>(_mockSagaStep.Object);
+            return new SagaStepAdapter<SagaEvent01>(0, _mockSagaStep.Object);
         }
 
         [Fact]
         public void Ctor_SagaStepIsNull_ThrowArgumentNull()
         {
             // Assert
-            Assert.Throws<ArgumentNullException>(() => new SagaStepAdapter<SagaEvent01>(null));
+            Assert.Throws<ArgumentNullException>(() => new SagaStepAdapter<SagaEvent01>(0, null));
         }
 
         [Fact]

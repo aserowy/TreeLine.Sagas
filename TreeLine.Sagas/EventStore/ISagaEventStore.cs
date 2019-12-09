@@ -6,6 +6,6 @@ namespace TreeLine.Sagas.EventStore
 {
     public interface ISagaEventStore
     {
-        Task<IList<ISagaReference>?> GetEventsAsync(Guid referenceId);
+        Task<IList<ISagaReference>?> GetReferencesAsync(Guid referenceId);
     }
 }

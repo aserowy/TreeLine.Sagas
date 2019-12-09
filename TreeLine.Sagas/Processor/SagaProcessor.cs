@@ -17,14 +17,14 @@ namespace TreeLine.Sagas.Processor
 
     internal sealed class SagaProcessor : ISagaProcessor
     {
-        private readonly ISagaVersionedStepResolver _resolver;
+        private readonly ISagaVersionStepResolver _resolver;
         private readonly ISagaServiceProvider _provider;
         private readonly ISagaProcess _process;
         private readonly ILogger<SagaProcessor> _logger;
         private readonly IDictionary<ISagaVersion, IList<ISagaStepConfiguration>> _steps;
 
         public SagaProcessor(
-            ISagaVersionedStepResolver resolver,
+            ISagaVersionStepResolver resolver,
             ISagaServiceProvider provider,
             ISagaProcess process,
             ILogger<SagaProcessor> logger)
@@ -66,6 +66,11 @@ namespace TreeLine.Sagas.Processor
             if (sagaEvent == null)
             {
                 throw new ArgumentNullException(nameof(sagaEvent));
+            }
+
+            if (_steps.Count.Equals(0))
+            {
+                throw new InvalidOperationException($"No steps configured for reference id {sagaEvent.ReferenceId}");
             }
 
             var configuration = await _resolver

@@ -7,6 +7,8 @@ namespace TreeLine.Sagas.Builder
 {
     public interface ISagaStepAdapter
     {
+        int Index { get; }
+
         public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent);
     }
 

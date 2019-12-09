@@ -9,18 +9,18 @@ using TreeLine.Sagas.Versioning;
 
 namespace TreeLine.Sagas.Processor
 {
-    internal interface ISagaVersionedStepResolver
+    internal interface ISagaVersionStepResolver
     {
         Task<ISagaStepConfiguration> ResolveAsync(ISagaEvent sagaEvent, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>> versions);
     }
 
-    internal sealed class SagaVersionedStepResolver : ISagaVersionedStepResolver
+    internal sealed class SagaVersionStepResolver : ISagaVersionStepResolver
     {
         private readonly ISagaEventStore _sagaEventStore;
         private readonly ISagaVersionResolver _sagaVersionResolver;
         private readonly ISagaStepResolver _sagaStepResolver;
 
-        public SagaVersionedStepResolver(
+        public SagaVersionStepResolver(
             ISagaEventStore sagaEventStore,
             ISagaVersionResolver sagaVersionResolver,
             ISagaStepResolver sagaStepResolver)
@@ -33,7 +33,7 @@ namespace TreeLine.Sagas.Processor
         public async Task<ISagaStepConfiguration> ResolveAsync(ISagaEvent sagaEvent, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>> versions)
         {
             var references = await _sagaEventStore
-                .GetEventsAsync(sagaEvent.ReferenceId)
+                .GetReferencesAsync(sagaEvent.ReferenceId)
                 .ConfigureAwait(false);
 
             var resolverFunc = GetVersionFunc(_sagaVersionResolver, references).Compose(GetStepFunc(_sagaStepResolver, sagaEvent, references));

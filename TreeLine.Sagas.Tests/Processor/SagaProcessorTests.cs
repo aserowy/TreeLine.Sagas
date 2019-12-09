@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using TreeLine.Sagas.Builder;
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Processor;
 using TreeLine.Sagas.Tests.Mocks;
+using TreeLine.Sagas.Versioning;
 using Xunit;
 
 namespace TreeLine.Sagas.Tests.Processor
@@ -14,15 +16,19 @@ namespace TreeLine.Sagas.Tests.Processor
     {
         private readonly MockRepository _mockRepository;
 
+        private readonly Mock<ISagaVersionStepResolver> _mockSagaVersionStepResolver;
         private readonly Mock<ISagaServiceProvider> _mockSagaServiceProvider;
         private readonly Mock<ISagaProcess> _mockSagaProcess;
+        private readonly Mock<ILogger<SagaProcessor>> _mockLogger;
 
         public SagaProcessorTests()
         {
             _mockRepository = new MockRepository(MockBehavior.Strict);
 
+            _mockSagaVersionStepResolver = _mockRepository.Create<ISagaVersionStepResolver>();
             _mockSagaServiceProvider = _mockRepository.Create<ISagaServiceProvider>();
             _mockSagaProcess = _mockRepository.Create<ISagaProcess>();
+            _mockLogger = _mockRepository.Create<ILogger<SagaProcessor>>();
         }
 
         public void Dispose()
@@ -33,8 +39,10 @@ namespace TreeLine.Sagas.Tests.Processor
         private SagaProcessor CreateSagaProcessor()
         {
             return new SagaProcessor(
+                _mockSagaVersionStepResolver.Object,
                 _mockSagaServiceProvider.Object,
-                _mockSagaProcess.Object);
+                _mockSagaProcess.Object,
+                _mockLogger.Object);
         }
 
         [Fact]
@@ -45,7 +53,7 @@ namespace TreeLine.Sagas.Tests.Processor
             IList<ISagaStepConfiguration> configurations = null;
 
             // Assert
-            Assert.Throws<ArgumentNullException>(() => sagaProcessor.AddSteps(configurations));
+            Assert.Throws<ArgumentNullException>(() => sagaProcessor.AddSteps(new SagaVersion("1.0.0"), configurations));
         }
 
         [Fact]
@@ -62,92 +70,11 @@ namespace TreeLine.Sagas.Tests.Processor
         }
 
         [Fact]
-        public async Task RunAsync_MultipleIsResponsibleTrue_OnlyFirstGotCalled()
-        {
-            // Arrange
-            var sagaProcessor = CreateSagaProcessor();
-            var sagaEvent = new SagaEvent01();
-
-            _mockSagaProcess
-                .Setup(prcss => prcss.RunAsync(It.IsAny<ISagaEvent>(), It.IsAny<ISagaStepAdapter>()))
-                .ReturnsAsync(new ArraySegment<ISagaCommand>());
-
-            var mockConfiguration01 = _mockRepository.Create<ISagaStepConfiguration>();
-            mockConfiguration01
-                .Setup(cnfg => cnfg.IsResponsible(It.IsAny<ISagaEvent>()))
-                .Returns(true);
-
-            mockConfiguration01
-                .Setup(cnfg => cnfg.Create(It.IsAny<ISagaServiceProvider>()))
-                .Returns(new SagaStepAdapter<SagaEvent01>(new SagaStep01Mock()));
-
-            var mockConfiguration02 = _mockRepository.Create<ISagaStepConfiguration>();
-
-            sagaProcessor.AddSteps(new List<ISagaStepConfiguration>
-            {
-                mockConfiguration01.Object,
-                mockConfiguration02.Object
-            });
-
-            // Act
-            await sagaProcessor
-                .RunAsync(sagaEvent)
-                .ConfigureAwait(false);
-
-            // Assert
-            mockConfiguration01.Verify(cnfg => cnfg.IsResponsible(It.IsAny<ISagaEvent>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task RunAsync_AllIsResponsibleFalse_ThrowArgumentOutOfRange()
-        {
-            // Arrange
-            var sagaProcessor = CreateSagaProcessor();
-            var sagaEvent = new SagaEvent01();
-
-            var mockConfiguration01 = _mockRepository.Create<ISagaStepConfiguration>();
-            mockConfiguration01
-                .Setup(cnfg => cnfg.IsResponsible(It.IsAny<ISagaEvent>()))
-                .Returns(false);
-
-            var mockConfiguration02 = _mockRepository.Create<ISagaStepConfiguration>();
-            mockConfiguration02
-                .Setup(cnfg => cnfg.IsResponsible(It.IsAny<ISagaEvent>()))
-                .Returns(false);
-
-            sagaProcessor.AddSteps(new List<ISagaStepConfiguration>
-            {
-                mockConfiguration01.Object,
-                mockConfiguration02.Object
-            });
-
-            // Assert
-            await Assert
-                .ThrowsAsync<ArgumentOutOfRangeException>(() => sagaProcessor.RunAsync(sagaEvent))
-                .ConfigureAwait(false);
-        }
-
-        [Fact]
         public async Task RunAsync_NoAddStepsCalled_ThrowInvalidOperation()
         {
             // Arrange
             var sagaProcessor = CreateSagaProcessor();
             var sagaEvent = new SagaEvent01();
-
-            // Assert
-            await Assert
-                .ThrowsAsync<InvalidOperationException>(() => sagaProcessor.RunAsync(sagaEvent))
-                .ConfigureAwait(false);
-        }
-
-        [Fact]
-        public async Task RunAsync_EmptyListAddedWithAddSteps_ThrowInvalidOperation()
-        {
-            // Arrange
-            var sagaProcessor = CreateSagaProcessor();
-            var sagaEvent = new SagaEvent01();
-
-            sagaProcessor.AddSteps(new List<ISagaStepConfiguration>());
 
             // Assert
             await Assert
