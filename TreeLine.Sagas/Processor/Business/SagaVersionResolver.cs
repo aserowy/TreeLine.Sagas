@@ -22,7 +22,12 @@ namespace TreeLine.Sagas.Processor.Business
         private static readonly Func<IList<ISagaReference>?, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> Resolve =
             (references, versions) =>
             {
-                if (references is null || references.Count.Equals(0))
+                if (versions?.Count.Equals(0) != false)
+                {
+                    throw new InvalidOperationException("No version configured.");
+                }
+
+                if (references?.Count.Equals(0) != false)
                 {
                     return GetCurrentVersionFunc(versions);
                 }
@@ -36,11 +41,6 @@ namespace TreeLine.Sagas.Processor.Business
         private static readonly Func<IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> GetCurrentVersionFunc =
             versions =>
             {
-                if (versions.Count.Equals(0))
-                {
-                    throw new InvalidOperationException("No version configured.");
-                }
-
                 var result = GetHighestVersionFunc(versions.Keys);
 
                 return versions[result];
