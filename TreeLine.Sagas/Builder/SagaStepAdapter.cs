@@ -27,7 +27,7 @@ namespace TreeLine.Sagas.Builder
 
         public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
         {
-            if (sagaEvent == null)
+            if (sagaEvent is null)
             {
                 throw new ArgumentNullException(nameof(sagaEvent));
             }

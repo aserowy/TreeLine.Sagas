@@ -19,7 +19,7 @@ namespace TreeLine.Sagas.Builder
         private readonly IList<SagaVersionBuilder> _versionBuilders;
 
         public SagaProcessorBuilder(
-            ISagaVersionFactory versionFactory, 
+            ISagaVersionFactory versionFactory,
             ISagaServiceProvider serviceProvider)
         {
             _versionFactory = versionFactory;

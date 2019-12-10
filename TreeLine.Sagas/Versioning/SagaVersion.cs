@@ -13,7 +13,7 @@ namespace TreeLine.Sagas.Versioning
     {
         public SagaVersion(string version)
         {
-            if (version == null)
+            if (version is null)
             {
                 throw new System.ArgumentNullException(nameof(version));
             }

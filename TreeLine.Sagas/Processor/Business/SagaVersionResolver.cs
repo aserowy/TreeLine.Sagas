@@ -22,7 +22,7 @@ namespace TreeLine.Sagas.Processor.Business
         private static readonly Func<IList<ISagaReference>?, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> Resolve =
             (references, versions) =>
             {
-                if (references is null || references.Count == 0)
+                if (references is null || references.Count.Equals(0))
                 {
                     return GetCurrentVersionFunc(versions);
                 }

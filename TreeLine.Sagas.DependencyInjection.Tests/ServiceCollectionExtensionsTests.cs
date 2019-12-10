@@ -62,7 +62,6 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
             }
 
             public Guid ReferenceId { get; set; }
-
             public Guid TransactionId { get; set; }
         }
 
@@ -75,7 +74,6 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
             }
 
             public Guid ReferenceId { get; set; }
-
             public Guid TransactionId { get; set; }
         }
     }
