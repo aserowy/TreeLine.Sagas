@@ -52,7 +52,7 @@ namespace TreeLine.Sagas.Processor.Business
                     return configurations;
                 }
 
-                var reference = references.FirstOrDefault(rfrnc => rfrnc.TransactionId.Equals(sagaEvent.TransactionId));
+                var reference = references.LastOrDefault(rfrnc => rfrnc.TransactionId.Equals(sagaEvent.TransactionId));
                 if (reference is null)
                 {
                     throw new InvalidOperationException($"No reference for event with transaction id {sagaEvent.TransactionId} found.");
@@ -64,7 +64,7 @@ namespace TreeLine.Sagas.Processor.Business
                 }
 
                 return configurations
-                    .Skip(reference.StepIndex)
+                    .Skip(reference.StepIndex + 1)
                     .ToList();
             };
 

@@ -48,7 +48,7 @@ namespace TreeLine.Sagas.Builder
                 throw new ArgumentNullException(nameof(provider));
             }
 
-            return new SagaStepAdapter<TEvent>(Index, provider.Resolve<TEvent, TStep>());
+            return new SagaStepAdapter<TEvent>(Version, Index, provider.Resolve<TEvent, TStep>());
         }
     }
 }

@@ -146,7 +146,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
 
             var references = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.0.0"), 1, Guid.NewGuid(), sagaEvent.TransactionId)
+                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, Guid.NewGuid(), sagaEvent.TransactionId)
             };
 
             var configuration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 0, null);
@@ -172,8 +172,8 @@ namespace TreeLine.Sagas.Tests.Processor.Business
 
             var references = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.0.0"), 0, Guid.NewGuid(), sagaEvent.TransactionId),
-                new SagaReference(new SagaVersion("1.0.0"), 1, sagaEvent.ReferenceId, sagaEvent.TransactionId)
+                new SagaReference(new SagaVersion("1.0.0"), 1, SagaMessageType.Command, Guid.NewGuid(), sagaEvent.TransactionId),
+                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, sagaEvent.ReferenceId, sagaEvent.TransactionId)
             };
 
             var configuration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 1, null);
@@ -199,7 +199,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
 
             var references = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.0.0"), 1, sagaEvent.ReferenceId, Guid.NewGuid())
+                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, sagaEvent.ReferenceId, Guid.NewGuid())
             };
 
             var configurations = new List<ISagaStepConfiguration>
@@ -213,7 +213,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
         }
 
         [Fact]
-        public void Create_RefWithMultipleMatchingTransactionId_UseFirstReference()
+        public void Create_RefWithMultipleMatchingTransactionId_UseLastReference()
         {
             // Arrange
             var func = new SagaStepResolver().Create();
@@ -221,15 +221,16 @@ namespace TreeLine.Sagas.Tests.Processor.Business
 
             var references = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.0.0"), 0, sagaEvent.ReferenceId, sagaEvent.TransactionId),
-                new SagaReference(new SagaVersion("1.0.0"), 1, sagaEvent.ReferenceId, sagaEvent.TransactionId)
+                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, sagaEvent.ReferenceId, sagaEvent.TransactionId),
+                new SagaReference(new SagaVersion("1.0.0"), 1, SagaMessageType.Command, sagaEvent.ReferenceId, sagaEvent.TransactionId)
             };
 
-            var configuration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 0, null);
+            var configuration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 2, null);
             var configurations = new List<ISagaStepConfiguration>
             {
+                new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 0, null),
+                new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 1, null),
                 configuration,
-                new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 1, null)
             };
 
             // Act
@@ -248,7 +249,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
 
             var references = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.0.0"), 1, sagaEvent.ReferenceId, sagaEvent.TransactionId)
+                new SagaReference(new SagaVersion("1.0.0"), 1, SagaMessageType.Command, sagaEvent.ReferenceId, sagaEvent.TransactionId)
             };
 
             var configurations = new List<ISagaStepConfiguration>

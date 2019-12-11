@@ -103,7 +103,7 @@ namespace TreeLine.Sagas.Tests.Processor
             var sagaEvent = new SagaEvent01();
             var sagaVersion = new SagaVersion("1.0.0");
 
-            var mockSagaStep = new SagaStepAdapter<SagaEvent01>(0, new SagaStep01Mock());
+            var mockSagaStep = new SagaStepAdapter<SagaEvent01>(sagaVersion, 0, new SagaStep01Mock());
             var mockConfiguration01 = _mockRepository.Create<ISagaStepConfiguration>();
             mockConfiguration01
                 .Setup(cnfgrtn => cnfgrtn.Create(It.IsAny<ISagaServiceProvider>()))

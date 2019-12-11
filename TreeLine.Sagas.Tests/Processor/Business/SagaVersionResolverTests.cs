@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TreeLine.Sagas.Builder;
 using TreeLine.Sagas.EventStore;
+using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Processor.Business;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
@@ -45,7 +46,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
             var refs = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.4.5"), 0, Guid.NewGuid(), Guid.NewGuid())
+                new SagaReference(new SagaVersion("1.4.5"), 0, SagaMessageType.Command,  Guid.NewGuid(), Guid.NewGuid())
             };
 
             // Act
@@ -62,7 +63,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
             var refs = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.4.1"), 0, Guid.NewGuid(), Guid.NewGuid())
+                new SagaReference(new SagaVersion("1.4.1"), 0, SagaMessageType.Command,  Guid.NewGuid(), Guid.NewGuid())
     };
 
             // Act
@@ -79,7 +80,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
             var refs = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.4.99"), 0, Guid.NewGuid(), Guid.NewGuid())
+                new SagaReference(new SagaVersion("1.4.99"), 0, SagaMessageType.Command,  Guid.NewGuid(), Guid.NewGuid())
         };
 
             // Act
@@ -96,7 +97,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
             var refs = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.3.99"), 0, Guid.NewGuid(), Guid.NewGuid())
+                new SagaReference(new SagaVersion("1.3.99"), 0, SagaMessageType.Command,  Guid.NewGuid(), Guid.NewGuid())
         };
 
             // Assert
@@ -111,9 +112,9 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var referenceId = Guid.NewGuid();
             var refs = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.4.1"), 0, referenceId, Guid.NewGuid()),
-                new SagaReference(new SagaVersion("1.4.99"), 0, referenceId, Guid.NewGuid()),
-                new SagaReference(new SagaVersion("1.4.15"), 0, referenceId, Guid.NewGuid())
+                new SagaReference(new SagaVersion("1.4.1"), 0, SagaMessageType.Command,  referenceId, Guid.NewGuid()),
+                new SagaReference(new SagaVersion("1.4.99"), 0, SagaMessageType.Command,  referenceId, Guid.NewGuid()),
+                new SagaReference(new SagaVersion("1.4.15"), 0, SagaMessageType.Command,  referenceId, Guid.NewGuid())
         };
 
             // Act
@@ -131,9 +132,9 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var referenceId = Guid.NewGuid();
             var refs = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("2.4.1"), 0, referenceId, Guid.NewGuid()),
-                new SagaReference(new SagaVersion("1.4.99"), 0, referenceId, Guid.NewGuid()),
-                new SagaReference(new SagaVersion("1.4.15"), 0, referenceId, Guid.NewGuid())
+                new SagaReference(new SagaVersion("2.4.1"), 0, SagaMessageType.Command,  referenceId, Guid.NewGuid()),
+                new SagaReference(new SagaVersion("1.4.99"), 0, SagaMessageType.Command,  referenceId, Guid.NewGuid()),
+                new SagaReference(new SagaVersion("1.4.15"), 0, SagaMessageType.Command,  referenceId, Guid.NewGuid())
             };
 
             // Act
@@ -160,7 +161,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             {
                 var sagaVersion = new SagaVersion(version);
 
-                result.Add(sagaVersion, new List<ISagaStepConfiguration> { new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(sagaVersion, 0, null) });
+                result.Add(sagaVersion, new List<ISagaStepConfiguration> { new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(sagaVersion, 0,  null) });
             }
 
             return result;
@@ -173,9 +174,9 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
             var refs = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("2.4.1"), 0, Guid.NewGuid(), Guid.NewGuid()),
-                new SagaReference(new SagaVersion("2.4.1"), 0, Guid.NewGuid(), Guid.NewGuid()),
-                new SagaReference(new SagaVersion("2.4.1"), 0, Guid.NewGuid(), Guid.NewGuid())
+                new SagaReference(new SagaVersion("2.4.1"), 0, SagaMessageType.Command,  Guid.NewGuid(), Guid.NewGuid()),
+                new SagaReference(new SagaVersion("2.4.1"), 0, SagaMessageType.Command,  Guid.NewGuid(), Guid.NewGuid()),
+                new SagaReference(new SagaVersion("2.4.1"), 0, SagaMessageType.Command,  Guid.NewGuid(), Guid.NewGuid())
             };
 
             // Assert

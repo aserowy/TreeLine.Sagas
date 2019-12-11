@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TreeLine.Sagas.Builder;
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Tests.Mocks;
+using TreeLine.Sagas.Versioning;
 using Xunit;
 
 namespace TreeLine.Sagas.Tests.Builder
@@ -28,14 +29,21 @@ namespace TreeLine.Sagas.Tests.Builder
 
         private SagaStepAdapter<SagaEvent01> CreateSagaStepAdapter()
         {
-            return new SagaStepAdapter<SagaEvent01>(0, _mockSagaStep.Object);
+            return new SagaStepAdapter<SagaEvent01>(new SagaVersion("1.0.0"), 0, _mockSagaStep.Object);
         }
 
         [Fact]
         public void Ctor_SagaStepIsNull_ThrowArgumentNull()
         {
             // Assert
-            Assert.Throws<ArgumentNullException>(() => new SagaStepAdapter<SagaEvent01>(0, null));
+            Assert.Throws<ArgumentNullException>(() => new SagaStepAdapter<SagaEvent01>(new SagaVersion("1.0.0"), 0, null));
+        }
+
+        [Fact]
+        public void Ctor_VersionIsNull_ThrowArgumentNull()
+        {
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => new SagaStepAdapter<SagaEvent01>(null, 0, new SagaStep01Mock()));
         }
 
         [Fact]
