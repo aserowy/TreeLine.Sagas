@@ -22,6 +22,11 @@ namespace TreeLine.Sagas.Processor.Business
         private static readonly Func<ISagaEvent, IList<ISagaReference>?, IList<ISagaStepConfiguration>, ISagaStepConfiguration> Resolve =
             (sagaEvent, references, configurations) =>
             {
+                if (sagaEvent is null)
+                {
+                    throw new ArgumentNullException(nameof(sagaEvent));
+                }
+
                 if (configurations?.Count.Equals(0) != false)
                 {
                     throw new ArgumentNullException(nameof(configurations));
@@ -38,14 +43,28 @@ namespace TreeLine.Sagas.Processor.Business
                     return configurations;
                 }
 
-                var reference = references.SingleOrDefault(rfrnc => rfrnc.TransactionId.Equals(sagaEvent.TransactionId));
-                if (configurations.Count >= reference.StepIndex)
+                references = references
+                    .Where(rfrnc => rfrnc.ReferenceId.Equals(sagaEvent.ReferenceId))
+                    .ToList();
+
+                if (references.Count.Equals(0))
+                {
+                    return configurations;
+                }
+
+                var reference = references.FirstOrDefault(rfrnc => rfrnc.TransactionId.Equals(sagaEvent.TransactionId));
+                if (reference is null)
+                {
+                    throw new InvalidOperationException($"No reference for event with transaction id {sagaEvent.TransactionId} found.");
+                }
+
+                if (configurations.Count <= reference.StepIndex)
                 {
                     throw new ArgumentOutOfRangeException($"Reference step index {reference.StepIndex} could not resolve a step for reference id {reference.TransactionId}");
                 }
 
                 return configurations
-                    .Skip(reference.StepIndex + 1)
+                    .Skip(reference.StepIndex)
                     .ToList();
             };
 
@@ -60,7 +79,7 @@ namespace TreeLine.Sagas.Processor.Business
                     }
                 }
 
-                throw new ArgumentOutOfRangeException($"No step for event type {sagaEvent.GetType().Name} found.");
+                throw new InvalidOperationException($"No step for event type {sagaEvent.GetType().Name} found.");
             };
     }
 }

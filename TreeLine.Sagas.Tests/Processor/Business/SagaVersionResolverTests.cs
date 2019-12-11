@@ -45,7 +45,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
             var refs = new List<ISagaReference>
             {
-                new SagaReference{Version = new SagaVersion("1.4.5")}
+                new SagaReference(new SagaVersion("1.4.5"), 0, Guid.NewGuid(), Guid.NewGuid())
             };
 
             // Act
@@ -62,8 +62,8 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
             var refs = new List<ISagaReference>
             {
-                new SagaReference{Version = new SagaVersion("1.4.1")}
-            };
+                new SagaReference(new SagaVersion("1.4.1"), 0, Guid.NewGuid(), Guid.NewGuid())
+    };
 
             // Act
             var result = func(refs, CreateVersions("1.0.0", "0.0.9", "2.10.1", "12.5.99", "1.4.5"));
@@ -79,8 +79,8 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
             var refs = new List<ISagaReference>
             {
-                new SagaReference{Version = new SagaVersion("1.4.99")}
-            };
+                new SagaReference(new SagaVersion("1.4.99"), 0, Guid.NewGuid(), Guid.NewGuid())
+        };
 
             // Act
             var result = func(refs, CreateVersions("1.0.0", "0.0.9", "2.10.1", "12.5.99", "1.4.5"));
@@ -96,8 +96,8 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
             var refs = new List<ISagaReference>
             {
-                new SagaReference{Version = new SagaVersion("1.3.99")}
-            };
+                new SagaReference(new SagaVersion("1.3.99"), 0, Guid.NewGuid(), Guid.NewGuid())
+        };
 
             // Assert
             Assert.Throws<InvalidOperationException>(() => func(refs, CreateVersions("1.0.0", "0.0.9", "2.10.1", "12.5.99", "1.4.5")));
@@ -108,12 +108,13 @@ namespace TreeLine.Sagas.Tests.Processor.Business
         {
             // Arrange
             var func = new SagaVersionResolver().Create();
+            var referenceId = Guid.NewGuid();
             var refs = new List<ISagaReference>
             {
-                new SagaReference{Version = new SagaVersion("1.4.1")},
-                new SagaReference{Version = new SagaVersion("1.4.99")},
-                new SagaReference{Version = new SagaVersion("1.4.15")},
-            };
+                new SagaReference(new SagaVersion("1.4.1"), 0, referenceId, Guid.NewGuid()),
+                new SagaReference(new SagaVersion("1.4.99"), 0, referenceId, Guid.NewGuid()),
+                new SagaReference(new SagaVersion("1.4.15"), 0, referenceId, Guid.NewGuid())
+        };
 
             // Act
             var result = func(refs, CreateVersions("1.4.5"));
@@ -123,19 +124,23 @@ namespace TreeLine.Sagas.Tests.Processor.Business
         }
 
         [Fact]
-        public void Create_RefsWithDifferentMajorVersions_ThrowInvalidOperation()
+        public void Create_RefsWithDifferentMajorVersions_ReturnStepWithHighestVersion()
         {
             // Arrange
             var func = new SagaVersionResolver().Create();
+            var referenceId = Guid.NewGuid();
             var refs = new List<ISagaReference>
             {
-                new SagaReference{Version = new SagaVersion("2.4.1")},
-                new SagaReference{Version = new SagaVersion("1.4.99")},
-                new SagaReference{Version = new SagaVersion("1.4.15")},
+                new SagaReference(new SagaVersion("2.4.1"), 0, referenceId, Guid.NewGuid()),
+                new SagaReference(new SagaVersion("1.4.99"), 0, referenceId, Guid.NewGuid()),
+                new SagaReference(new SagaVersion("1.4.15"), 0, referenceId, Guid.NewGuid())
             };
 
+            // Act
+            var result = func(refs, CreateVersions("2.4.5"));
+
             // Assert
-            Assert.Throws<InvalidOperationException>(() => func(refs, CreateVersions("1.4.5")));
+            Assert.Equal("2.4.5", result.Single().Version.ToString());
         }
 
         [Fact]
@@ -159,6 +164,22 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             }
 
             return result;
+        }
+
+        [Fact]
+        public void Create_RefsWithMultipleReferenceIds_ThrowsInvalidOperation()
+        {
+            // Arrange
+            var func = new SagaVersionResolver().Create();
+            var refs = new List<ISagaReference>
+            {
+                new SagaReference(new SagaVersion("2.4.1"), 0, Guid.NewGuid(), Guid.NewGuid()),
+                new SagaReference(new SagaVersion("2.4.1"), 0, Guid.NewGuid(), Guid.NewGuid()),
+                new SagaReference(new SagaVersion("2.4.1"), 0, Guid.NewGuid(), Guid.NewGuid())
+            };
+
+            // Assert
+            Assert.Throws<InvalidOperationException>(() => func(refs, CreateVersions("2.4.5")));
         }
     }
 }
