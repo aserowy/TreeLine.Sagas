@@ -16,7 +16,7 @@ steps:
 - template: template-steps-build-test.yml
   parameters:
     buildConfiguration: '$(buildConfiguration)'
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   displayName: 'nuget pack $(buildConfiguration)'
   inputs:
     command: pack
