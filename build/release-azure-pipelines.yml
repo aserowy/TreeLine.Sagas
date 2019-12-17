@@ -25,4 +25,4 @@ steps:
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(major)'
     minorVersion: '$(minor)'
-    patchVersion: '$[counter(variables['majorMinor'], 0)'
+    patchVersion: '$[counter(variables['majorMinor'], 0)]'
