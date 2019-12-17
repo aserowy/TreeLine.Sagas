@@ -4,7 +4,7 @@ trigger:
 - release/*
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   buildConfiguration: 'Release'
@@ -17,7 +17,7 @@ steps:
   parameters:
     buildConfiguration: '$(buildConfiguration)'
 - task: NuGetCommand@2
-  displayName: 'dotnet pack $(buildConfiguration)'
+  displayName: 'nuget pack $(buildConfiguration)'
   inputs:
     command: pack
     packagesToPack: '**/$(projectName).csproj'
