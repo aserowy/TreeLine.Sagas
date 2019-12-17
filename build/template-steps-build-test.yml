@@ -1,11 +1,4 @@
-trigger:
-- master
-- release/*
-
-pool:
-  vmImage: 'ubuntu-latest'
-
-variables:
+parameters:
   buildConfiguration: 'Release'
 
 steps:

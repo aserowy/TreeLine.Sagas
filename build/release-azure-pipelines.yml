@@ -1,0 +1,26 @@
+trigger:
+- release/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  projectName: 'TreeLine.Sagas.DependencyInjection'
+  major: '1'
+  minor: '0'
+
+steps:
+- template: template-steps-build-test.yml
+  parameters:
+    buildConfiguration: '$(buildConfiguration)'
+- task: NuGetCommand@2
+  displayName: 'dotnet pack $(buildConfiguration)'
+  inputs:
+    command: pack
+    packagesToPack: '**/$(projectName).csproj'
+    nobuild: true
+    versioningScheme: byPrereleaseNumber
+    majorVersion: '$(major)'
+    minorVersion: '$(minor)'
+    patchVersion: '$[counter(variables['$(major).$(minor)'], 0)'
