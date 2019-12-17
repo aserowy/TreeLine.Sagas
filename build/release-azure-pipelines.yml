@@ -1,3 +1,5 @@
+name: $(majorMinorVersion).$(patchVersion)
+
 trigger:
 - release/*
 
@@ -7,10 +9,8 @@ pool:
 variables:
   buildConfiguration: 'Release'
   projectName: 'TreeLine.Sagas.DependencyInjection'
-  major: '1'
-  minor: '0'
-
-  majorMinor: '$(major).$(minor)'
+  majorMinorVersion: 1.0
+  patchVersion: $[counter(variables['majorMinorVersion'], 0)]
 
 steps:
 - template: template-steps-build-test.yml
@@ -22,7 +22,4 @@ steps:
     command: pack
     packagesToPack: '**/$(projectName).csproj'
     nobuild: true
-    versioningScheme: byPrereleaseNumber
-    majorVersion: '$(major)'
-    minorVersion: '$(minor)'
-    patchVersion: '$[counter(variables['majorMinor'], 0)]'
+    versioningScheme: byBuildNumber
