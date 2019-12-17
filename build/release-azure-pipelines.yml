@@ -10,6 +10,8 @@ variables:
   major: '1'
   minor: '0'
 
+  majorMinor: '$(major).$(minor)'
+
 steps:
 - template: template-steps-build-test.yml
   parameters:
@@ -23,4 +25,4 @@ steps:
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(major)'
     minorVersion: '$(minor)'
-    patchVersion: '$[counter(variables['$(major).$(minor)'], 0)'
+    patchVersion: '$[counter(variables['majorMinor'], 0)'
