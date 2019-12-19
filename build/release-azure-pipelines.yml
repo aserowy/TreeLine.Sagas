@@ -17,9 +17,17 @@ steps:
   parameters:
     buildConfiguration: '$(buildConfiguration)'
 - task: DotNetCoreCLI@2
-  displayName: 'nuget pack $(buildConfiguration)'
+  displayName: 'dotnet pack $(buildConfiguration)'
   inputs:
     command: pack
     packagesToPack: '**/$(projectName).csproj'
     nobuild: true
     versioningScheme: byBuildNumber
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'push'
+    searchPatternPush: ''
+    nugetFeedType: 'external'
+- ${{ each package in $(Build.ArtifactStagingDirectory)/*.nupkg}}
+  - script: dotnet nuget push $(package) -k $(nugetKey) -s https://api.nuget.org/v3/index.json
+    displayName: 'dotnet nuget push'
