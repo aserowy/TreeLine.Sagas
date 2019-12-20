@@ -1,7 +1,12 @@
 trigger:
-- master
-- bugfix/*
-- feature/*
+  branches:
+    include:
+    - master
+    - bugfix/*
+    - feature/*
+  paths:
+    include:
+    - src/*
 
 pool:
   vmImage: 'ubuntu-latest'
