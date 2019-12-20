@@ -1,6 +1,8 @@
 parameters:
-    packageName: ''
-    nugetKey: ''
+- name: packageName
+  type: string
+- name: nugetKey
+  type: string
 
 steps:
 - task: DotNetCoreCLI@2
