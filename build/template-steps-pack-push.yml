@@ -7,7 +7,7 @@ steps:
   displayName: 'dotnet pack $(buildConfiguration) for $(packageName)'
   inputs:
     command: pack
-    packagesToPack: '**/$(projectName).csproj'
+    packagesToPack: '**/$(packageName).csproj'
     nobuild: true
     versioningScheme: byBuildNumber
 - script: dotnet nuget push $(Build.ArtifactStagingDirectory)/$(packageName).$(Build.BuildNumber).nupkg -k $(nugetKey) -s https://api.nuget.org/v3/index.json
