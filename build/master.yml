@@ -1,5 +1,7 @@
 trigger:
 - master
+- bugfix/*
+- feature/*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -8,6 +10,6 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- template: template-steps-build-test.yml
+- template: templates/template-steps-build-test.yml
   parameters:
     buildConfiguration: '$(buildConfiguration)'

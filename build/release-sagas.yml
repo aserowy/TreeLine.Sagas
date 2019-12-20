@@ -1,0 +1,27 @@
+name: $(majorMinorVersion).$(patchVersion)
+
+trigger:
+  branches:
+    include:
+    - releases/*
+  paths:
+    include:
+    - src/TreeLine.Sagas/*
+    - src/TreeLine.Sagas.Tests/*
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  majorMinorVersion: 1.0
+  patchVersion: $[counter(variables['majorMinorVersion'], 10)]
+
+steps:
+- template: templates/template-steps-build-test.yml
+  parameters:
+    buildConfiguration: '$(buildConfiguration)'
+- template: templates/template-steps-pack-push.yml
+  parameters:
+    packageName: 'TreeLine.Sagas'
+    nugetKey: $(nugetKey)
