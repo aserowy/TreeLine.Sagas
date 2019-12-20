@@ -3,7 +3,7 @@ name: $(majorMinorVersion).$(patchVersion)
 trigger:
   branches:
     include:
-    - releases/*
+    - release/*
   paths:
     include:
     - src/TreeLine.Sagas/*
