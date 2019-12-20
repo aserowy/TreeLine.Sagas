@@ -7,11 +7,11 @@ namespace TreeLine.Sagas.Tests.Mocks
     {
         public SagaCommand()
         {
-            ReferenceId = Guid.NewGuid();
+            ProcessId = Guid.NewGuid();
             TransactionId = Guid.NewGuid();
         }
 
-        public Guid ReferenceId { get; set; }
+        public Guid ProcessId { get; set; }
 
         public Guid TransactionId { get; set; }
     }

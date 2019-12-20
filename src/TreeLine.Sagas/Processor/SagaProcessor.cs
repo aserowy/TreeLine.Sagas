@@ -70,7 +70,7 @@ namespace TreeLine.Sagas.Processor
 
             if (_steps.Count.Equals(0))
             {
-                throw new InvalidOperationException($"No steps configured for reference id {sagaEvent.ReferenceId}.");
+                throw new InvalidOperationException($"No steps configured for reference id {sagaEvent.ProcessId}.");
             }
 
             var configuration = await _resolver

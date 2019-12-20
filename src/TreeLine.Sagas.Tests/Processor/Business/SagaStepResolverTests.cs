@@ -173,7 +173,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var references = new List<ISagaReference>
             {
                 new SagaReference(new SagaVersion("1.0.0"), 1, SagaMessageType.Command, Guid.NewGuid(), sagaEvent.TransactionId),
-                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, sagaEvent.ReferenceId, sagaEvent.TransactionId)
+                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, sagaEvent.ProcessId, sagaEvent.TransactionId)
             };
 
             var configuration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 1, null);
@@ -199,7 +199,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
 
             var references = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, sagaEvent.ReferenceId, Guid.NewGuid())
+                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, sagaEvent.ProcessId, Guid.NewGuid())
             };
 
             var configurations = new List<ISagaStepConfiguration>
@@ -221,8 +221,8 @@ namespace TreeLine.Sagas.Tests.Processor.Business
 
             var references = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, sagaEvent.ReferenceId, sagaEvent.TransactionId),
-                new SagaReference(new SagaVersion("1.0.0"), 1, SagaMessageType.Command, sagaEvent.ReferenceId, sagaEvent.TransactionId)
+                new SagaReference(new SagaVersion("1.0.0"), 0, SagaMessageType.Command, sagaEvent.ProcessId, sagaEvent.TransactionId),
+                new SagaReference(new SagaVersion("1.0.0"), 1, SagaMessageType.Command, sagaEvent.ProcessId, sagaEvent.TransactionId)
             };
 
             var configuration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 2, null);
@@ -249,7 +249,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
 
             var references = new List<ISagaReference>
             {
-                new SagaReference(new SagaVersion("1.0.0"), 1, SagaMessageType.Command, sagaEvent.ReferenceId, sagaEvent.TransactionId)
+                new SagaReference(new SagaVersion("1.0.0"), 1, SagaMessageType.Command, sagaEvent.ProcessId, sagaEvent.TransactionId)
             };
 
             var configurations = new List<ISagaStepConfiguration>

@@ -7,17 +7,17 @@ namespace TreeLine.Sagas.Tests.Mocks
     {
         public SagaEvent01()
         {
-            ReferenceId = Guid.NewGuid();
+            ProcessId = Guid.NewGuid();
             TransactionId = Guid.NewGuid();
         }
 
-        public Guid ReferenceId { get; set; }
+        public Guid ProcessId { get; set; }
         public Guid TransactionId { get; set; }
     }
 
     internal sealed class SagaEvent02 : ISagaEvent
     {
-        public Guid ReferenceId => Guid.Empty;
+        public Guid ProcessId => Guid.Empty;
         public Guid TransactionId => Guid.Empty;
     }
 }

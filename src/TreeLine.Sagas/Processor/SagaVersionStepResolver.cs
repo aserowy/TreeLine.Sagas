@@ -33,7 +33,7 @@ namespace TreeLine.Sagas.Processor
         public async Task<ISagaStepConfiguration> ResolveAsync(ISagaEvent sagaEvent, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>> versions)
         {
             var references = await _sagaEventStore
-                .GetReferencesAsync(sagaEvent.ReferenceId)
+                .GetReferencesAsync(sagaEvent.ProcessId)
                 .ConfigureAwait(false);
 
             var resolverFunc = GetVersionFunc(_sagaVersionResolver, references).Compose(GetStepFunc(_sagaStepResolver, sagaEvent, references));

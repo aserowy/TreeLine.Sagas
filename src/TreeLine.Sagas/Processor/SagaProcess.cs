@@ -23,7 +23,7 @@ namespace TreeLine.Sagas.Processor
 
         public async Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent, ISagaStepAdapter step)
         {
-            var eventReference = new SagaReference(step.Version, step.Index, SagaMessageType.Event, sagaEvent.ReferenceId, sagaEvent.TransactionId, sagaEvent);
+            var eventReference = new SagaReference(step.Version, step.Index, SagaMessageType.Event, sagaEvent.ProcessId, sagaEvent.TransactionId, sagaEvent);
 
             await _store
                 .AddReferences(eventReference)
@@ -39,7 +39,7 @@ namespace TreeLine.Sagas.Processor
             }
 
             var commandReferences = commands
-                .Select(cmnd => new SagaReference(step.Version, step.Index, SagaMessageType.Command, cmnd.ReferenceId, cmnd.TransactionId, cmnd))
+                .Select(cmnd => new SagaReference(step.Version, step.Index, SagaMessageType.Command, cmnd.ProcessId, cmnd.TransactionId, cmnd))
                 .ToArray();
 
             await _store

@@ -57,11 +57,11 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
         {
             public SagaCommand()
             {
-                ReferenceId = Guid.NewGuid();
+                ProcessId = Guid.NewGuid();
                 TransactionId = Guid.NewGuid();
             }
 
-            public Guid ReferenceId { get; set; }
+            public Guid ProcessId { get; set; }
             public Guid TransactionId { get; set; }
         }
 
@@ -69,11 +69,11 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
         {
             public SagaEvent()
             {
-                ReferenceId = Guid.NewGuid();
+                ProcessId = Guid.NewGuid();
                 TransactionId = Guid.NewGuid();
             }
 
-            public Guid ReferenceId { get; set; }
+            public Guid ProcessId { get; set; }
             public Guid TransactionId { get; set; }
         }
     }

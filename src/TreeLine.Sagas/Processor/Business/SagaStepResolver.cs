@@ -44,7 +44,7 @@ namespace TreeLine.Sagas.Processor.Business
                 }
 
                 references = references
-                    .Where(rfrnc => rfrnc.ReferenceId.Equals(sagaEvent.ReferenceId))
+                    .Where(rfrnc => rfrnc.ReferenceId.Equals(sagaEvent.ProcessId))
                     .ToList();
 
                 if (references.Count.Equals(0))
