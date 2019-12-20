@@ -4,14 +4,14 @@ parameters:
 
 steps:
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet build $(buildConfiguration)'
+  displayName: 'dotnet build ${{ parameters.buildConfiguration }}'
   inputs:
     command: build
     projects: '**/*/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '--configuration ${{ parameters.buildConfiguration }}'
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet test $(buildConfiguration)'
+  displayName: 'dotnet test ${{ parameters.buildConfiguration }}'
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '--configuration ${{ parameters.buildConfiguration }}'

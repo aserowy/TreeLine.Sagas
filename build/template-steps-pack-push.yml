@@ -6,11 +6,11 @@ parameters:
 
 steps:
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet pack $(buildConfiguration) for $(packageName)'
+  displayName: 'dotnet pack ${{ parameters.packageName }}'
   inputs:
     command: pack
-    packagesToPack: '**/$(packageName).csproj'
+    packagesToPack: '**/${{ parameters.packageName }}.csproj'
     nobuild: true
     versioningScheme: byBuildNumber
-- script: dotnet nuget push $(Build.ArtifactStagingDirectory)/$(packageName).$(Build.BuildNumber).nupkg -k $(nugetKey) -s https://api.nuget.org/v3/index.json
-  displayName: 'dotnet nuget push for $(packageName)'
+- script: dotnet nuget push $(Build.ArtifactStagingDirectory)/${{ parameters.packageName }}.$(Build.BuildNumber).nupkg -k ${{ parameters.nugetKey }} -s https://api.nuget.org/v3/index.json
+  displayName: 'dotnet nuget push ${{ parameters.packageName }}'
