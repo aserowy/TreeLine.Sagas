@@ -14,7 +14,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  majorMinorVersion: 1.0
+  majorMinorVersion: $(Build.SourceBranchName)
   patchVersion: $[counter(variables['majorMinorVersion'], 10)]
 
 steps:
