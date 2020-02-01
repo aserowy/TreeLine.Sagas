@@ -1,4 +1,4 @@
-| Projekt | Status |
+| Project | Status |
 | --- | --- |
 | TreeLine.Sagas | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=6&branchName=release%2F1.1) | 
 | TreeLine.Sagas.DependencyInjection | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas_dependency%20injection?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=7&branchName=release%2F1.1) |
@@ -9,7 +9,7 @@ In distributed systems, such as microservices, business processes pose multiple 
 One of these approaches is the design pattern Saga-Orchestration.
 
 ## How to use it?
-Three configureation steps are necessary to use the package.
+Three configuration steps are necessary to use the package.
 
 ### 1. Build steps of your Saga
 The first step is to develop the individual steps to define a business process. Since sagas consist of individual messages that in turn trigger parts of the business process, a step consists of a trigger (message type) and the corresponding logic.
