@@ -1,4 +1,5 @@
-name: $(Build.SourceBranchName).$(patchVersion)
+
+name: $(majorMinorVersion).$(patchVersion)
 
 trigger:
   branches:
@@ -14,7 +15,8 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  patchVersion: $[counter(Build.SourceBranchName, 0)]
+  majorMinorVersion: '$(Build.SourceBranchName)'
+  patchVersion: $[counter(variables['majorMinorVersion'], 10)]
 
 steps:
 - template: templates/template-steps-build-test.yml
