@@ -1,4 +1,4 @@
-name: $(majorMinorVersion).$(patchVersion)
+name: $(Build.SourceBranchName).$(patchVersion)
 
 trigger:
   branches:
