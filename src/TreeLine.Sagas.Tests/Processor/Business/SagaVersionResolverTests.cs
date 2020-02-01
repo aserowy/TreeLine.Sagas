@@ -33,7 +33,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             var func = new SagaVersionResolver().Create();
 
             // Act
-            var result = func(null, CreateVersions("1.0.0", "0.0.9", "2.12.1", "12.5.99", "1.4.5"));
+            var result = func(null, CreateVersions("1.0.0", "0.0.9", "2.10.1", "12.5.99", "1.4.5"));
 
             // Assert
             Assert.Equal("12.5.99", result.Single().Version.ToString());
