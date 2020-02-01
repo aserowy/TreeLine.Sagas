@@ -1,3 +1,8 @@
+| Projekt | Status |
+| --- | --- |
+| TreeLine.Sagas | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=6&branchName=release%2F1.1) | 
+| TreeLine.Sagas.DependencyInjection | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas_dependency%20injection?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=7&branchName=release%2F1.1) |
+
 # TreeLine.Sagas
 ## What is this package about?
 In distributed systems, such as microservices, business processes pose multiple challenges. There are different ways of solving these challenges, for example, to counter rollback scenarios or changes in business processes.
