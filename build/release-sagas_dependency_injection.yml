@@ -14,7 +14,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  patchVersion: $[counter(variables[$(Build.SourceBranchName)], 10)]
+  patchVersion: $[counter($(Build.SourceBranchName), 0)]
 
 steps:
 - template: templates/template-steps-build-test.yml
