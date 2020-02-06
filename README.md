@@ -1,7 +1,7 @@
-| Project | Status |
-| --- | --- |
-| TreeLine.Sagas | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=6&branchName=release%2F1.1) | 
-| TreeLine.Sagas.DependencyInjection | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas_dependency%20injection?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=7&branchName=release%2F1.1) |
+| Project | Package | Status |
+| --- | --- | --- |
+| TreeLine.Sagas | https://www.nuget.org/packages/TreeLine.Sagas/ | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=6&branchName=release%2F1.1) | 
+| TreeLine.Sagas.DependencyInjection | https://www.nuget.org/packages/TreeLine.Sagas.DependencyInjection/ | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas_dependency%20injection?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=7&branchName=release%2F1.1) |
 
 # TreeLine.Sagas
 ## What is this package about?
