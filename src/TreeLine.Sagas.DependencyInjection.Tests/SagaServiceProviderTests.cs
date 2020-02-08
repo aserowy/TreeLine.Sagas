@@ -21,20 +21,6 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
         }
 
         [Fact]
-        public void ResolveProcessor_CalledTwice_ResolvedNotSameProcessors()
-        {
-            // Arrange
-            var provider = CreateProvider();
-
-            // Act
-            var result01 = provider.ResolveProcessor();
-            var result02 = provider.ResolveProcessor();
-
-            // Assert
-            Assert.NotSame(result01, result02);
-        }
-
-        [Fact]
         public void Resolve_CalledTwice_ResolvedNotSameProcessorsSagaSteps()
         {
             // Arrange
