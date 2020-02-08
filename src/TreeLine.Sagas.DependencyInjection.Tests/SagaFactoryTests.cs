@@ -4,9 +4,9 @@ using Xunit;
 
 namespace TreeLine.Sagas.DependencyInjection.Tests
 {
-    public class SagaServiceProviderTests
+    public class SagaFactoryTests
     {
-        private SagaServiceProvider CreateProvider()
+        private SagaFactory CreateFactory()
         {
             var services = new ServiceCollection();
             services
@@ -15,20 +15,18 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
                 .AddTransient<SagaProfileMock>()
                 .AddTransient<SagaStep01Mock>();
 
-            var provider = services.BuildServiceProvider();
-
-            return new SagaServiceProvider(provider);
+            return new SagaFactory(services);
         }
 
         [Fact]
-        public void Resolve_CalledTwice_ResolvedNotSameSagaSteps()
+        public void Create_CalledTwice_ResolvedNotSameSaga()
         {
             // Arrange
-            var provider = CreateProvider();
+            var factory = CreateFactory();
 
             // Act
-            var result01 = provider.Resolve<SagaEvent01, SagaStep01Mock>();
-            var result02 = provider.Resolve<SagaEvent01, SagaStep01Mock>();
+            var result01 = factory.Create<SagaProfileMock>();
+            var result02 = factory.Create<SagaProfileMock>();
 
             // Assert
             Assert.NotSame(result01, result02);
