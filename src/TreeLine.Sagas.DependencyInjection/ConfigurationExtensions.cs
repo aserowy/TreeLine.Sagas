@@ -9,7 +9,7 @@ namespace TreeLine.Sagas.DependencyInjection
         {
             if (configuration is Configuration casted)
             {
-                casted.Add(services => services.AddTransient<TEventStore>());
+                casted.Add(services => services.AddTransient<ISagaEventStore, TEventStore>());
             }
 
             return configuration;
