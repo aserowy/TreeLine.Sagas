@@ -15,6 +15,11 @@ namespace TreeLine.Sagas.DependencyInjection
 
         public IServiceCollection Configure(IServiceCollection services)
         {
+            if (services is null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
             foreach (var configuration in _configurations)
             {
                 configuration.Invoke(services);
@@ -25,6 +30,11 @@ namespace TreeLine.Sagas.DependencyInjection
 
         internal void Add(Action<IServiceCollection> configuration)
         {
+            if (configuration is null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
             _configurations.Add(configuration);
         }
     }
