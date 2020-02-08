@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TreeLine.Sagas.DependencyInjection.Tests
 {
-    public class ServiceCollectionExtensionsIntegration
+    public class ServiceCollectionExtensionsTests
     {
         [Fact]
         public async Task AddSagas_ProfileAndStepConfigured_AllDependenciesResolved()
