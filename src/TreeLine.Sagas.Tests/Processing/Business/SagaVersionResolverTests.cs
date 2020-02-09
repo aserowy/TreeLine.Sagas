@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.EventStore;
 using TreeLine.Sagas.Messaging;
-using TreeLine.Sagas.Processor.Business;
+using TreeLine.Sagas.Processing.Business;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
 using Xunit;
 
-namespace TreeLine.Sagas.Tests.Processor.Business
+namespace TreeLine.Sagas.Tests.Processing.Business
 {
     public class SagaVersionResolverTests
     {
@@ -161,7 +161,7 @@ namespace TreeLine.Sagas.Tests.Processor.Business
             {
                 var sagaVersion = new SagaVersion(version);
 
-                result.Add(sagaVersion, new List<ISagaStepConfiguration> { new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(sagaVersion, 0,  null) });
+                result.Add(sagaVersion, new List<ISagaStepConfiguration> { new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(sagaVersion, 0, null) });
             }
 
             return result;

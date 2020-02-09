@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Messaging;
 
 namespace TreeLine.Sagas.DependencyInjection

@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Versioning;
 
-namespace TreeLine.Sagas.Processor
+namespace TreeLine.Sagas.Processing
 {
     public interface ISagaProcessor
     {

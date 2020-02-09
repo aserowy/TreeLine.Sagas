@@ -2,7 +2,7 @@
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Versioning;
 
-namespace TreeLine.Sagas.Builder
+namespace TreeLine.Sagas.Building
 {
     public interface ISagaStepConfiguration
     {

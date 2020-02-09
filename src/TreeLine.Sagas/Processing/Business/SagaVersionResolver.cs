@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.EventStore;
 using TreeLine.Sagas.Versioning;
 
-namespace TreeLine.Sagas.Processor.Business
+namespace TreeLine.Sagas.Processing.Business
 {
     internal interface ISagaVersionResolver
     {
@@ -16,10 +16,10 @@ namespace TreeLine.Sagas.Processor.Business
     {
         public Func<IList<ISagaReference>?, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> Create()
         {
-            return Resolve;
+            return _resolve;
         }
 
-        private static readonly Func<IList<ISagaReference>?, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> Resolve =
+        private static readonly Func<IList<ISagaReference>?, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> _resolve =
             (references, versions) =>
             {
                 if (versions?.Count.Equals(0) != false)
@@ -29,37 +29,37 @@ namespace TreeLine.Sagas.Processor.Business
 
                 if (references?.Count.Equals(0) != false)
                 {
-                    return GetCurrentVersionFunc(versions);
+                    return _getCurrentVersionFunc(versions);
                 }
 
-                var referenceId = GetReferenceIdFunc(references);
-                var result = GetReferenceVersionFunc(references, versions);
+                var referenceId = _getReferenceIdFunc(references);
+                var result = _getReferenceVersionFunc(references, versions);
 
                 return result ?? throw new ArgumentOutOfRangeException($"No version found for reference id {referenceId}");
             };
 
-        private static readonly Func<IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> GetCurrentVersionFunc =
+        private static readonly Func<IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> _getCurrentVersionFunc =
             versions =>
             {
-                var result = GetHighestVersionFunc(versions.Keys);
+                var result = _getHighestVersionFunc(versions.Keys);
 
                 return versions[result];
             };
 
-        private static readonly Func<IList<ISagaReference>, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> GetReferenceVersionFunc =
+        private static readonly Func<IList<ISagaReference>, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> _getReferenceVersionFunc =
             (references, versions) =>
             {
-                var referenceVersion = GetHighestVersionFunc(references.Select(rfrnc => rfrnc.Version));
+                var referenceVersion = _getHighestVersionFunc(references.Select(rfrnc => rfrnc.Version));
                 var possibleVersions = versions
                     .Keys
                     .Where(vrsn => vrsn.Major.Equals(referenceVersion.Major) && vrsn.Minor.Equals(referenceVersion.Minor));
 
-                var version = GetHighestVersionFunc(possibleVersions);
+                var version = _getHighestVersionFunc(possibleVersions);
 
                 return versions[version];
             };
 
-        private static readonly Func<IEnumerable<ISagaVersion>, ISagaVersion> GetHighestVersionFunc =
+        private static readonly Func<IEnumerable<ISagaVersion>, ISagaVersion> _getHighestVersionFunc =
             versions =>
             {
                 ISagaVersion? result = null;
@@ -85,7 +85,7 @@ namespace TreeLine.Sagas.Processor.Business
                 return result;
             };
 
-        private static readonly Func<IList<ISagaReference>, Guid> GetReferenceIdFunc =
+        private static readonly Func<IList<ISagaReference>, Guid> _getReferenceIdFunc =
             references =>
             {
                 return references

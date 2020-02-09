@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using TreeLine.Sagas.Processor;
+using TreeLine.Sagas.Processing;
 using TreeLine.Sagas.Versioning;
 
-namespace TreeLine.Sagas.Builder
+namespace TreeLine.Sagas.Building
 {
     public interface ISagaProcessorBuilder
     {

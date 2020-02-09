@@ -2,13 +2,13 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
 using Xunit;
 
-namespace TreeLine.Sagas.Tests.Builder
+namespace TreeLine.Sagas.Tests.Building
 {
     public class SagaStepAdapterTests : IDisposable
     {

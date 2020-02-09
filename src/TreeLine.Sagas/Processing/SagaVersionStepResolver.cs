@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.EventStore;
 using TreeLine.Sagas.Messaging;
-using TreeLine.Sagas.Processor.Business;
+using TreeLine.Sagas.Processing.Business;
 using TreeLine.Sagas.Versioning;
 
-namespace TreeLine.Sagas.Processor
+namespace TreeLine.Sagas.Processing
 {
     internal interface ISagaVersionStepResolver
     {

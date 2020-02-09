@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.EventStore;
 using TreeLine.Sagas.Messaging;
 
-namespace TreeLine.Sagas.Processor
+namespace TreeLine.Sagas.Processing
 {
     internal interface ISagaProcess
     {

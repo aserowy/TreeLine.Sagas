@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.EventStore;
-using TreeLine.Sagas.Processor;
-using TreeLine.Sagas.Processor.Business;
+using TreeLine.Sagas.Processing;
+using TreeLine.Sagas.Processing.Business;
 using TreeLine.Sagas.Versioning;
 
 namespace TreeLine.Sagas.DependencyInjection

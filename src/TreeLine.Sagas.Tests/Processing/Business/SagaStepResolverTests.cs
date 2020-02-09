@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.EventStore;
 using TreeLine.Sagas.Messaging;
-using TreeLine.Sagas.Processor.Business;
+using TreeLine.Sagas.Processing.Business;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
 using Xunit;
 
-namespace TreeLine.Sagas.Tests.Processor.Business
+namespace TreeLine.Sagas.Tests.Processing.Business
 {
     public class SagaStepResolverTests
     {

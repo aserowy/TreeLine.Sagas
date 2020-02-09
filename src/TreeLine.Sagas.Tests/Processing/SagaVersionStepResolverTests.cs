@@ -3,15 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.EventStore;
-using TreeLine.Sagas.Processor;
-using TreeLine.Sagas.Processor.Business;
+using TreeLine.Sagas.Processing;
+using TreeLine.Sagas.Processing.Business;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
 using Xunit;
 
-namespace TreeLine.Sagas.Tests.Processor
+namespace TreeLine.Sagas.Tests.Processing
 {
     public class SagaVersionStepResolverTests : IDisposable
     {

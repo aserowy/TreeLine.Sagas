@@ -1,11 +1,11 @@
 using Moq;
 using System;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
 using Xunit;
 
-namespace TreeLine.Sagas.Tests.Builder
+namespace TreeLine.Sagas.Tests.Building
 {
     public class SagaVersionBuilderTests : IDisposable
     {

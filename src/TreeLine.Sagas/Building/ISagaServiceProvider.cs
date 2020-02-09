@@ -1,6 +1,6 @@
 ﻿using TreeLine.Sagas.Messaging;
 
-namespace TreeLine.Sagas.Builder
+namespace TreeLine.Sagas.Building
 {
     public interface ISagaServiceProvider
     {
