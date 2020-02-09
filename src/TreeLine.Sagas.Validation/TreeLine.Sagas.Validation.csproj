@@ -1,12 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
 
-    <Summary>DI extensions for saga orchestrator.</Summary>
-    <Description>DI extensions for saga orchestrator.</Description>
+    <Summary>Validation for saga orchestrator.</Summary>
+    <Description>Validation for saga orchestrator.</Description>
     <PackageProjectUrl>https://github.com/aserowy/TreeLine.Sagas</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/aserowy/TreeLine.Sagas/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
@@ -19,11 +19,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TreeLine.Sagas\TreeLine.Sagas.csproj" />
   </ItemGroup>
 
 </Project>
