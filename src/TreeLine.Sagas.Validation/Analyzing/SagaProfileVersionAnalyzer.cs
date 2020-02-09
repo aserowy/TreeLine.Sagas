@@ -2,7 +2,7 @@
 using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Messaging;
 
-namespace TreeLine.Sagas.Validation.Rules.Analyzing
+namespace TreeLine.Sagas.Validation.Analyzing
 {
     internal interface ISagaProfileVersionAnalyzer : ISagaVersionBuilder
     {

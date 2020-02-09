@@ -1,7 +1,10 @@
-﻿namespace TreeLine.Sagas.Validation.Rules
+﻿using System.Collections.Generic;
+using TreeLine.Sagas.Validation.Analyzing;
+
+namespace TreeLine.Sagas.Validation.Rules
 {
     internal interface IValidationRule
     {
-        void Validate();
+        void Validate(IEnumerable<ISagaProfileAnalyzer> analyzers);
     }
 }

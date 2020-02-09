@@ -1,4 +1,4 @@
-﻿namespace TreeLine.Sagas.Validation.Rules.Analyzing
+﻿namespace TreeLine.Sagas.Validation.Analyzing
 {
     internal interface ISagaProfileVersionAnalyzerFactory
     {

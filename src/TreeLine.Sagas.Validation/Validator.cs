@@ -1,27 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TreeLine.Sagas.Validation.Analyzing;
 using TreeLine.Sagas.Validation.Rules;
 
 namespace TreeLine.Sagas.Validation
 {
-    internal sealed class Validator
+    public interface IValidator
     {
+        void Validate();
+    }
+
+    internal sealed class Validator : IValidator
+    {
+        private readonly ISagaProfileAnalyzerResolver _analyzerResolver;
         private readonly IEnumerable<IValidationRule> _rules;
 
-        public Validator(IEnumerable<IValidationRule> rules)
+        public Validator(
+            ISagaProfileAnalyzerResolver analyzerResolver,
+            IEnumerable<IValidationRule> rules)
         {
+            _analyzerResolver = analyzerResolver;
             _rules = rules;
         }
 
         public void Validate()
         {
+            var analyzer = _analyzerResolver.Get();
+
             var result = new List<ValidationException>();
             foreach (var rule in _rules)
             {
                 try
                 {
-                    rule.Validate();
+                    rule.Validate(analyzer);
                 }
                 catch (ValidationException e)
                 {

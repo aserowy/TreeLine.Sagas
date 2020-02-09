@@ -2,27 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using TreeLine.Sagas.EventStore;
-using TreeLine.Sagas.Validation.Rules.Analyzing;
+using TreeLine.Sagas.Validation.Analyzing;
 
 namespace TreeLine.Sagas.Validation.Rules
 {
     internal sealed class MultipleVersionsWithEqualIdentifierRule : IValidationRule
     {
         private readonly ISagaEventStore _store;
-        private readonly ISagaProfileAnalyzerFactory _analyzerFactory;
-        private readonly IEnumerable<ISagaProfile> _profiles;
 
-        public MultipleVersionsWithEqualIdentifierRule(
-            ISagaEventStore store,
-            ISagaProfileAnalyzerFactory analyzerFactory,
-            IEnumerable<ISagaProfile> profiles)
+        public MultipleVersionsWithEqualIdentifierRule(ISagaEventStore store)
         {
             _store = store;
-            _analyzerFactory = analyzerFactory;
-            _profiles = profiles;
         }
 
-        public void Validate()
+        public void Validate(IEnumerable<ISagaProfileAnalyzer> analyzers)
         {
             if (!(_store is NullSagaEventStore))
             {
@@ -30,11 +23,8 @@ namespace TreeLine.Sagas.Validation.Rules
             }
 
             var exceptions = new List<ValidationException>();
-            foreach (var profile in _profiles)
+            foreach (var analyzer in analyzers)
             {
-                var analyzer = _analyzerFactory.Create();
-                profile.Configure(analyzer);
-
                 var analysis = analyzer
                     .VersionAnalyzer
                     .GroupBy(anlyzr => anlyzr.Version)
@@ -42,7 +32,7 @@ namespace TreeLine.Sagas.Validation.Rules
 
                 if (analysis.Any())
                 {
-                    exceptions.Add(new ValidationException($"{profile.GetType().Name} has multiple Versions with same identifier."));
+                    exceptions.Add(new ValidationException($"{analyzer.ProfileName} has multiple Versions with same identifier."));
                 }
             }
 

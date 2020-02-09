@@ -1,8 +1,8 @@
-﻿namespace TreeLine.Sagas.Validation.Rules.Analyzing
+﻿namespace TreeLine.Sagas.Validation.Analyzing
 {
     internal interface ISagaProfileAnalyzerFactory
     {
-        ISagaProfileAnalyzer Create();
+        ISagaProfileAnalyzer Create(string profileName);
     }
 
     internal sealed class SagaProfileAnalyzerFactory : ISagaProfileAnalyzerFactory
@@ -14,9 +14,9 @@
             _factory = factory;
         }
 
-        public ISagaProfileAnalyzer Create()
+        public ISagaProfileAnalyzer Create(string profileName)
         {
-            return new SagaProfileAnalyzer(_factory);
+            return new SagaProfileAnalyzer(profileName, _factory);
         }
     }
 }

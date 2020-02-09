@@ -1,36 +1,26 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
-using TreeLine.Sagas.Validation.Rules.Analyzing;
+using TreeLine.Sagas.Validation.Analyzing;
 
 namespace TreeLine.Sagas.Validation.Rules
 {
     internal sealed class VersionsWithoutStepsRule : IValidationRule
     {
-        private readonly ISagaProfileAnalyzerFactory _analyzerFactory;
-        private readonly IEnumerable<ISagaProfile> _profiles;
         private readonly ILogger<VersionsWithoutStepsRule> _logger;
 
-        public VersionsWithoutStepsRule(
-            ISagaProfileAnalyzerFactory analyzerFactory,
-            IEnumerable<ISagaProfile> profiles,
-            ILogger<VersionsWithoutStepsRule> logger)
+        public VersionsWithoutStepsRule(ILogger<VersionsWithoutStepsRule> logger)
         {
-            _analyzerFactory = analyzerFactory;
-            _profiles = profiles;
             _logger = logger;
         }
 
-        public void Validate()
+        public void Validate(IEnumerable<ISagaProfileAnalyzer> analyzers)
         {
-            foreach (var profile in _profiles)
+            foreach (var analyzer in analyzers)
             {
-                var analyzer = _analyzerFactory.Create();
-                profile.Configure(analyzer);
-
                 if (analyzer.VersionAnalyzer.Any(anlyzr => anlyzr.StepCount.Equals(0)))
                 {
-                    _logger.LogWarning($"{profile.GetType().Name} has registered versions without configured steps.");
+                    _logger.LogWarning($"{analyzer.ProfileName} has registered versions without configured steps.");
                 }
             }
         }
