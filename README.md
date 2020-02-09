@@ -1,7 +1,7 @@
 | Project | Package | Status |
 | --- | --- | --- |
-| TreeLine.Sagas | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas/) | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=6&branchName=release%2F1.1) | 
-| TreeLine.Sagas.DependencyInjection | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas.DependencyInjection/) | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas_dependency%20injection?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=7&branchName=release%2F1.1) |
+| TreeLine.Sagas | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas/) | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=6&branchName=release%2F1.2) | 
+| TreeLine.Sagas.DependencyInjection | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas.DependencyInjection/) | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas_dependency%20injection?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=7&branchName=release%2F1.2) |
 
 # TreeLine.Sagas
 ## What is this package about?
@@ -64,9 +64,13 @@ var services = new ServiceCollection()
     .AddTransient<SagaProfileMock>()
     .AddTransient<SagaStepMock>();
 ```
-To register an own implementation of ISagaEventStore you should use the given overload to register the pakage.
+To register an own implementation of ISagaEventStore you should use the given overload to register the package.
 ```csharp
-IServiceCollection AddSagas<TEventStore>(this IServiceCollection services) where TEventStore : class, ISagaEventStore
+var services = new ServiceCollection()
+    .AddSagas(bldr => bldr.AddEventStore<SagaEventStoreMock>())
+    .AddLogging()
+    .AddTransient<SagaProfileMock>()
+    .AddTransient<SagaStepMock>();
 ```
 ### 4. Get a Saga
 Now the different sagas can be created and used via a factory.
