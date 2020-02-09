@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TreeLine.Sagas.Validation.Rules;
 
 namespace TreeLine.Sagas.Validation
 {
@@ -15,7 +16,7 @@ namespace TreeLine.Sagas.Validation
 
         public void Validate()
         {
-            var result = new List<Exception>();
+            var result = new List<ValidationException>();
             foreach (var rule in _rules)
             {
                 try
@@ -33,17 +34,14 @@ namespace TreeLine.Sagas.Validation
                 return;
             }
 
-            Exception exception;
             if (result.Count.Equals(1))
             {
-                exception = result.Single();
+                throw result.Single();
             }
             else
             {
-                exception = new AggregateException($"Validation failed for current saga configuration.", result);
+                throw new AggregateException($"Validation failed for current saga configuration.", result);
             }
-
-            throw exception;
         }
     }
 }

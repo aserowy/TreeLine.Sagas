@@ -1,4 +1,4 @@
-﻿namespace TreeLine.Sagas.Validation
+﻿namespace TreeLine.Sagas.Validation.Rules
 {
     internal interface IValidationRule
     {
