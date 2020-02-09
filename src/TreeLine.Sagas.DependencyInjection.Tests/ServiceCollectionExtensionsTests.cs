@@ -1,10 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using TreeLine.Sagas.Builder;
-using TreeLine.Sagas.Messaging;
+using TreeLine.Sagas.DependencyInjection.Tests.Mocks;
 using Xunit;
 
 namespace TreeLine.Sagas.DependencyInjection.Tests
@@ -19,7 +15,7 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
                 .AddSagas()
                 .AddLogging()
                 .AddTransient<SagaProfileMock>()
-                .AddTransient<SagaStepMock>();
+                .AddTransient<SagaStep01Mock>();
 
             // Act
             var saga = services
@@ -28,53 +24,11 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
                 .Create<SagaProfileMock>();
 
             var commands = await saga
-                .RunAsync(new SagaEvent())
+                .RunAsync(new SagaEvent01())
                 .ConfigureAwait(false);
 
             // Assert
             Assert.NotEmpty(commands);
-        }
-
-        private sealed class SagaProfileMock : ISagaProfile
-        {
-            public void Configure(ISagaProcessorBuilder processorBuilder)
-            {
-                processorBuilder
-                    .AddVersion("1.0.0")
-                    .AddStep<SagaEvent, SagaStepMock>();
-            }
-        }
-
-        private sealed class SagaStepMock : ISagaStep<SagaEvent>
-        {
-            public Task<IEnumerable<ISagaCommand>> RunAsync(SagaEvent sagaEvent)
-            {
-                return Task.FromResult(new[] { new SagaCommand() }.AsEnumerable<ISagaCommand>());
-            }
-        }
-
-        private sealed class SagaCommand : ISagaCommand
-        {
-            public SagaCommand()
-            {
-                ProcessId = Guid.NewGuid();
-                TransactionId = Guid.NewGuid();
-            }
-
-            public Guid ProcessId { get; set; }
-            public Guid TransactionId { get; set; }
-        }
-
-        private sealed class SagaEvent : ISagaEvent
-        {
-            public SagaEvent()
-            {
-                ProcessId = Guid.NewGuid();
-                TransactionId = Guid.NewGuid();
-            }
-
-            public Guid ProcessId { get; set; }
-            public Guid TransactionId { get; set; }
         }
     }
 }

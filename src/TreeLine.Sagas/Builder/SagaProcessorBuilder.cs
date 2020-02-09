@@ -15,15 +15,15 @@ namespace TreeLine.Sagas.Builder
     internal sealed class SagaProcessorBuilder : ISagaProcessorBuilder
     {
         private readonly ISagaVersionFactory _versionFactory;
-        private readonly ISagaServiceProvider _serviceProvider;
+        private readonly ISagaProcessor _processor;
         private readonly IList<SagaVersionBuilder> _versionBuilders;
 
         public SagaProcessorBuilder(
             ISagaVersionFactory versionFactory,
-            ISagaServiceProvider serviceProvider)
+            ISagaProcessor processor)
         {
             _versionFactory = versionFactory;
-            _serviceProvider = serviceProvider;
+            _processor = processor;
 
             _versionBuilders = new List<SagaVersionBuilder>();
         }
@@ -45,13 +45,12 @@ namespace TreeLine.Sagas.Builder
                 throw new InvalidOperationException("No version for processor configured.");
             }
 
-            var processor = _serviceProvider.ResolveProcessor();
             foreach (var versionBuilder in _versionBuilders)
             {
-                processor.AddSteps(versionBuilder.Version, versionBuilder.Steps);
+                _processor.AddSteps(versionBuilder.Version, versionBuilder.Steps);
             }
 
-            return processor;
+            return _processor;
         }
     }
 }

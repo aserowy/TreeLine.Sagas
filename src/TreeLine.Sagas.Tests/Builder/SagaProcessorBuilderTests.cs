@@ -13,13 +13,13 @@ namespace TreeLine.Sagas.Tests.Builder
     {
         private readonly MockRepository _mockRepository;
         private readonly Mock<ISagaVersionFactory> _mockSagaVersionFactory;
-        private readonly Mock<ISagaServiceProvider> _mockSagaServiceProvider;
+        private readonly Mock<ISagaProcessor> _mockSagaProcessor;
 
         public SagaProcessorBuilderTests()
         {
             _mockRepository = new MockRepository(MockBehavior.Strict);
             _mockSagaVersionFactory = _mockRepository.Create<ISagaVersionFactory>();
-            _mockSagaServiceProvider = _mockRepository.Create<ISagaServiceProvider>();
+            _mockSagaProcessor = _mockRepository.Create<ISagaProcessor>();
         }
 
         public void Dispose()
@@ -31,7 +31,7 @@ namespace TreeLine.Sagas.Tests.Builder
         {
             return new SagaProcessorBuilder(
                 _mockSagaVersionFactory.Object,
-                _mockSagaServiceProvider.Object);
+                _mockSagaProcessor.Object);
         }
 
         [Fact]
@@ -49,17 +49,13 @@ namespace TreeLine.Sagas.Tests.Builder
         {
             // Arrange
             var sagaProcessorBuilder = CreateSagaProcessorBuilder();
-            var mockProcessor = _mockRepository.Create<ISagaProcessor>();
 
             _mockSagaVersionFactory
                 .Setup(fctry => fctry.Create(It.IsAny<string>()))
                 .Returns(new SagaVersion("1.0.0"));
 
-            _mockSagaServiceProvider
-                .Setup(prvdr => prvdr.ResolveProcessor())
-                .Returns(mockProcessor.Object);
-
-            mockProcessor.Setup(prcsr => prcsr.AddSteps(It.IsAny<ISagaVersion>(), It.Is<IList<ISagaStepConfiguration>>(stps => stps.Count == 1)));
+            _mockSagaProcessor
+                .Setup(prcsr => prcsr.AddSteps(It.IsAny<ISagaVersion>(), It.Is<IList<ISagaStepConfiguration>>(stps => stps.Count == 1)));
 
             // Act
             sagaProcessorBuilder
@@ -80,13 +76,9 @@ namespace TreeLine.Sagas.Tests.Builder
                 .Setup(fctry => fctry.Create(It.IsAny<string>()))
                 .Returns(new SagaVersion("1.0.0"));
 
-            _mockSagaServiceProvider
-                .Setup(prvdr => prvdr.ResolveProcessor())
-                .Returns(mockProcessor.Object);
-
             var configurations = new List<ISagaStepConfiguration>();
 
-            mockProcessor
+            _mockSagaProcessor
                 .Setup(prcsr => prcsr.AddSteps(It.IsAny<ISagaVersion>(), It.Is<IList<ISagaStepConfiguration>>(stps => stps.Count == 2)))
                 .Callback<ISagaVersion, IList<ISagaStepConfiguration>>((_, cnfgrtns) => configurations.AddRange(cnfgrtns));
 
