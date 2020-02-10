@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TreeLine.Sagas.Building;
@@ -20,14 +19,14 @@ namespace TreeLine.Sagas.Processing
         private readonly ISagaVersionStepResolver _resolver;
         private readonly ISagaServiceProvider _provider;
         private readonly ISagaProcess _process;
-        private readonly ILogger<SagaProcessor> _logger;
+        private readonly ILoggerAdapter<SagaProcessor> _logger;
         private readonly IDictionary<ISagaVersion, IList<ISagaStepConfiguration>> _steps;
 
         public SagaProcessor(
             ISagaVersionStepResolver resolver,
             ISagaServiceProvider provider,
             ISagaProcess process,
-            ILogger<SagaProcessor> logger)
+            ILoggerAdapter<SagaProcessor> logger)
         {
             _resolver = resolver;
             _provider = provider;

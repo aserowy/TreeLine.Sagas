@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace TreeLine.Sagas.Tests.Processing
         private readonly Mock<ISagaVersionStepResolver> _mockSagaVersionStepResolver;
         private readonly Mock<ISagaServiceProvider> _mockSagaServiceProvider;
         private readonly Mock<ISagaProcess> _mockSagaProcess;
-        private readonly Mock<ILogger<SagaProcessor>> _mockLogger;
+        private readonly Mock<ILoggerAdapter<SagaProcessor>> _mockLogger;
 
         public SagaProcessorTests()
         {
@@ -29,7 +28,7 @@ namespace TreeLine.Sagas.Tests.Processing
             _mockSagaVersionStepResolver = _mockRepository.Create<ISagaVersionStepResolver>();
             _mockSagaServiceProvider = _mockRepository.Create<ISagaServiceProvider>();
             _mockSagaProcess = _mockRepository.Create<ISagaProcess>();
-            _mockLogger = _mockRepository.Create<ILogger<SagaProcessor>>();
+            _mockLogger = _mockRepository.Create<ILoggerAdapter<SagaProcessor>>();
         }
 
         public void Dispose()

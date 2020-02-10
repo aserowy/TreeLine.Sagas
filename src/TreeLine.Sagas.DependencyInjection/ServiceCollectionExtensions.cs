@@ -53,6 +53,8 @@ namespace TreeLine.Sagas.DependencyInjection
         {
             services.AddSingleton(services);
 
+            services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
+
             services.AddTransient<ISagaFactory, SagaFactory>();
 
             services.AddTransient(typeof(ISaga<>), typeof(Saga<>));
