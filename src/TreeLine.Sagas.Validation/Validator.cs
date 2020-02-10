@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TreeLine.Sagas.Validation.Analyzing;
@@ -15,13 +16,16 @@ namespace TreeLine.Sagas.Validation
     {
         private readonly ISagaProfileAnalyzerResolver _analyzerResolver;
         private readonly IEnumerable<IValidationRule> _rules;
+        private readonly ILogger<Validator> _logger;
 
         public Validator(
             ISagaProfileAnalyzerResolver analyzerResolver,
-            IEnumerable<IValidationRule> rules)
+            IEnumerable<IValidationRule> rules,
+            ILogger<Validator> logger)
         {
             _analyzerResolver = analyzerResolver;
             _rules = rules;
+            _logger = logger;
         }
 
         public void Validate()
@@ -33,7 +37,18 @@ namespace TreeLine.Sagas.Validation
             {
                 try
                 {
-                    rule.Validate(analyzer);
+                    var (warnings, exceptions) = rule.Validate(analyzer);
+                    result.AddRange(exceptions ?? Enumerable.Empty<ValidationException>());
+
+                    if (warnings is null)
+                    {
+                        continue;
+                    }
+
+                    foreach (var warning in warnings)
+                    {
+                        _logger.LogWarning(warning);
+                    }
                 }
                 catch (ValidationException e)
                 {

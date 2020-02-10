@@ -5,6 +5,6 @@ namespace TreeLine.Sagas.Validation.Rules
 {
     internal interface IValidationRule
     {
-        void Validate(IEnumerable<ISagaProfileAnalyzer> analyzers);
+        (IEnumerable<string>? Warnings, IEnumerable<ValidationException>? Exceptions) Validate(IEnumerable<ISagaProfileAnalyzer> analyzers);
     }
 }
