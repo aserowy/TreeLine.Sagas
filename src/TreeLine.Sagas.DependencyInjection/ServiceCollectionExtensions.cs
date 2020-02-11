@@ -5,6 +5,9 @@ using TreeLine.Sagas.Building;
 using TreeLine.Sagas.EventStore;
 using TreeLine.Sagas.Processing;
 using TreeLine.Sagas.Processing.Business;
+using TreeLine.Sagas.Validation;
+using TreeLine.Sagas.Validation.Analyzing;
+using TreeLine.Sagas.Validation.Rules;
 using TreeLine.Sagas.Versioning;
 
 namespace TreeLine.Sagas.DependencyInjection
@@ -14,7 +17,8 @@ namespace TreeLine.Sagas.DependencyInjection
         public static IServiceCollection AddSagas(this IServiceCollection services)
         {
             services
-                .Configure()
+                .ConfigureSagas()
+                .ConfigureValidation()
                 .AddEventStoreIfNotExists();
 
             return services;
@@ -30,11 +34,9 @@ namespace TreeLine.Sagas.DependencyInjection
             var configuration = new Configuration();
             configure.Invoke(configuration);
 
-            configuration.Configure(services);
-
-            services
-                .Configure()
-                .AddEventStoreIfNotExists();
+            configuration
+                .Configure(services)
+                .AddSagas();
 
             return services;
         }
@@ -43,13 +45,14 @@ namespace TreeLine.Sagas.DependencyInjection
         public static IServiceCollection AddSagas<TEventStore>(this IServiceCollection services) where TEventStore : class, ISagaEventStore
         {
             services
-                .Configure()
+                .ConfigureSagas()
+                .ConfigureValidation()
                 .AddTransient<ISagaEventStore, TEventStore>();
 
             return services;
         }
 
-        internal static IServiceCollection Configure(this IServiceCollection services)
+        internal static IServiceCollection ConfigureSagas(this IServiceCollection services)
         {
             services.AddSingleton(services);
 
@@ -71,6 +74,24 @@ namespace TreeLine.Sagas.DependencyInjection
             services.AddTransient<ISagaVersionResolver, SagaVersionResolver>();
 
             services.AddTransient<ISagaProcess, SagaProcess>();
+
+            return services;
+        }
+
+        internal static IServiceCollection ConfigureValidation(this IServiceCollection services)
+        {
+            services.AddTransient<IValidator, Validator>();
+
+            services.AddTransient<ISagaProfileAnalyzer, SagaProfileAnalyzer>();
+            services.AddTransient<ISagaProfileAnalyzerFactory, SagaProfileAnalyzerFactory>();
+            services.AddTransient<ISagaProfileAnalyzerResolver, SagaProfileAnalyzerResolver>();
+            services.AddTransient<ISagaProfileVersionAnalyzer, SagaProfileVersionAnalyzer>();
+            services.AddTransient<ISagaProfileVersionAnalyzerFactory, SagaProfileVersionAnalyzerFactory>();
+
+            services.AddTransient<IValidationRule, MultipleVersionsWithEqualIdentifierRule>();
+            services.AddTransient<IValidationRule, MultipleVersionsWithoutEventStoreRule>();
+            services.AddTransient<IValidationRule, NoSagasRegisteredRule>();
+            services.AddTransient<IValidationRule, VersionsWithoutStepsRule>();
 
             return services;
         }

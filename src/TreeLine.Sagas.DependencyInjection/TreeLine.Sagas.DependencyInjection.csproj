@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TreeLine.Sagas.Validation\TreeLine.Sagas.Validation.csproj" />
     <ProjectReference Include="..\TreeLine.Sagas\TreeLine.Sagas.csproj" />
   </ItemGroup>
 
