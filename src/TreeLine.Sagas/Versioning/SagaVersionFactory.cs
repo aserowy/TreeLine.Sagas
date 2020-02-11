@@ -7,6 +7,9 @@
 
     internal sealed class SagaVersionFactory : ISagaVersionFactory
     {
-        public ISagaVersion Create(string version) => new SagaVersion(version);
+        public ISagaVersion Create(string version)
+        {
+            return new SagaVersion(version);
+        }
     }
 }
