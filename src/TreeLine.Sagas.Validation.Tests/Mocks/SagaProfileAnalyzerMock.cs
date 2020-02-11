@@ -4,7 +4,7 @@ using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Processing;
 using TreeLine.Sagas.Validation.Analyzing;
 
-namespace TreeLine.Sagas.Validation.Tests.Mock
+namespace TreeLine.Sagas.Validation.Tests.Mocks
 {
     internal sealed class SagaProfileAnalyzerMock : ISagaProfileAnalyzer
     {

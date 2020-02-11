@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TreeLine.Sagas.Validation.Analyzing;
 using TreeLine.Sagas.Validation.Rules;
-using TreeLine.Sagas.Validation.Tests.Mock;
+using TreeLine.Sagas.Validation.Tests.Mocks;
 using Xunit;
 
 namespace TreeLine.Sagas.Validation.Tests
@@ -32,6 +32,32 @@ namespace TreeLine.Sagas.Validation.Tests
                 _mockSagaProfileAnalyzerResolver.Object,
                 _mockEnumerable.Object,
                 _mockLogger.Object);
+        }
+
+        private IEnumerable<Mock<IValidationRule>> GetRuleMocks(int count, IEnumerable<ISagaProfileAnalyzer>? analyzers = null)
+        {
+            var result = new List<Mock<IValidationRule>>();
+            for (int i = 0; i < count; i++)
+            {
+                var mock = _mockRepository.Create<IValidationRule>();
+
+                if (analyzers is null)
+                {
+                    mock
+                        .Setup(mck => mck.Validate(It.IsAny<IEnumerable<ISagaProfileAnalyzer>>()))
+                        .Returns((null, null));
+                }
+                else
+                {
+                    mock
+                        .Setup(mck => mck.Validate(analyzers))
+                        .Returns((null, null));
+                }
+
+                result.Add(mock);
+            }
+
+            return result;
         }
 
         [Fact]
@@ -221,32 +247,6 @@ namespace TreeLine.Sagas.Validation.Tests
 
             // Assert
             _mockRepository.VerifyAll();
-        }
-
-        private IEnumerable<Mock<IValidationRule>> GetRuleMocks(int count, IEnumerable<ISagaProfileAnalyzer>? analyzers = null)
-        {
-            var result = new List<Mock<IValidationRule>>();
-            for (int i = 0; i < count; i++)
-            {
-                var mock = _mockRepository.Create<IValidationRule>();
-
-                if (analyzers is null)
-                {
-                    mock
-                        .Setup(mck => mck.Validate(It.IsAny<IEnumerable<ISagaProfileAnalyzer>>()))
-                        .Returns((null, null));
-                }
-                else
-                {
-                    mock
-                        .Setup(mck => mck.Validate(analyzers))
-                        .Returns((null, null));
-                }
-
-                result.Add(mock);
-            }
-
-            return result;
         }
     }
 }

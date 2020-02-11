@@ -13,9 +13,9 @@ namespace TreeLine.Sagas.Validation.Tests.Mocks
         }
     }
 
-    internal sealed class SagaStep02Mock : ISagaStep<SagaEvent01>
+    internal sealed class SagaStep02Mock : ISagaStep<SagaEvent02>
     {
-        public Task<IEnumerable<ISagaCommand>> RunAsync(SagaEvent01 sagaEvent)
+        public Task<IEnumerable<ISagaCommand>> RunAsync(SagaEvent02 sagaEvent)
         {
             return Task.FromResult(new[] { new SagaCommand() }.AsEnumerable<ISagaCommand>());
         }

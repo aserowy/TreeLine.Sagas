@@ -3,7 +3,7 @@ using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Validation.Analyzing;
 
-namespace TreeLine.Sagas.Validation.Tests.Mock
+namespace TreeLine.Sagas.Validation.Tests.Mocks
 {
     internal sealed class SagaProfileVersionAnalyzerMock : ISagaProfileVersionAnalyzer
     {

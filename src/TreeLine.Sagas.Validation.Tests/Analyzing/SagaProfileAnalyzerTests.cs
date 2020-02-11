@@ -1,7 +1,7 @@
 using Moq;
 using System;
 using TreeLine.Sagas.Validation.Analyzing;
-using TreeLine.Sagas.Validation.Tests.Mock;
+using TreeLine.Sagas.Validation.Tests.Mocks;
 using Xunit;
 
 namespace TreeLine.Sagas.Validation.Tests.Analyzing
