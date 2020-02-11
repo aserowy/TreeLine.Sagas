@@ -15,7 +15,7 @@ namespace TreeLine.Sagas.Validation.Tests.Mock
         public int StepCount { get; set; }
         public string Version { get; }
 
-        public ISagaVersionBuilder AddStep<TEvent, TSagaStep>(Predicate<TEvent> customValidation = null)
+        public ISagaVersionBuilder AddStep<TEvent, TSagaStep>(Predicate<TEvent>? customValidation = null)
             where TEvent : ISagaEvent
             where TSagaStep : ISagaStep<TEvent>
         {
