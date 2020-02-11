@@ -6,11 +6,11 @@ using Xunit;
 
 namespace TreeLine.Sagas.Validation.Tests.Rules
 {
-    public class MultipleVersionsWithEqualIdentifierRuleTests
+    public class NoSagasRegisteredRuleTests
     {
-        private MultipleVersionsWithEqualIdentifierRule CreateMultipleVersionsWithEqualIdentifierRule()
+        private NoSagasRegisteredRule CreateNoSagasRegisteredRule()
         {
-            return new MultipleVersionsWithEqualIdentifierRule();
+            return new NoSagasRegisteredRule();
         }
 
         private class AnalyzerMockTestDataCollection : AnalyzerMockTestDataCollectionBase
@@ -19,10 +19,10 @@ namespace TreeLine.Sagas.Validation.Tests.Rules
             {
                 return type switch
                 {
-                    AnalyzerMockTestDataType.NoSagasRegistered => new object[] { 0, 0 },
+                    AnalyzerMockTestDataType.NoSagasRegistered => new object[] { 1, 0 },
                     AnalyzerMockTestDataType.ValidAnalyzers => new object[] { 0, 0 },
                     AnalyzerMockTestDataType.EqualAnalyzerIdentifier => new object[] { 0, 0 },
-                    AnalyzerMockTestDataType.EqualVersionIdentifier => new object[] { 0, 2 },
+                    AnalyzerMockTestDataType.EqualVersionIdentifier => new object[] { 0, 0 },
                     AnalyzerMockTestDataType.VersionWithoutSteps => new object[] { 0, 0 },
                     _ => null
                 };
@@ -34,10 +34,10 @@ namespace TreeLine.Sagas.Validation.Tests.Rules
         internal void Validate(IList<ISagaProfileAnalyzer> analyzers, int countWarnings, int countExceptions)
         {
             // Arrange
-            var multipleVersionsWithEqualIdentifierRule = CreateMultipleVersionsWithEqualIdentifierRule();
+            var noSagasRegisteredRule = CreateNoSagasRegisteredRule();
 
             // Act
-            var (warnings, exceptions) = multipleVersionsWithEqualIdentifierRule.Validate(analyzers);
+            var (warnings, exceptions) = noSagasRegisteredRule.Validate(analyzers);
 
             // Assert
             Assert.Equal(countWarnings, warnings?.Count() ?? 0);

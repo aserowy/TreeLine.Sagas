@@ -6,3 +6,4 @@
 [assembly: InternalsVisibleTo("TreeLine.Sagas.DependencyInjection")]
 [assembly: InternalsVisibleTo("TreeLine.Sagas.Tests")]
 [assembly: InternalsVisibleTo("TreeLine.Sagas.Validation")]
+[assembly: InternalsVisibleTo("TreeLine.Sagas.Validation.Tests")]

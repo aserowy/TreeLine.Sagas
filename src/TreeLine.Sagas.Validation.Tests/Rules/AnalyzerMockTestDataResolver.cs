@@ -14,6 +14,7 @@ namespace TreeLine.Sagas.Validation.Tests.Rules
                 {AnalyzerMockTestDataType.ValidAnalyzers,  GetValidAnalyzers()},
                 {AnalyzerMockTestDataType.EqualAnalyzerIdentifier,  GetEqualAnalyzerIdentifier()},
                 {AnalyzerMockTestDataType.EqualVersionIdentifier,  GetEqualVersionIdentifier()},
+                {AnalyzerMockTestDataType.VersionWithoutSteps,  GetVersionWithoutSteps()}
             };
         }
         private static IList<ISagaProfileAnalyzer> GetNoSagasRegistered()
@@ -116,6 +117,33 @@ namespace TreeLine.Sagas.Validation.Tests.Rules
 
             analyzer02
                 .AddVersion("1.1.0")
+                .AddStep<SagaEvent01, SagaStep01Mock>()
+                .AddStep<SagaEvent02, SagaStep02Mock>();
+
+
+            return result;
+        }
+
+        private static IList<ISagaProfileAnalyzer> GetVersionWithoutSteps()
+        {
+            var result = new List<ISagaProfileAnalyzer>();
+
+            var analyzer01 = new SagaProfileAnalyzerMock("1");
+            result.Add(analyzer01);
+
+            analyzer01.AddVersion("1.1.0");
+            analyzer01.AddVersion("1.2.0");
+
+            var analyzer02 = new SagaProfileAnalyzerMock("2");
+            result.Add(analyzer02);
+
+            analyzer02
+                .AddVersion("1.1.0")
+                .AddStep<SagaEvent01, SagaStep01Mock>()
+                .AddStep<SagaEvent02, SagaStep02Mock>();
+
+            analyzer02
+                .AddVersion("1.2.0")
                 .AddStep<SagaEvent01, SagaStep01Mock>()
                 .AddStep<SagaEvent02, SagaStep02Mock>();
 

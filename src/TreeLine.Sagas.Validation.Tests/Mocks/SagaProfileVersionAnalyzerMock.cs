@@ -19,6 +19,8 @@ namespace TreeLine.Sagas.Validation.Tests.Mocks
             where TEvent : ISagaEvent
             where TSagaStep : ISagaStep<TEvent>
         {
+            StepCount++;
+
             return this;
         }
     }
