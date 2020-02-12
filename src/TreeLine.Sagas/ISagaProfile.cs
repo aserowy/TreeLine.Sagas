@@ -1,4 +1,4 @@
-﻿using TreeLine.Sagas.Builder;
+﻿using TreeLine.Sagas.Building;
 
 namespace TreeLine.Sagas
 {
