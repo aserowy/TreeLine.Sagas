@@ -9,8 +9,6 @@ In distributed systems, such as microservices, business processes pose multiple 
 One of these approaches is the design pattern Saga-Orchestration.
 
 ## How to use it?
-Three configuration steps are necessary to use the package.
-
 ### 1. Build steps of your Saga
 The first step is to develop the individual steps to define a business process. Since sagas consist of individual messages that in turn trigger parts of the business process, a step consists of a trigger (message type) and the corresponding logic.
 ```csharp
@@ -72,7 +70,16 @@ var services = new ServiceCollection()
     .AddTransient<SagaProfileMock>()
     .AddTransient<SagaStepMock>();
 ```
-### 4. Get a Saga
+### 4. Validate Sagas
+By validating your sagas you can ensure that most failures of your configurations are checked. If you have for example at least one saga profile with two identical version identifier the programm will throw an exception at start. To validate your profiles you should use the extension on IServiceProvider on startup.
+```csharp
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app
+        .ApplicationServices
+        .ValidateSagas();
+```
+### 5. Get a Saga
 Now the different sagas can be created and used via a factory.
 ```csharp
 var saga = services
