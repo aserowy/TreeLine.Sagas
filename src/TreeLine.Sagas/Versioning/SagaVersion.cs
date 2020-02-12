@@ -47,8 +47,14 @@ namespace TreeLine.Sagas.Versioning
             return Version.Equals(converted.Version);
         }
 
-        public override int GetHashCode() => Version.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Version.GetHashCode();
+        }
 
-        public override string ToString() => Version.ToString();
+        public override string ToString()
+        {
+            return Version.ToString();
+        }
     }
 }

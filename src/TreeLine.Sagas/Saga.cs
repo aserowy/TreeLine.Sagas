@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TreeLine.Sagas.Builder;
+using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Messaging;
-using TreeLine.Sagas.Processor;
+using TreeLine.Sagas.Processing;
 
 namespace TreeLine.Sagas
 {
