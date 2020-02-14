@@ -1,7 +1,8 @@
 | Project | Package | Status |
 | --- | --- | --- |
-| TreeLine.Sagas | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas/) | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=6&branchName=release%2F1.2) | 
-| TreeLine.Sagas.DependencyInjection | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas.DependencyInjection/) | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas_dependency%20injection?branchName=release%2F1.1)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=7&branchName=release%2F1.2) |
+| TreeLine.Sagas | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas/) | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas?branchName=release%2F1.2)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=6&branchName=release%2F1.2) | 
+| TreeLine.Sagas.DependencyInjection | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas.DependencyInjection/) | [![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release%20-%20sagas_dependency%20injection?branchName=release%2F1.2)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=7&branchName=release%2F1.2) |
+| TreeLine.Sagas.Validation | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas.Validation/) | | 
 
 # TreeLine.Sagas
 ## What is this package about?
@@ -71,7 +72,7 @@ var services = new ServiceCollection()
     .AddTransient<SagaStepMock>();
 ```
 ### 4. Validate Sagas
-By validating your sagas you can ensure that most failures of your configurations are checked. If you have for example at least one saga profile with two identical version identifier the programm will throw an exception at start. To validate your profiles you should use the extension on IServiceProvider on startup.
+By validating your sagas you can ensure that most failures of your profiles are checked. If you have for example at least one saga profile with two identical version identifier the programm will throw an exception at start. To validate your profiles you should use the extension on IServiceProvider on startup.
 ```csharp
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
