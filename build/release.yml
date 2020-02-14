@@ -11,7 +11,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   majorMinorVersion: '$(Build.SourceBranchName)'
-  patchVersion: $[counter(variables['majorMinorVersion'], 0)]
+  patchVersion: $[counter(variables['majorMinorVersion'], 20)]
 
 steps:
 - template: templates/template-steps-build-test.yml
