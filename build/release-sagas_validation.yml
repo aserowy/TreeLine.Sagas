@@ -23,5 +23,5 @@ steps:
     buildConfiguration: '$(buildConfiguration)'
 - template: templates/template-steps-pack-push.yml
   parameters:
-    packageName: 'TreeLine.Sagas'
+    packageName: 'TreeLine.Sagas.Validation'
     nugetKey: $(nugetKey)
