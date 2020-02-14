@@ -1,0 +1,31 @@
+name: $(Build.SourceBranchName).$(patchVersion)
+
+trigger:
+  branches:
+    include:
+    - release/*
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  majorMinorVersion: '$(Build.SourceBranchName)'
+  patchVersion: $[counter(variables['majorMinorVersion'], 0)]
+
+steps:
+- template: templates/template-steps-build-test.yml
+  parameters:
+    buildConfiguration: '$(buildConfiguration)'
+- template: templates/template-steps-pack-push.yml
+  parameters:
+    packageName: 'TreeLine.Sagas'
+    nugetKey: $(nugetKey)
+- template: templates/template-steps-pack-push.yml
+  parameters:
+    packageName: 'TreeLine.Sagas.DependencyInjection'
+    nugetKey: $(nugetKey)
+- template: templates/template-steps-pack-push.yml
+  parameters:
+    packageName: 'TreeLine.Sagas.Validation'
+    nugetKey: $(nugetKey)
