@@ -1,7 +1,7 @@
-
+[![Build Status](https://serowy.visualstudio.com/TreeLine.Sagas/_apis/build/status/release?branchName=release%2F1.2)](https://serowy.visualstudio.com/TreeLine.Sagas/_build/latest?definitionId=9&branchName=release%2F1.2)
 
 | Project | Package |
-| --- | --- | --- |
+| --- | --- |
 | TreeLine.Sagas | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas/) | 
 | TreeLine.Sagas.DependencyInjection | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas.DependencyInjection/) | 
 | TreeLine.Sagas.Validation | [NuGet](https://www.nuget.org/packages/TreeLine.Sagas.Validation/) | 
