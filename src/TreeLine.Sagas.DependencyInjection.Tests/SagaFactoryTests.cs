@@ -15,7 +15,7 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
                 .AddTransient<SagaProfileMock>()
                 .AddTransient<SagaStep01Mock>();
 
-            return new SagaFactory(services);
+            return new SagaFactory(services.BuildServiceProvider());
         }
 
         [Fact]

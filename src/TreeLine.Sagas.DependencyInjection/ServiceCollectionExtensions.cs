@@ -54,8 +54,6 @@ namespace TreeLine.Sagas.DependencyInjection
 
         internal static IServiceCollection ConfigureSagas(this IServiceCollection services)
         {
-            services.AddSingleton(services);
-
             services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 
             services.AddTransient<ISagaFactory, SagaFactory>();
