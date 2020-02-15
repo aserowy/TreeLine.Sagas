@@ -1,21 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace TreeLine.Sagas.DependencyInjection
 {
     internal sealed class SagaFactory : ISagaFactory
     {
-        private readonly IServiceCollection _services;
+        private readonly IServiceProvider _provider;
 
-        public SagaFactory(IServiceCollection services)
+        public SagaFactory(IServiceProvider provider)
         {
-            _services = services;
+            _provider = provider;
         }
 
         public ISaga<TProfile> Create<TProfile>() where TProfile : ISagaProfile
         {
-            return _services
-                .BuildServiceProvider()
-                .GetRequiredService<ISaga<TProfile>>();
+            return _provider.GetRequiredService<ISaga<TProfile>>();
         }
     }
 }
