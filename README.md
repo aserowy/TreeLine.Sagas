@@ -11,6 +11,18 @@
 In distributed systems, such as microservices, business processes pose multiple challenges. There are different ways of solving these challenges, for example, to counter rollback scenarios or changes in business processes.
 One of these approaches is the design pattern Saga-Orchestration.
 
+## Before we start
+This whole package revolves around ISagaEvent and ISagaCommand. Events are triggers for certain steps in your saga. So a concrete step of your business logic is called. Commands on the other hand will leave your saga to trigger operations on e.g. another service. This service will communicate the results with an event. To reference a saga or a specific transaction of a saga, both interfaces implement two simple properties.
+```csharp
+public interface ISagaEvent
+{
+    Guid ProcessId { get; }
+    Guid TransactionId { get; }
+}
+```
+Both Ids deal with different scopes. The ProcessId is used to reference an entire saga run. Therefore, events and commands should reuse this Id to allow references to the complete business process of a saga.
+The TransactionId handles a smaller scope. It allows references from one command to n events. Each command must have a unique TransactionId and each event created by that command should reuse that Id.
+
 ## How to use it?
 ### 1. Build steps of your Saga
 The first step is to develop the individual steps to define a business process. Since sagas consist of individual messages that in turn trigger parts of the business process, a step consists of a trigger (message type) and the corresponding logic.
