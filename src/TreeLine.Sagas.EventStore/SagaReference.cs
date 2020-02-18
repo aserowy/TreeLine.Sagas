@@ -14,7 +14,7 @@ namespace TreeLine.Sagas.EventStore
         object? Message { get; }
     }
 
-    internal sealed class SagaReference : ISagaReference
+    public sealed class SagaReference : ISagaReference
     {
         public SagaReference(ISagaVersion sagaVersion, int stepIndex, SagaMessageType messageType, Guid referenceId, Guid transactionId, object? message = null)
         {

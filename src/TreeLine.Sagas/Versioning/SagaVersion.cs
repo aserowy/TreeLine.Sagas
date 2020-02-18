@@ -1,21 +1,15 @@
-﻿using Version = SemVer.Version;
+﻿using System;
+using Version = SemVer.Version;
 
 namespace TreeLine.Sagas.Versioning
 {
-    public interface ISagaVersion : System.IComparable<ISagaVersion>
-    {
-        int Major { get; }
-        int Minor { get; }
-        int Patch { get; }
-    }
-
     internal sealed class SagaVersion : ISagaVersion
     {
         public SagaVersion(string version)
         {
             if (version is null)
             {
-                throw new System.ArgumentNullException(nameof(version));
+                throw new ArgumentNullException(nameof(version));
             }
 
             Version = new Version(version);
