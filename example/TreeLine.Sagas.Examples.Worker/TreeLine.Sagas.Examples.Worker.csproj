@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>dotnet-TreeLine.Sagas.Examples.Worker-5294244A-B0DB-4F96-8226-3FFFA390A4D8</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.1" />
+    <PackageReference Include="TreeLine.Sagas.DependencyInjection" Version="1.2.25" />
+  </ItemGroup>
+</Project>
