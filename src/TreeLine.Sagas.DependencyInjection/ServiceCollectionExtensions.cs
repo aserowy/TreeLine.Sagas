@@ -62,7 +62,6 @@ namespace TreeLine.Sagas.DependencyInjection
 
             services.AddTransient<ISagaServiceProvider, SagaServiceProvider>();
             services.AddTransient<ISagaProcessorBuilder, SagaProcessorBuilder>();
-            services.AddTransient<ISagaVersionBuilder, SagaVersionBuilder>();
 
             services.AddTransient<ISagaVersionFactory, SagaVersionFactory>();
 
