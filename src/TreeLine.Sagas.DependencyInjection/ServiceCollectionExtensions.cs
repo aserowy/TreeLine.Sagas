@@ -79,7 +79,6 @@ namespace TreeLine.Sagas.DependencyInjection
         {
             services.AddTransient<IValidator, Validator>();
 
-            services.AddTransient<ISagaProfileAnalyzer, SagaProfileAnalyzer>();
             services.AddTransient<ISagaProfileAnalyzerFactory, SagaProfileAnalyzerFactory>();
             services.AddTransient<ISagaProfileAnalyzerResolver, SagaProfileAnalyzerResolver>();
             services.AddTransient<ISagaProfileVersionAnalyzer, SagaProfileVersionAnalyzer>();
