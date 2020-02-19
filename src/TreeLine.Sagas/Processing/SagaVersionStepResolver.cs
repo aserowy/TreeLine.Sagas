@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TreeLine.Sagas.Building;
 using TreeLine.Sagas.EventStore;
@@ -36,15 +35,10 @@ namespace TreeLine.Sagas.Processing
                 .GetReferencesAsync(sagaEvent.ProcessId)
                 .ConfigureAwait(false);
 
-            var resolverFunc = _getVersionFunc(_sagaVersionResolver, references).Compose(_getStepFunc(_sagaStepResolver, sagaEvent, references));
+            var steps = _sagaVersionResolver.Create()(references, versions);
+            var configuration = _sagaStepResolver.Create()(sagaEvent, references, steps);
 
-            return resolverFunc(versions);
+            return configuration;
         }
-
-        private static readonly Func<ISagaVersionResolver, IList<ISagaReference>?, Func<IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>>> _getVersionFunc =
-            (sagaVersionResolver, references) => (versions) => sagaVersionResolver.Create()(references, versions);
-
-        private static readonly Func<ISagaStepResolver, ISagaEvent, IList<ISagaReference>?, Func<IList<ISagaStepConfiguration>, ISagaStepConfiguration>> _getStepFunc =
-            (sagaStepResolver, sagaEvent, references) => (steps) => sagaStepResolver.Create()(sagaEvent, references, steps);
     }
 }
