@@ -2,9 +2,9 @@
 using System;
 using System.Linq;
 using TreeLine.Sagas.Building;
-using TreeLine.Sagas.EventStore;
 using TreeLine.Sagas.Processing;
 using TreeLine.Sagas.Processing.Business;
+using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Validation;
 using TreeLine.Sagas.Validation.Analyzing;
 using TreeLine.Sagas.Validation.Rules;
@@ -19,7 +19,7 @@ namespace TreeLine.Sagas.DependencyInjection
             services
                 .ConfigureSagas()
                 .ConfigureValidation()
-                .AddEventStoreIfNotExists();
+                .AddReferenceStoreIfNotExists();
 
             return services;
         }
@@ -37,17 +37,6 @@ namespace TreeLine.Sagas.DependencyInjection
             configuration
                 .Configure(services)
                 .AddSagas();
-
-            return services;
-        }
-
-        [Obsolete("Use AddSagas(this IServiceCollection services, Action<IConfiguration> configure) to configure IEventStore instead.")]
-        public static IServiceCollection AddSagas<TEventStore>(this IServiceCollection services) where TEventStore : class, ISagaEventStore
-        {
-            services
-                .ConfigureSagas()
-                .ConfigureValidation()
-                .AddTransient<ISagaEventStore, TEventStore>();
 
             return services;
         }
@@ -84,18 +73,18 @@ namespace TreeLine.Sagas.DependencyInjection
             services.AddTransient<ISagaProfileVersionAnalyzerFactory, SagaProfileVersionAnalyzerFactory>();
 
             services.AddTransient<IValidationRule, MultipleVersionsWithEqualIdentifierRule>();
-            services.AddTransient<IValidationRule, MultipleVersionsWithoutEventStoreRule>();
+            services.AddTransient<IValidationRule, MultipleVersionsWithoutReferenceStoreRule>();
             services.AddTransient<IValidationRule, NoSagasRegisteredRule>();
             services.AddTransient<IValidationRule, VersionsWithoutStepsRule>();
 
             return services;
         }
 
-        internal static IServiceCollection AddEventStoreIfNotExists(this IServiceCollection services)
+        internal static IServiceCollection AddReferenceStoreIfNotExists(this IServiceCollection services)
         {
-            if (!services.Any(x => x.ServiceType == typeof(ISagaEventStore)))
+            if (!services.Any(x => x.ServiceType == typeof(IReferenceStore)))
             {
-                services.AddTransient<ISagaEventStore, NullSagaEventStore>();
+                services.AddTransient<IReferenceStore, EmptyReferenceStore>();
             }
 
             return services;

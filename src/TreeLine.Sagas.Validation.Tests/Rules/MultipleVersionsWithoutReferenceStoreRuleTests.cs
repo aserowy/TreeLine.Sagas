@@ -1,16 +1,16 @@
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
-using TreeLine.Sagas.EventStore;
+using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Validation.Analyzing;
 using TreeLine.Sagas.Validation.Rules;
 using Xunit;
 
 namespace TreeLine.Sagas.Validation.Tests.Rules
 {
-    public class MultipleVersionsWithoutEventStoreRuleTests
+    public class MultipleVersionsWithoutReferenceStoreRuleTests
     {
-        private class NullSagaEventStoreAnalyzerMockTestDataCollection : AnalyzerMockTestDataCollectionBase
+        private class NullSagaReferenceStoreAnalyzerMockTestDataCollection : AnalyzerMockTestDataCollectionBase
         {
             internal override object[]? GetReturnValuesByDataType(AnalyzerMockTestDataType type)
             {
@@ -27,21 +27,21 @@ namespace TreeLine.Sagas.Validation.Tests.Rules
         }
 
         [Theory]
-        [ClassData(typeof(NullSagaEventStoreAnalyzerMockTestDataCollection))]
-        internal void Validate_NullSagaEventStore(IList<ISagaProfileAnalyzer> analyzers, int countWarnings, int countExceptions)
+        [ClassData(typeof(NullSagaReferenceStoreAnalyzerMockTestDataCollection))]
+        internal void Validate_NullSagaReferenceStore(IList<ISagaProfileAnalyzer> analyzers, int countWarnings, int countExceptions)
         {
             // Arrange
-            var multipleVersionsWithoutEventStoreRule = new MultipleVersionsWithoutEventStoreRule(new NullSagaEventStore());
+            var multipleVersionsWithoutReferenceStoreRule = new MultipleVersionsWithoutReferenceStoreRule(new EmptyReferenceStore());
 
             // Act
-            var (warnings, exceptions) = multipleVersionsWithoutEventStoreRule.Validate(analyzers);
+            var (warnings, exceptions) = multipleVersionsWithoutReferenceStoreRule.Validate(analyzers);
 
             // Assert
             Assert.Equal(countWarnings, warnings?.Count() ?? 0);
             Assert.Equal(countExceptions, exceptions?.Count() ?? 0);
         }
 
-        private class SagaEventStoreMockAnalyzerMockTestDataCollection : AnalyzerMockTestDataCollectionBase
+        private class SagaReferenceStoreMockAnalyzerMockTestDataCollection : AnalyzerMockTestDataCollectionBase
         {
             internal override object[]? GetReturnValuesByDataType(AnalyzerMockTestDataType type)
             {
@@ -58,14 +58,14 @@ namespace TreeLine.Sagas.Validation.Tests.Rules
         }
 
         [Theory]
-        [ClassData(typeof(SagaEventStoreMockAnalyzerMockTestDataCollection))]
-        internal void Validate_SagaEventStoreMock(IList<ISagaProfileAnalyzer> analyzers, int countWarnings, int countExceptions)
+        [ClassData(typeof(SagaReferenceStoreMockAnalyzerMockTestDataCollection))]
+        internal void Validate_SagaReferenceStoreMock(IList<ISagaProfileAnalyzer> analyzers, int countWarnings, int countExceptions)
         {
             // Arrange
-            var multipleVersionsWithoutEventStoreRule = new MultipleVersionsWithoutEventStoreRule(new Mock<ISagaEventStore>().Object);
+            var multipleVersionsWithoutReferenceStoreRule = new MultipleVersionsWithoutReferenceStoreRule(new Mock<IReferenceStore>().Object);
 
             // Act
-            var (warnings, exceptions) = multipleVersionsWithoutEventStoreRule.Validate(analyzers);
+            var (warnings, exceptions) = multipleVersionsWithoutReferenceStoreRule.Validate(analyzers);
 
             // Assert
             Assert.Equal(countWarnings, warnings?.Count() ?? 0);

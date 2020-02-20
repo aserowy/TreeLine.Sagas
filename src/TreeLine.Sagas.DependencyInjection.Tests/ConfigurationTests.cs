@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using TreeLine.Sagas.DependencyInjection.Tests.Mocks;
-using TreeLine.Sagas.EventStore;
+using TreeLine.Sagas.ReferenceStore;
 using Xunit;
 
 namespace TreeLine.Sagas.DependencyInjection.Tests
@@ -52,8 +52,8 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
             var services = new ServiceCollection();
 
             // Act
-            configuration.Add(services => services.AddTransient<ISagaEventStore, SagaEventStoreMock>());
-            configuration.Add(services => services.AddTransient<ISagaEventStore, SagaEventStoreMock>());
+            configuration.Add(services => services.AddTransient<IReferenceStore, SagaReferenceStoreMock>());
+            configuration.Add(services => services.AddTransient<IReferenceStore, SagaReferenceStoreMock>());
             configuration.Configure(services);
 
             // Assert

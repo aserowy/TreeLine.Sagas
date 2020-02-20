@@ -2,7 +2,7 @@
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Versioning;
 
-namespace TreeLine.Sagas.EventStore
+namespace TreeLine.Sagas.ReferenceStore
 {
     public interface ISagaReference
     {
@@ -11,19 +11,17 @@ namespace TreeLine.Sagas.EventStore
         SagaMessageType MessageType { get; }
         Guid ReferenceId { get; }
         Guid TransactionId { get; }
-        object? Message { get; }
     }
 
     public sealed class SagaReference : ISagaReference
     {
-        public SagaReference(ISagaVersion sagaVersion, int stepIndex, SagaMessageType messageType, Guid referenceId, Guid transactionId, object? message = null)
+        public SagaReference(ISagaVersion sagaVersion, int stepIndex, SagaMessageType messageType, Guid referenceId, Guid transactionId)
         {
             Version = sagaVersion;
             StepIndex = stepIndex;
             MessageType = messageType;
             ReferenceId = referenceId;
             TransactionId = transactionId;
-            Message = message;
         }
 
         public ISagaVersion Version { get; }
@@ -31,6 +29,5 @@ namespace TreeLine.Sagas.EventStore
         public SagaMessageType MessageType { get; }
         public Guid ReferenceId { get; }
         public Guid TransactionId { get; }
-        public object? Message { get; }
     }
 }

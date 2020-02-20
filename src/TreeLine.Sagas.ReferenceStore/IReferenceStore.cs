@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace TreeLine.Sagas.EventStore
+namespace TreeLine.Sagas.ReferenceStore
 {
-    public interface ISagaEventStore
+    public interface IReferenceStore
     {
         Task AddReferences(params ISagaReference[] eventReference);
         Task<IList<ISagaReference>?> GetReferencesAsync(Guid referenceId);

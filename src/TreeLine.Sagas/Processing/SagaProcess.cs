@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using TreeLine.Sagas.Building;
-using TreeLine.Sagas.EventStore;
 using TreeLine.Sagas.Messaging;
+using TreeLine.Sagas.ReferenceStore;
 
 namespace TreeLine.Sagas.Processing
 {
@@ -14,16 +14,16 @@ namespace TreeLine.Sagas.Processing
 
     internal sealed class SagaProcess : ISagaProcess
     {
-        private readonly ISagaEventStore _store;
+        private readonly IReferenceStore _store;
 
-        public SagaProcess(ISagaEventStore store)
+        public SagaProcess(IReferenceStore store)
         {
             _store = store;
         }
 
         public async Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent, ISagaStepAdapter step)
         {
-            var eventReference = new SagaReference(step.Version, step.Index, SagaMessageType.Event, sagaEvent.ProcessId, sagaEvent.TransactionId, sagaEvent);
+            var eventReference = new SagaReference(step.Version, step.Index, SagaMessageType.Event, sagaEvent.ProcessId, sagaEvent.TransactionId);
 
             await _store
                 .AddReferences(eventReference)
@@ -39,7 +39,7 @@ namespace TreeLine.Sagas.Processing
             }
 
             var commandReferences = commands
-                .Select(cmnd => new SagaReference(step.Version, step.Index, SagaMessageType.Command, cmnd.ProcessId, cmnd.TransactionId, cmnd))
+                .Select(cmnd => new SagaReference(step.Version, step.Index, SagaMessageType.Command, cmnd.ProcessId, cmnd.TransactionId))
                 .ToArray();
 
             await _store

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TreeLine.Sagas.Building;
-using TreeLine.Sagas.EventStore;
+using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Messaging;
 
 namespace TreeLine.Sagas.Processing.Business

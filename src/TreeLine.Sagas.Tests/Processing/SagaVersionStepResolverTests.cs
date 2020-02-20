@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TreeLine.Sagas.Building;
-using TreeLine.Sagas.EventStore;
+using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Processing;
 using TreeLine.Sagas.Processing.Business;
 using TreeLine.Sagas.Tests.Mocks;
@@ -35,13 +35,13 @@ namespace TreeLine.Sagas.Tests.Processing
         private SagaVersionStepResolver CreateSagaVersionStepResolver()
         {
             return new SagaVersionStepResolver(
-                new NullSagaEventStore(),
+                new EmptyReferenceStore(),
                 _mockSagaVersionResolver.Object,
                 _mockSagaStepResolver.Object);
         }
 
         [Fact]
-        public async Task ResolveAsync_EventStoreReturnsNull_FunctionsAreCalled()
+        public async Task ResolveAsync_ReferenceStoreReturnsNull_FunctionsAreCalled()
         {
             // Arrange
             var sagaVersionStepResolver = CreateSagaVersionStepResolver();

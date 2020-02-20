@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Validation",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Validation.Tests", "TreeLine.Sagas.Validation.Tests\TreeLine.Sagas.Validation.Tests.csproj", "{AC333BCE-03B8-4623-AE46-03F4D72919FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Sagas.EventStore", "TreeLine.Sagas.EventStore\TreeLine.Sagas.EventStore.csproj", "{624C53B2-4320-477D-8BFE-598BEAAF5E62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Sagas.ReferenceStore", "TreeLine.Sagas.ReferenceStore\TreeLine.Sagas.ReferenceStore.csproj", "{624C53B2-4320-477D-8BFE-598BEAAF5E62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Sagas.Abstractions", "TreeLine.Sagas.Abstractions\TreeLine.Sagas.Abstractions.csproj", "{0F6121FE-CEC8-40A7-A89D-0A8A90DD9EFD}"
 EndProject

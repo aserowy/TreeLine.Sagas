@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace TreeLine.Sagas.EventStore
+namespace TreeLine.Sagas.ReferenceStore
 {
-    public sealed class NullSagaEventStore : ISagaEventStore
+    public sealed class EmptyReferenceStore : IReferenceStore
     {
         public Task AddReferences(params ISagaReference[] eventReference)
         {

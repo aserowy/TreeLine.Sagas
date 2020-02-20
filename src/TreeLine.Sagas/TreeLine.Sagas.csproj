@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TreeLine.Sagas.EventStore\TreeLine.Sagas.EventStore.csproj" />
+    <ProjectReference Include="..\TreeLine.Sagas.ReferenceStore\TreeLine.Sagas.ReferenceStore.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TreeLine.Sagas.EventStore;
+using TreeLine.Sagas.ReferenceStore;
 
 namespace TreeLine.Sagas.DependencyInjection
 {
     public static class ConfigurationExtensions
     {
-        public static IConfiguration AddEventStore<TEventStore>(this IConfiguration configuration) where TEventStore : class, ISagaEventStore
+        public static IConfiguration AddReferenceStore<TReferenceStore>(this IConfiguration configuration) where TReferenceStore : class, IReferenceStore
         {
             if (configuration is Configuration casted)
             {
-                casted.Add(services => services.AddTransient<ISagaEventStore, TEventStore>());
+                casted.Add(services => services.AddTransient<IReferenceStore, TReferenceStore>());
             }
 
             return configuration;

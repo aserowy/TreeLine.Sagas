@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
-using TreeLine.Sagas.EventStore;
+using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Validation.Analyzing;
 
 namespace TreeLine.Sagas.Validation.Rules
 {
-    internal sealed class MultipleVersionsWithoutEventStoreRule : IValidationRule
+    internal sealed class MultipleVersionsWithoutReferenceStoreRule : IValidationRule
     {
-        private readonly ISagaEventStore _store;
+        private readonly IReferenceStore _store;
 
-        public MultipleVersionsWithoutEventStoreRule(ISagaEventStore store)
+        public MultipleVersionsWithoutReferenceStoreRule(IReferenceStore store)
         {
             _store = store;
         }
 
         public (IEnumerable<string>? Warnings, IEnumerable<ValidationException>? Exceptions) Validate(IEnumerable<ISagaProfileAnalyzer> analyzers)
         {
-            if (!(_store is NullSagaEventStore))
+            if (!(_store is EmptyReferenceStore))
             {
                 return (null, null);
             }

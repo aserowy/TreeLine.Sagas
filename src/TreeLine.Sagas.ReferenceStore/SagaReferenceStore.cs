@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using TreeLine.Sagas.EventStore.Accessing;
+using TreeLine.Sagas.ReferenceStore.Accessing;
 
-namespace TreeLine.Sagas.EventStore
+namespace TreeLine.Sagas.ReferenceStore
 {
     // TODO retries in seconds and time to live configurable with builder 
-    internal sealed class SagaEventStore : ISagaEventStore
+    internal sealed class SagaReferenceStore : IReferenceStore
     {
-        private static readonly IList<int> _retriesInSeconds = new List<int> { 1, 1, 2, 5, 8, 13 };
+        private static readonly IList<int> _retriesInSeconds = new List<int> { 1, 1, 2, 3, 5, 8, 13 };
 
-        private readonly IEventStoreRepository _repository;
+        private readonly IReferenceRepository _repository;
 
-        public SagaEventStore(IEventStoreRepository repository)
+        public SagaReferenceStore(IReferenceRepository repository)
         {
             _repository = repository;
         }
@@ -31,11 +31,9 @@ namespace TreeLine.Sagas.EventStore
             return result.ToList();
         }
 
-        [SuppressMessage(
-            "Design",
-            "CA1031:Do not catch general exception types",
-            Justification = "Depending on the concrete implementation of IEventStoreRepository, Retry produces unknown Exceptions.")]
-        private async Task<T> Retry<T>(IList<int> retriesInSeconds, Func<Task<T>> doFunc)
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types",
+            Justification = "Depending on the concrete implementation of IReferenceRepository, Retry produces unknown Exceptions.")]
+        private static async Task<T> Retry<T>(IList<int> retriesInSeconds, Func<Task<T>> doFunc)
         {
             var exceptions = new List<Exception>();
             foreach (var span in retriesInSeconds)

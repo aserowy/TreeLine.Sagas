@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TreeLine.Sagas.EventStore;
+using TreeLine.Sagas.ReferenceStore;
 
 namespace TreeLine.Sagas.DependencyInjection.Tests.Mocks
 {
-    internal sealed class SagaEventStoreMock : ISagaEventStore
+    internal sealed class SagaReferenceStoreMock : IReferenceStore
     {
         public Task AddReferences(params ISagaReference[] eventReference)
         {
