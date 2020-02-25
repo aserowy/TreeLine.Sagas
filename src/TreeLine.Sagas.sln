@@ -20,9 +20,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Validation",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Validation.Tests", "TreeLine.Sagas.Validation.Tests\TreeLine.Sagas.Validation.Tests.csproj", "{AC333BCE-03B8-4623-AE46-03F4D72919FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Sagas.ReferenceStore", "TreeLine.Sagas.ReferenceStore\TreeLine.Sagas.ReferenceStore.csproj", "{624C53B2-4320-477D-8BFE-598BEAAF5E62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.ReferenceStore", "TreeLine.Sagas.ReferenceStore\TreeLine.Sagas.ReferenceStore.csproj", "{624C53B2-4320-477D-8BFE-598BEAAF5E62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Sagas.Abstractions", "TreeLine.Sagas.Abstractions\TreeLine.Sagas.Abstractions.csproj", "{0F6121FE-CEC8-40A7-A89D-0A8A90DD9EFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Abstractions", "TreeLine.Sagas.Abstractions\TreeLine.Sagas.Abstractions.csproj", "{0F6121FE-CEC8-40A7-A89D-0A8A90DD9EFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Messaging", "TreeLine.Messaging\TreeLine.Messaging.csproj", "{2CF24C48-52B6-4E17-9B48-DF3C862FBB84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Messaging.Tests", "TreeLine.Messaging.Tests\TreeLine.Messaging.Tests.csproj", "{14BE5ED0-E19F-4347-9C07-B40B56CF347E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +66,14 @@ Global
 		{0F6121FE-CEC8-40A7-A89D-0A8A90DD9EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F6121FE-CEC8-40A7-A89D-0A8A90DD9EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F6121FE-CEC8-40A7-A89D-0A8A90DD9EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CF24C48-52B6-4E17-9B48-DF3C862FBB84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF24C48-52B6-4E17-9B48-DF3C862FBB84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF24C48-52B6-4E17-9B48-DF3C862FBB84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF24C48-52B6-4E17-9B48-DF3C862FBB84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14BE5ED0-E19F-4347-9C07-B40B56CF347E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14BE5ED0-E19F-4347-9C07-B40B56CF347E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14BE5ED0-E19F-4347-9C07-B40B56CF347E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14BE5ED0-E19F-4347-9C07-B40B56CF347E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
