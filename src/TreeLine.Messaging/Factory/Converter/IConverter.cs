@@ -1,4 +1,4 @@
-﻿namespace TreeLine.Messaging.Factory
+﻿namespace TreeLine.Messaging.Factory.Converter
 {
     internal interface IConverter<in TIn, out TOut>
     {

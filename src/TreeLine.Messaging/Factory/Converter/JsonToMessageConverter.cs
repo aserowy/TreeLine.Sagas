@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using TreeLine.Messaging.Mapper;
 
-namespace TreeLine.Messaging.Factory
+namespace TreeLine.Messaging.Factory.Converter
 {
     internal class JsonToMessageConverter : IConverter<string, IMessage>
     {

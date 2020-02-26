@@ -1,4 +1,6 @@
-﻿namespace TreeLine.Messaging.Factory
+﻿using TreeLine.Messaging.Factory.Converter;
+
+namespace TreeLine.Messaging.Factory
 {
     public interface IMessageFactory
     {

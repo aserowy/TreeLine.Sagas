@@ -2,7 +2,7 @@
 using System;
 using TreeLine.Messaging.Mapper;
 
-namespace TreeLine.Messaging.Factory
+namespace TreeLine.Messaging.Factory.Converter
 {
     internal class DynamicToMessageConverter : IConverter<DynamicWrapper, IMessage>
     {
