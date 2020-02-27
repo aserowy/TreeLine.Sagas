@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using TreeLine.Messaging.Mapper;
 
-namespace TreeLine.Messaging.Factory.Converter
+namespace TreeLine.Messaging.Factory.Converting
 {
     internal class DynamicToMessageConverter : IConverter<DynamicWrapper, IMessage>
     {

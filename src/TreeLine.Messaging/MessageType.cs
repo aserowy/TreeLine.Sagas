@@ -4,7 +4,7 @@ namespace TreeLine.Messaging
 {
     internal class MessageType : MessageTypeBase
     {
-        public MessageType() : base("", "", typeof(Type))
+        public MessageType() : base("_", "_", typeof(Type))
         {
         }
     }

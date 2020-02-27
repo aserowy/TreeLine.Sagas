@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json.Linq;
 using System;
-using TreeLine.Messaging.Mapper;
 
-namespace TreeLine.Messaging.Factory.Converter
+namespace TreeLine.Messaging.Factory.Converting
 {
     internal class JsonToMessageConverter : IConverter<string, IMessage>
     {
@@ -11,10 +10,10 @@ namespace TreeLine.Messaging.Factory.Converter
         private readonly IMapper _mapper;
         private readonly IConverter<string, JObject> _stringToJObjectConverter;
 
-        public JsonToMessageConverter(IConverter<string, JObject> stringToJObjectConverter,
+        public JsonToMessageConverter(
+            IConverter<string, JObject> stringToJObjectConverter,
             IMessageTypeToClassResolver classResolver,
-            IMapper mapper
-        )
+            IMapper mapper)
         {
             _stringToJObjectConverter = stringToJObjectConverter;
             _classResolver = classResolver;

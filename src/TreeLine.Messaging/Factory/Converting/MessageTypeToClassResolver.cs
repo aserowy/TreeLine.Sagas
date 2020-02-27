@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace TreeLine.Messaging.Mapper
+namespace TreeLine.Messaging.Factory.Converting
 {
     internal interface IMessageTypeToClassResolver
     {
@@ -11,16 +10,17 @@ namespace TreeLine.Messaging.Mapper
 
     internal class MessageTypeToClassResolver : IMessageTypeToClassResolver
     {
-        private readonly IEnumerable<IMessageType> _messageTypes;
+        private readonly IMessageTypeResolver _resolver;
 
-        public MessageTypeToClassResolver(IEnumerable<IMessageType> messageTypes)
+        public MessageTypeToClassResolver(IMessageTypeResolver resolver)
         {
-            _messageTypes = messageTypes;
+            _resolver = resolver;
         }
 
         public Type Get(string type, string version)
         {
-            return _messageTypes
+            return _resolver
+                .Get()
                 .Single(msgtyp => msgtyp.Type == type && msgtyp.Version == version)
                 .TargetType;
         }

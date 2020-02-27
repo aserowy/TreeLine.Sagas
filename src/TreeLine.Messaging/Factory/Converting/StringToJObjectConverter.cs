@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 
-namespace TreeLine.Messaging.Factory.Converter
+namespace TreeLine.Messaging.Factory.Converting
 {
     internal class StringToJObjectConverter : IConverter<string, JObject>
     {

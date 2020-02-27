@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json.Linq;
 
-namespace TreeLine.Messaging.Factory.Mappings
+namespace TreeLine.Messaging.Mapping.Profiles
 {
     internal class JsonToMessageBaseProfile : Profile
     {

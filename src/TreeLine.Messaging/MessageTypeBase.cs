@@ -7,6 +7,21 @@ namespace TreeLine.Messaging
     {
         protected MessageTypeBase(string type, string version, Type targetType)
         {
+            if (string.IsNullOrWhiteSpace(type))
+            {
+                throw new ArgumentException("Should not be null or empty.", nameof(type));
+            }
+
+            if (string.IsNullOrWhiteSpace(version))
+            {
+                throw new ArgumentException("Should not be null or empty.", nameof(version));
+            }
+
+            if (targetType is null)
+            {
+                throw new ArgumentNullException(nameof(targetType));
+            }
+
             Type = type;
             Version = version;
             TargetType = targetType;
@@ -35,7 +50,7 @@ namespace TreeLine.Messaging
         public override int GetHashCode()
         {
             return Type.GetHashCode(StringComparison.InvariantCultureIgnoreCase) ^ 17
-                * Version.GetHashCode(StringComparison.InvariantCultureIgnoreCase);
+                 * Version.GetHashCode(StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

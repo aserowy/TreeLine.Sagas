@@ -1,4 +1,4 @@
-﻿using TreeLine.Messaging.Factory.Converter;
+﻿using TreeLine.Messaging.Factory.Converting;
 
 namespace TreeLine.Messaging.Factory
 {
