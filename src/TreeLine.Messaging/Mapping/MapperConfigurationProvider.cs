@@ -10,6 +10,7 @@ namespace TreeLine.Messaging.Mapping
 
     internal sealed class MapperConfigurationProvider : IMapperConfigurationProvider
     {
+        private readonly object _lock = new object();
         private readonly IMessageTypeResolver _resolver;
 
         private IConfigurationProvider? _mapperConfiguration;
@@ -21,14 +22,25 @@ namespace TreeLine.Messaging.Mapping
 
         public IConfigurationProvider Get()
         {
-            return _mapperConfiguration ?? (_mapperConfiguration = GenerateConfiguration());
+            if (_mapperConfiguration is null)
+            {
+                lock (_lock)
+                {
+                    if (_mapperConfiguration is null)
+                    {
+                        _mapperConfiguration = GenerateConfiguration();
+                    }
+                }
+            }
+
+            return _mapperConfiguration;
         }
 
         private IConfigurationProvider GenerateConfiguration()
         {
             return new MapperConfiguration(cnfgrtn =>
             {
-                // TODO: Resolve profiles dynamically if the list should be extended
+                // If the list must be extended, resolve profiles dynamically instead
                 cnfgrtn.AddProfile<JsonToMessageBaseProfile>();
                 cnfgrtn.AddProfile<JsonToMessageTypeProfile>();
 

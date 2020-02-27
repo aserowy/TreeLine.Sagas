@@ -1,19 +1,19 @@
-﻿using AutoMapper;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
+using TreeLine.Messaging.Mapping;
 
 namespace TreeLine.Messaging.Factory.Converting
 {
     internal class JsonToMessageConverter : IConverter<string, IMessage>
     {
         private readonly IMessageTypeToClassResolver _classResolver;
-        private readonly IMapper _mapper;
+        private readonly IMapperAdapter _mapper;
         private readonly IConverter<string, JObject> _stringToJObjectConverter;
 
         public JsonToMessageConverter(
             IConverter<string, JObject> stringToJObjectConverter,
             IMessageTypeToClassResolver classResolver,
-            IMapper mapper)
+            IMapperAdapter mapper)
         {
             _stringToJObjectConverter = stringToJObjectConverter;
             _classResolver = classResolver;
@@ -48,7 +48,7 @@ namespace TreeLine.Messaging.Factory.Converting
             return resolvedType;
         }
 
-        private IMessageType GetMessageType(JObject jObject)
+        private static IMessageType GetMessageType(JObject jObject)
         {
             if (!jObject.TryGetValue(nameof(IMessage.Type), out var typeJToken))
             {
