@@ -1,4 +1,4 @@
-﻿namespace TreeLine.Messaging.Factory.Converting
+﻿namespace TreeLine.Messaging.Converting
 {
     public class DynamicWrapper
     {

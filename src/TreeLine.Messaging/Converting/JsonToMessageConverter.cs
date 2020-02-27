@@ -2,7 +2,7 @@
 using System;
 using TreeLine.Messaging.Mapping;
 
-namespace TreeLine.Messaging.Factory.Converting
+namespace TreeLine.Messaging.Converting
 {
     internal class JsonToMessageConverter : IConverter<string, IMessage>
     {

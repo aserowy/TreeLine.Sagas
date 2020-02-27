@@ -1,12 +1,12 @@
-﻿using TreeLine.Messaging.Factory.Converting;
+﻿using TreeLine.Messaging.Converting;
 
-namespace TreeLine.Messaging.Factory
+namespace TreeLine.Messaging
 {
     public interface IMessageFactory
     {
         IMessage Create(string json);
 
-        IMessage Create(dynamic obj);
+        IMessage Create(dynamic content);
     }
 
     internal class MessageFactory : IMessageFactory
@@ -27,9 +27,9 @@ namespace TreeLine.Messaging.Factory
             return _jsonToMessageConverter.Convert(json);
         }
 
-        public IMessage Create(dynamic obj)
+        public IMessage Create(dynamic content)
         {
-            return _dynamicToMessageConverter.Convert(new DynamicWrapper(obj));
+            return _dynamicToMessageConverter.Convert(new DynamicWrapper(content));
         }
     }
 }

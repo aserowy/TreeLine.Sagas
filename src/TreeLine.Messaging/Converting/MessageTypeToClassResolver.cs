@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace TreeLine.Messaging.Factory.Converting
+namespace TreeLine.Messaging.Converting
 {
     internal interface IMessageTypeToClassResolver
     {
