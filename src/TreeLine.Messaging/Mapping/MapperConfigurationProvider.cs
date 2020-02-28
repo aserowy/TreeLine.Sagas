@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
 using TreeLine.Messaging.Mapping.Profiles;
 
 namespace TreeLine.Messaging.Mapping
@@ -44,10 +46,13 @@ namespace TreeLine.Messaging.Mapping
                 cnfgrtn.AddProfile<JsonToMessageBaseProfile>();
                 cnfgrtn.AddProfile<JsonToMessageTypeProfile>();
 
+                var customTypes = new List<Type>();
                 foreach (var type in _resolver.Get())
                 {
-                    cnfgrtn.AddMessageTypeMappings(type);
+                    customTypes.AddRange(cnfgrtn.AddJObjectMapping(type));
                 }
+
+                cnfgrtn.AddJTokenMapping(customTypes);
             });
         }
     }

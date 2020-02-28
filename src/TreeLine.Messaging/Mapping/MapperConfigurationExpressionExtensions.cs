@@ -1,47 +1,50 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TreeLine.Messaging.Mapping
 {
     internal static class MapperConfigurationExpressionExtensions
     {
-        public static void AddMessageTypeMappings(this IMapperConfigurationExpression expression, IMessageType type)
+        public static IEnumerable<Type> AddJObjectMapping(this IMapperConfigurationExpression expression, IMessageType type)
         {
             var map = expression
                 .CreateMap(typeof(JObject), type.TargetType)
                 .IncludeBase(typeof(JObject), typeof(MessageBase));
 
-            var settableProperties = type
-                .TargetType
-                .GetProperties()
-                .Where(prprty => prprty.CanWrite);
-
-            //var customClassTypes = new List<Type>();
-            foreach (var propertyInfo in settableProperties)
+            var customClassTypes = new List<Type>();
+            foreach (var member in type.TargetType.GetPublicMember())
             {
-                RegisterForMember(ref map, propertyInfo.Name);
-
-                //if (!propertyInfo.PropertyType.Namespace.StartsWith("System", StringComparison.OrdinalIgnoreCase))
-                //{
-                //    customClassTypes.Add(propertyInfo.PropertyType);
-                //}
+                map.RegisterJObjectMember(member.Name);
+                customClassTypes.AddTypeIfCustom(member.Type);
             }
 
-            var settableFields = type
-                .TargetType
-                .GetFields();
-
-            foreach (var fieldInfo in settableFields)
-            {
-                RegisterForMember(ref map, fieldInfo.Name);
-            }
-
-            // TODO: Create map froms for properties
-            // TODO: Create maps for complex types nested in target type
+            return customClassTypes;
         }
 
-        private static void RegisterForMember(ref IMappingExpression map, string memberName)
+        public static void AddJTokenMapping(this IMapperConfigurationExpression expression, IEnumerable<Type> types)
+        {
+            var originTypes = types.ToList();
+
+            var customTypes = new List<Type>(originTypes);
+            foreach (var type in originTypes)
+            {
+                customTypes.AddTypeIfCustom(type.ResolveCustomTypes());
+            }
+
+            foreach (var type in customTypes.Distinct())
+            {
+                var map = expression.CreateMap(typeof(JToken), type);
+                foreach (var member in type.GetPublicMember())
+                {
+                    map.RegisterJTokenMember(member.Name);
+                }
+            }
+        }
+
+        private static void RegisterJObjectMember(this IMappingExpression map, string memberName)
         {
             map.ForMember(memberName, cnfgrtn => cnfgrtn.MapFrom((src, _) =>
             {
@@ -52,6 +55,90 @@ namespace TreeLine.Messaging.Mapping
 
                 return jObject[memberName] ?? JToken.Parse("{}");
             }));
+        }
+
+        private static void RegisterJTokenMember(this IMappingExpression map, string memberName)
+        {
+            map.ForMember(memberName, cnfgrtn => cnfgrtn.MapFrom((src, _) =>
+            {
+                if (!(src is JToken jToken))
+                {
+                    throw new AutoMapperMappingException($"{nameof(src)} is not of type {nameof(JToken)}.");
+                }
+
+                return jToken[memberName] ?? JToken.Parse("{}");
+            }));
+        }
+
+        private static IEnumerable<Type> ResolveCustomTypes(this Type type, IList<Type>? customTypes = null)
+        {
+            if (customTypes is null)
+            {
+                customTypes = new List<Type>();
+            }
+            else
+            {
+                if (customTypes.Contains(type))
+                {
+                    return customTypes;
+                }
+            }
+
+            foreach (var member in type.GetPublicMember())
+            {
+                var isCustom = customTypes.AddTypeIfCustom(member.Type);
+                if (isCustom)
+                {
+                    member.Type.ResolveCustomTypes(customTypes);
+                }
+            }
+
+            return customTypes;
+        }
+
+        private static IEnumerable<(string Name, Type Type)> GetPublicMember(this Type type)
+        {
+            var settableProperties = type
+                .GetProperties()
+                .Where(prprty => prprty.CanWrite);
+
+            var result = new List<(string Name, Type Type)>();
+            foreach (var propertyInfo in settableProperties)
+            {
+                result.Add((propertyInfo.Name, propertyInfo.PropertyType));
+            }
+
+            var settableFields = type.GetFields();
+            foreach (var fieldInfo in settableFields)
+            {
+                result.Add((fieldInfo.Name, fieldInfo.FieldType));
+            }
+
+            return result;
+        }
+
+        private static void AddTypeIfCustom(this IList<Type> customClassTypes, IEnumerable<Type> types)
+        {
+            foreach (var type in types)
+            {
+                if (customClassTypes.Contains(type))
+                {
+                    continue;
+                }
+
+                customClassTypes.AddTypeIfCustom(type);
+            }
+        }
+
+        private static bool AddTypeIfCustom(this IList<Type> customClassTypes, Type type)
+        {
+            var result = type.IsCustom();
+            if (result)
+            {
+                customClassTypes.Add(type);
+            }
+
+            return result;
         }
     }
 }
