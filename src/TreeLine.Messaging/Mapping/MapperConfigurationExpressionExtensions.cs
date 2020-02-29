@@ -17,7 +17,7 @@ namespace TreeLine.Messaging.Mapping
             var customClassTypes = new List<Type>();
             foreach (var member in type.TargetType.GetPublicMember())
             {
-                map.RegisterJObjectMember(member.Name);
+                map.RegisterJObjectMember(member.Name, member.Type);
                 customClassTypes.AddTypeIfCustom(member.Type);
             }
 
@@ -39,12 +39,12 @@ namespace TreeLine.Messaging.Mapping
                 var map = expression.CreateMap(typeof(JToken), type);
                 foreach (var member in type.GetPublicMember())
                 {
-                    map.RegisterJTokenMember(member.Name);
+                    map.RegisterJTokenMember(member.Name, member.Type);
                 }
             }
         }
 
-        private static void RegisterJObjectMember(this IMappingExpression map, string memberName)
+        private static void RegisterJObjectMember(this IMappingExpression map, string memberName, Type memberType)
         {
             map.ForMember(memberName, cnfgrtn => cnfgrtn.MapFrom((src, _) =>
             {
@@ -53,11 +53,11 @@ namespace TreeLine.Messaging.Mapping
                     throw new AutoMapperMappingException($"{nameof(src)} is not of type {nameof(JObject)}.");
                 }
 
-                return jObject[memberName] ?? JToken.Parse("{}");
+                return jObject[memberName]?.ToObject(memberType) ?? JToken.Parse("{}");
             }));
         }
 
-        private static void RegisterJTokenMember(this IMappingExpression map, string memberName)
+        private static void RegisterJTokenMember(this IMappingExpression map, string memberName, Type memberType)
         {
             map.ForMember(memberName, cnfgrtn => cnfgrtn.MapFrom((src, _) =>
             {
@@ -66,7 +66,7 @@ namespace TreeLine.Messaging.Mapping
                     throw new AutoMapperMappingException($"{nameof(src)} is not of type {nameof(JToken)}.");
                 }
 
-                return jToken[memberName] ?? JToken.Parse("{}");
+                return jToken[memberName]?.ToObject(memberType) ?? JToken.Parse("{}");
             }));
         }
 
