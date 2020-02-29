@@ -10,14 +10,11 @@ namespace TreeLine.Messaging.Mapping
 
     internal sealed class MapperAdapter : IMapperAdapter
     {
-        private readonly IMapperConfigurationProvider _configurationProvider;
         private readonly IMapper _mapper;
 
         public MapperAdapter(IMapperConfigurationProvider configurationProvider)
         {
-            _configurationProvider = configurationProvider;
-
-            _mapper = new Mapper(_configurationProvider.Get());
+            _mapper = new Mapper(configurationProvider.Get());
         }
 
         public object Map(object source, Type sourceType, Type destinationType)

@@ -1,4 +1,5 @@
-﻿using TreeLine.Messaging.Converting;
+﻿using System;
+using TreeLine.Messaging.Converting;
 
 namespace TreeLine.Messaging
 {
@@ -24,11 +25,21 @@ namespace TreeLine.Messaging
 
         public IMessage Create(string json)
         {
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                throw new ArgumentNullException(nameof(json));
+            }
+
             return _jsonToMessageConverter.Convert(json);
         }
 
         public IMessage Create(dynamic content)
         {
+            if (content is null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
             return _dynamicToMessageConverter.Convert(new DynamicWrapper(content));
         }
     }
