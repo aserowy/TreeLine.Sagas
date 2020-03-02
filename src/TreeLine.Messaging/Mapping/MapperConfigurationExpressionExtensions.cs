@@ -98,9 +98,8 @@ namespace TreeLine.Messaging.Mapping
 
         private static IEnumerable<(string Name, Type Type)> GetPublicMember(this Type type)
         {
-            var settableProperties = type
-                .GetProperties()
-                .Where(prprty => prprty.CanWrite);
+            var properties = type.GetProperties();
+            var settableProperties = properties.Where(prprty => prprty.CanWrite);
 
             var result = new List<(string Name, Type Type)>();
             foreach (var propertyInfo in settableProperties)

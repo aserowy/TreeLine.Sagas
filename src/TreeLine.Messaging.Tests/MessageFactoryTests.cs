@@ -52,7 +52,7 @@ namespace TreeLine.Messaging.Tests
             var factory = CreateFactory();
             dynamic content = new object();
 
-            var resultMock = new MessageMock();
+            var resultMock = new Message01Mock();
 
             _mockConverterDynamicWrapperMessage
                 .Setup(cnvrtr => cnvrtr.Convert(It.IsAny<DynamicWrapper>()))
@@ -106,7 +106,7 @@ namespace TreeLine.Messaging.Tests
             var factory = CreateFactory();
             var json = "{ }";
 
-            var resultMock = new MessageMock();
+            var resultMock = new Message01Mock();
 
             _mockConverterStringMessage
                 .Setup(cnvrtr => cnvrtr.Convert(It.Is<string>(strng => strng.Equals(json, StringComparison.InvariantCulture))))

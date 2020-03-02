@@ -19,7 +19,7 @@ namespace TreeLine.Messaging.Tests
             var result = messageTypeResolver.Get();
 
             // Assert
-            Assert.Single(result);
+            Assert.Equal(2, result.Count);
         }
 
         [Fact]
