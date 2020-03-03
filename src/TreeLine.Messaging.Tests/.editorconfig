@@ -1,6 +1,13 @@
 ﻿[*.cs]
 
-# CA1707: Bezeichner dürfen keine Unterstriche enthalten
+# CA1063: Implement IDisposable correctly
+dotnet_diagnostic.CA1063.severity = none
+
+# CA1707: Identifiers should not contain underscores
 dotnet_diagnostic.CA1707.severity = none
 
+# CA1812: Avoid uninstantiated internal classes
 dotnet_diagnostic.CA1812.severity = none
+
+# CA1816: Call GC.SuppressFinalize correctly
+dotnet_diagnostic.CA1816.severity = none
