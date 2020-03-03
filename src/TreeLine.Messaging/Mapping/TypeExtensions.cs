@@ -6,7 +6,13 @@ namespace TreeLine.Messaging.Mapping
     {
         public static bool IsCustom(this Type type)
         {
-            return !type.Namespace.StartsWith("System", StringComparison.OrdinalIgnoreCase);
+            var result = !type.Namespace.StartsWith("System.", StringComparison.OrdinalIgnoreCase);
+            if (result)
+            {
+                result = !type.Namespace.Equals("System", StringComparison.OrdinalIgnoreCase);
+            }
+
+            return result;
         }
     }
 }
