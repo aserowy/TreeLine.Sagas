@@ -9,7 +9,8 @@ namespace TreeLine.Messaging.Mapping.Profiles
         {
             CreateMap<JObject, MessageTypeBase>()
                 .ForMember(t => t.Type, exp => exp.MapFrom(s => s[nameof(MessageTypeBase.Type)]))
-                .ForMember(t => t.Version, exp => exp.MapFrom(s => s[nameof(MessageTypeBase.Version)]));
+                .ForMember(t => t.Version, exp => exp.MapFrom(s => s[nameof(MessageTypeBase.Version)]))
+                .ForMember(t => t.TargetType, exp => exp.MapFrom(s => s[nameof(MessageTypeBase.TargetType)]));
         }
     }
 }

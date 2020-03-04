@@ -31,6 +31,7 @@ namespace TreeLine.Messaging.Mapping
                     if (_mapperConfiguration is null)
                     {
                         _mapperConfiguration = GenerateConfiguration();
+                        _mapperConfiguration.AssertConfigurationIsValid();
                     }
                 }
             }

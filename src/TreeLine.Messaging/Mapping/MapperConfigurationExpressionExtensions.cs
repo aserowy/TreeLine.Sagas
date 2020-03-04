@@ -26,7 +26,9 @@ namespace TreeLine.Messaging.Mapping
 
         public static void AddJTokenMapping(this IMapperConfigurationExpression expression, IEnumerable<Type> types)
         {
-            var originTypes = types.ToList();
+            var originTypes = types
+                .Where(typ => typ.IsCustom())
+                .ToList();
 
             var customTypes = new List<Type>(originTypes);
             foreach (var type in originTypes)
