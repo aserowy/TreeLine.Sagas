@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace TreeLine.Messaging.Converting
 {
@@ -14,11 +15,6 @@ namespace TreeLine.Messaging.Converting
 
         public IMessage Convert(DynamicWrapper wrapper)
         {
-            if (wrapper is null || wrapper.Data is null)
-            {
-                throw new ArgumentNullException(nameof(wrapper));
-            }
-
             var type = GetTypeByMessageType(wrapper);
 
             var settings = new JsonSerializerSettings { DateParseHandling = DateParseHandling.DateTimeOffset };
@@ -33,7 +29,7 @@ namespace TreeLine.Messaging.Converting
             var (type, version) = GetMessageType(wrapper);
 
             var resolvedType = _classResolver.Get(type, version);
-            if (resolvedType == null)
+            if (resolvedType is null)
             {
                 throw new InvalidOperationException($"Type could not get resolved for MessageType {type} and version {version}.");
             }
@@ -44,22 +40,50 @@ namespace TreeLine.Messaging.Converting
         private static (string Type, string Version) GetMessageType(DynamicWrapper wrapper)
         {
             var data = wrapper.Data;
-            if (data?.Type is null)
+            var messageType = ResolveValue(data, nameof(IMessage.Type));
+            if (messageType is null)
             {
                 throw new ArgumentNullException(nameof(wrapper));
             }
 
-            if (!(data.Type.Type is string type))
+            var type = ResolveString(messageType, nameof(IMessageType.Type));
+            var version = ResolveString(messageType, nameof(IMessageType.Version));
+
+            return (type, version);
+        }
+
+        private static string ResolveString(dynamic obj, string propertyName)
+        {
+            var value = ResolveValue(obj, propertyName);
+            if (value is null || !(value is string result))
             {
-                throw new ArgumentNullException(nameof(wrapper));
+                throw new ArgumentNullException(nameof(obj));
             }
 
-            if (!(data.Type.Version is string version))
-            {
-                throw new ArgumentNullException(nameof(wrapper));
-            }
+            return result;
+        }
 
-            return new ValueTuple<string, string>(type, version);
+        private static object ResolveValue(dynamic obj, string propertyName)
+        {
+            if (obj is IDictionary<string, object> expando)
+            {
+                if (!expando.ContainsKey(propertyName))
+                {
+                    throw new ArgumentNullException(nameof(obj));
+                }
+
+                return expando[propertyName];
+            }
+            else
+            {
+                var property = obj.GetType().GetProperty(propertyName);
+                if (property is null)
+                {
+                    throw new ArgumentNullException(nameof(obj));
+                }
+
+                return property.GetValue(obj);
+            }
         }
     }
 }
