@@ -5,7 +5,7 @@ namespace TreeLine.Messaging.Converting
 {
     internal interface IMessageTypeToClassResolver
     {
-        Type Get(string type, string version);
+        Type? Get(string type, string version);
     }
 
     internal class MessageTypeToClassResolver : IMessageTypeToClassResolver
@@ -17,12 +17,12 @@ namespace TreeLine.Messaging.Converting
             _resolver = resolver;
         }
 
-        public Type Get(string type, string version)
+        public Type? Get(string type, string version)
         {
             return _resolver
                 .Get()
-                .Single(msgtyp => msgtyp.Type == type && msgtyp.Version == version)
-                .TargetType;
+                .SingleOrDefault(msgtyp => msgtyp.Type == type && msgtyp.Version == version)
+                ?.TargetType;
         }
     }
 }

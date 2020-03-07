@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using TreeLine.Messaging.Mapping;
 
@@ -22,11 +23,6 @@ namespace TreeLine.Messaging.Converting
 
         public IMessage Convert(string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
-
             var jObject = _stringToJObjectConverter.Convert(input);
 
             return (IMessage)_mapper.Map(
@@ -40,7 +36,7 @@ namespace TreeLine.Messaging.Converting
         {
             var messageType = GetMessageType(jObject);
             var resolvedType = _classResolver.Get(messageType.Type, messageType.Version);
-            if (resolvedType == null)
+            if (resolvedType is null)
             {
                 throw new InvalidOperationException($"Type could not get resolved for type {messageType.Type} and version {messageType.Version}");
             }
@@ -55,7 +51,16 @@ namespace TreeLine.Messaging.Converting
                 throw new ArgumentNullException(nameof(jObject));
             }
 
-            var messageType = typeJToken.ToObject<MessageType>();
+            MessageType? messageType = null;
+            try
+            {
+                messageType = typeJToken.ToObject<MessageType>();
+            }
+            catch (JsonSerializationException e)
+            {
+                throw new InvalidCastException($"{nameof(MessageType)} could not get intantiated by object {jObject} with error '{e.InnerException.Message}'.");
+            }
+
             if (messageType is null)
             {
                 throw new InvalidCastException($"{nameof(MessageType)} could not get intantiated by object {jObject}.");

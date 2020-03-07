@@ -20,7 +20,7 @@ namespace TreeLine.Messaging
         }
 
         [JsonProperty(Required = Required.Always)]
-        public DateTimeOffset TimeOffset { get; }
+        public DateTimeOffset TimeOffset { get; internal set; }
 
         [JsonProperty(Required = Required.Always)]
         public IMessageType Type { get; }
