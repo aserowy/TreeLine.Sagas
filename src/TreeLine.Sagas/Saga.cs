@@ -9,7 +9,7 @@ namespace TreeLine.Sagas
 {
     public interface ISaga<TProfile>
     {
-        Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent);
+        Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent? sagaEvent);
     }
 
     internal sealed class Saga<TProfile> : ISaga<TProfile> where TProfile : ISagaProfile
@@ -27,7 +27,7 @@ namespace TreeLine.Sagas
             _processorBuilder = processorBuilder;
         }
 
-        public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
+        public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent? sagaEvent)
         {
             if (sagaEvent is null)
             {

@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Messaging", "TreeL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Messaging.Tests", "TreeLine.Messaging.Tests\TreeLine.Messaging.Tests.csproj", "{14BE5ED0-E19F-4347-9C07-B40B56CF347E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Messaging.DependencyInjection", "TreeLine.Messaging.DependencyInjection\TreeLine.Messaging.DependencyInjection.csproj", "{C3CA0B95-DB20-4481-A463-B160F10F5BBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{14BE5ED0-E19F-4347-9C07-B40B56CF347E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14BE5ED0-E19F-4347-9C07-B40B56CF347E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14BE5ED0-E19F-4347-9C07-B40B56CF347E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3CA0B95-DB20-4481-A463-B160F10F5BBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3CA0B95-DB20-4481-A463-B160F10F5BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3CA0B95-DB20-4481-A463-B160F10F5BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3CA0B95-DB20-4481-A463-B160F10F5BBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
