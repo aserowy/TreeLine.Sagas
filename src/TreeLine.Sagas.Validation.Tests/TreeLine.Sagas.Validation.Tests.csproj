@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include=".editorconfig" />
+    <AdditionalFiles Include="..\CodeMetricsConfig.txt" Link="CodeMetricsConfig.txt" />
   </ItemGroup>
 
   <ItemGroup>

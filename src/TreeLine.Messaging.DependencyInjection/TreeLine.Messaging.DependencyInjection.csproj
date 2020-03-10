@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <AdditionalFiles Include="..\CodeMetricsConfig.txt" Link="CodeMetricsConfig.txt" />
   </ItemGroup>
 
   <ItemGroup>

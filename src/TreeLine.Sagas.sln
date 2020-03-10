@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3C5C4D81-AB8D-42C0-AE29-305C87EC9CEF}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		CodeMetricsConfig.txt = CodeMetricsConfig.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Validation", "TreeLine.Sagas.Validation\TreeLine.Sagas.Validation.csproj", "{6E2339B5-9534-4B35-9E7E-55DECA86FBC2}"
@@ -24,11 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.ReferenceSto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Abstractions", "TreeLine.Sagas.Abstractions\TreeLine.Sagas.Abstractions.csproj", "{0F6121FE-CEC8-40A7-A89D-0A8A90DD9EFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Messaging", "TreeLine.Messaging\TreeLine.Messaging.csproj", "{2CF24C48-52B6-4E17-9B48-DF3C862FBB84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Messaging", "TreeLine.Messaging\TreeLine.Messaging.csproj", "{2CF24C48-52B6-4E17-9B48-DF3C862FBB84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Messaging.Tests", "TreeLine.Messaging.Tests\TreeLine.Messaging.Tests.csproj", "{14BE5ED0-E19F-4347-9C07-B40B56CF347E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Messaging.Tests", "TreeLine.Messaging.Tests\TreeLine.Messaging.Tests.csproj", "{14BE5ED0-E19F-4347-9C07-B40B56CF347E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeLine.Messaging.DependencyInjection", "TreeLine.Messaging.DependencyInjection\TreeLine.Messaging.DependencyInjection.csproj", "{C3CA0B95-DB20-4481-A463-B160F10F5BBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Messaging.DependencyInjection", "TreeLine.Messaging.DependencyInjection\TreeLine.Messaging.DependencyInjection.csproj", "{C3CA0B95-DB20-4481-A463-B160F10F5BBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
