@@ -5,9 +5,9 @@ namespace TreeLine.Messaging
 {
     public interface IMessageFactory
     {
-        IMessage Create(string json);
+        IMessage Create(string? json);
 
-        IMessage Create(dynamic content);
+        IMessage Create(dynamic? content);
     }
 
     internal class MessageFactory : IMessageFactory
@@ -23,7 +23,7 @@ namespace TreeLine.Messaging
             _dynamicToMessageConverter = dynamicToMessageConverter;
         }
 
-        public IMessage Create(string json)
+        public IMessage Create(string? json)
         {
             if (string.IsNullOrWhiteSpace(json))
             {
@@ -33,7 +33,7 @@ namespace TreeLine.Messaging
             return _jsonToMessageConverter.Convert(json);
         }
 
-        public IMessage Create(dynamic content)
+        public IMessage Create(dynamic? content)
         {
             if (content is null)
             {
