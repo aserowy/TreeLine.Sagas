@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using TreeLine.Sagas.Building;
-using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Messaging;
+using TreeLine.Sagas.ReferenceStore;
 
 namespace TreeLine.Sagas.Processing.Business
 {
@@ -16,10 +16,10 @@ namespace TreeLine.Sagas.Processing.Business
     {
         public Func<ISagaEvent, IList<ISagaReference>?, IList<ISagaStepConfiguration>, ISagaStepConfiguration> Create()
         {
-            return Resolve;
+            return _resolve;
         }
 
-        private static readonly Func<ISagaEvent, IList<ISagaReference>?, IList<ISagaStepConfiguration>, ISagaStepConfiguration> Resolve =
+        private static readonly Func<ISagaEvent, IList<ISagaReference>?, IList<ISagaStepConfiguration>, ISagaStepConfiguration> _resolve =
             (sagaEvent, references, configurations) =>
             {
                 if (sagaEvent is null)
@@ -32,10 +32,10 @@ namespace TreeLine.Sagas.Processing.Business
                     throw new ArgumentNullException(nameof(configurations));
                 }
 
-                return GetConfigurationFunc(sagaEvent, GetValidConfigurationRangeFunc(sagaEvent, references, configurations));
+                return _getConfigurationFunc(sagaEvent, _getValidConfigurationRangeFunc(sagaEvent, references, configurations));
             };
 
-        private static readonly Func<ISagaEvent, IList<ISagaReference>?, IList<ISagaStepConfiguration>, IList<ISagaStepConfiguration>> GetValidConfigurationRangeFunc =
+        private static readonly Func<ISagaEvent, IList<ISagaReference>?, IList<ISagaStepConfiguration>, IList<ISagaStepConfiguration>> _getValidConfigurationRangeFunc =
             (sagaEvent, references, configurations) =>
             {
                 if (references is null)
@@ -68,7 +68,7 @@ namespace TreeLine.Sagas.Processing.Business
                     .ToList();
             };
 
-        private static readonly Func<ISagaEvent, IList<ISagaStepConfiguration>, ISagaStepConfiguration> GetConfigurationFunc =
+        private static readonly Func<ISagaEvent, IList<ISagaStepConfiguration>, ISagaStepConfiguration> _getConfigurationFunc =
             (sagaEvent, configurations) =>
             {
                 foreach (var configuration in configurations)
