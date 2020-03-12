@@ -15,15 +15,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="CodeMetricsConfig.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="CodeMetricsConfig.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <AdditionalFiles Include="..\CodeMetricsConfig.txt" Link="CodeMetricsConfig.txt" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TreeLine.Sagas.Building;
-using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Processing.Business;
+using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
 using Xunit;
@@ -145,26 +145,13 @@ namespace TreeLine.Sagas.Tests.Processing.Business
         }
 
         [Fact]
-        public void Create_NoRefsNoVersions_ThrowInvalidOperation()
+        public void Create_NoRefsEmptyVersions_ThrowInvalidOperation()
         {
             // Arrange
             var func = new SagaVersionResolver().Create();
 
             // Assert
-            Assert.Throws<InvalidOperationException>(() => func(null, null));
-        }
-
-        private static IDictionary<ISagaVersion, IList<ISagaStepConfiguration>> CreateVersions(params string[] versions)
-        {
-            var result = new Dictionary<ISagaVersion, IList<ISagaStepConfiguration>>();
-            foreach (var version in versions)
-            {
-                var sagaVersion = new SagaVersion(version);
-
-                result.Add(sagaVersion, new List<ISagaStepConfiguration> { new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(sagaVersion, 0, null) });
-            }
-
-            return result;
+            Assert.Throws<InvalidOperationException>(() => func(null, CreateVersions()));
         }
 
         [Fact]
@@ -181,6 +168,19 @@ namespace TreeLine.Sagas.Tests.Processing.Business
 
             // Assert
             Assert.Throws<InvalidOperationException>(() => func(refs, CreateVersions("2.4.5")));
+        }
+
+        private static IDictionary<ISagaVersion, IList<ISagaStepConfiguration>> CreateVersions(params string[] versions)
+        {
+            var result = new Dictionary<ISagaVersion, IList<ISagaStepConfiguration>>();
+            foreach (var version in versions)
+            {
+                var sagaVersion = new SagaVersion(version);
+
+                result.Add(sagaVersion, new List<ISagaStepConfiguration> { new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(sagaVersion, 0, null) });
+            }
+
+            return result;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace TreeLine.Sagas.Processing.Business
         private static readonly Func<IList<ISagaReference>?, IDictionary<ISagaVersion, IList<ISagaStepConfiguration>>, IList<ISagaStepConfiguration>> _resolve =
             (references, versions) =>
             {
-                if (versions?.Count.Equals(0) != false)
+                if (versions.Count.Equals(0))
                 {
                     throw new InvalidOperationException("No version configured.");
                 }
