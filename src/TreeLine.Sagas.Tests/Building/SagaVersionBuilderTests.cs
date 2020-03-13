@@ -30,13 +30,6 @@ namespace TreeLine.Sagas.Tests.Building
         }
 
         [Fact]
-        public void Ctor_VersionIsNull_ThrowArgumentNull()
-        {
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => new SagaVersionBuilder(null));
-        }
-
-        [Fact]
         public void Build_OneStepAdded_StepsContainsOne()
         {
             // Arrange

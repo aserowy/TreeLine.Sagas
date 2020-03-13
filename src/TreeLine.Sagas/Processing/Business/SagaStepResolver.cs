@@ -22,12 +22,7 @@ namespace TreeLine.Sagas.Processing.Business
         private static readonly Func<ISagaEvent, IList<ISagaReference>?, IList<ISagaStepConfiguration>, ISagaStepConfiguration> _resolve =
             (sagaEvent, references, configurations) =>
             {
-                if (sagaEvent is null)
-                {
-                    throw new ArgumentNullException(nameof(sagaEvent));
-                }
-
-                if (configurations?.Count.Equals(0) != false)
+                if (configurations.Count.Equals(0))
                 {
                     throw new ArgumentNullException(nameof(configurations));
                 }

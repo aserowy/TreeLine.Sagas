@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TreeLine.Sagas.Building;
-using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Processing;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
@@ -43,42 +42,6 @@ namespace TreeLine.Sagas.Tests.Processing
                 _mockSagaServiceProvider.Object,
                 _mockSagaProcess.Object,
                 _mockLogger.Object);
-        }
-
-        [Fact]
-        public void AddSteps_ConfigurationsAreNull_ThrowArgumentNull()
-        {
-            // Arrange
-            var sagaProcessor = CreateSagaProcessor();
-            IList<ISagaStepConfiguration> configurations = null;
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => sagaProcessor.AddSteps(new SagaVersion("1.0.0"), configurations));
-        }
-
-        [Fact]
-        public void AddSteps_VersionIsNull_ThrowArgumentNull()
-        {
-            // Arrange
-            var sagaProcessor = CreateSagaProcessor();
-            var configurations = new List<ISagaStepConfiguration>();
-            ISagaVersion version = null;
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => sagaProcessor.AddSteps(version, configurations));
-        }
-
-        [Fact]
-        public async Task RunAsync_EventIsNull_ThrowArgumentNull()
-        {
-            // Arrange
-            var sagaProcessor = CreateSagaProcessor();
-            ISagaEvent sagaEvent = null;
-
-            // Assert
-            await Assert
-                .ThrowsAsync<ArgumentNullException>(() => sagaProcessor.RunAsync(sagaEvent))
-                .ConfigureAwait(false);
         }
 
         [Fact]

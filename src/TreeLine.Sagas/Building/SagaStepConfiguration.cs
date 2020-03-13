@@ -21,7 +21,7 @@ namespace TreeLine.Sagas.Building
 
         public SagaStepConfiguration(ISagaVersion version, int index, Predicate<TEvent>? customValidation)
         {
-            Version = version ?? throw new ArgumentNullException(nameof(version));
+            Version = version;
             Index = index;
 
             _customValidation = customValidation;
@@ -43,11 +43,6 @@ namespace TreeLine.Sagas.Building
 
         public ISagaStepAdapter Create(ISagaServiceProvider provider)
         {
-            if (provider is null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-
             return new SagaStepAdapter<TEvent>(Version, Index, provider.Resolve<TEvent, TStep>());
         }
     }

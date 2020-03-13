@@ -20,10 +20,10 @@ namespace TreeLine.Sagas.Building
 
         public SagaStepAdapter(ISagaVersion sagaVersion, int index, ISagaStep<TEvent> step)
         {
-            Version = sagaVersion ?? throw new ArgumentNullException(nameof(sagaVersion));
+            Version = sagaVersion;
             Index = index;
 
-            _step = step ?? throw new ArgumentNullException(nameof(step));
+            _step = step;
         }
 
         public ISagaVersion Version { get; }
@@ -31,11 +31,6 @@ namespace TreeLine.Sagas.Building
 
         public Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
         {
-            if (sagaEvent is null)
-            {
-                throw new ArgumentNullException(nameof(sagaEvent));
-            }
-
             if (!(sagaEvent is TEvent converted))
             {
                 throw new ArgumentOutOfRangeException($"{nameof(sagaEvent)} is not of type {typeof(TEvent).Name}.");

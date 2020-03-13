@@ -1,4 +1,3 @@
-using System;
 using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
@@ -8,13 +7,6 @@ namespace TreeLine.Sagas.Tests.Building
 {
     public class SagaStepConfigurationTests
     {
-        [Fact]
-        public void Ctor_VersionIsNull_ThrowsArgumentNull()
-        {
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(null, 0, null));
-        }
-
         [Fact]
         public void IsResponsible_EventTypeEqualPredicateNull_ReturnTrue()
         {
@@ -69,16 +61,6 @@ namespace TreeLine.Sagas.Tests.Building
 
             // Assert
             Assert.False(result);
-        }
-
-        [Fact]
-        public void Create_ServiceProviderIsNull_ThrowsArgumentNull()
-        {
-            // Arrange
-            var sagaStepConfiguration = new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 1, null);
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => sagaStepConfiguration.Create(null));
         }
     }
 }

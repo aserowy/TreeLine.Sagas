@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using TreeLine.Sagas.DependencyInjection.Tests.Mocks;
 using TreeLine.Sagas.ReferenceStore;
 using Xunit;
@@ -8,28 +7,6 @@ namespace TreeLine.Sagas.DependencyInjection.Tests
 {
     public class ConfigurationTests
     {
-        [Fact]
-        public void Add_ActionIsNull_ThrowArgumentNull()
-        {
-            // Arrange
-            var configuration = new Configuration();
-            Action<IServiceCollection> action = null;
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => configuration.Add(action));
-        }
-
-        [Fact]
-        public void Configure_ServicesIsNull_ThrowArgumentNull()
-        {
-            // Arrange
-            var configuration = new Configuration();
-            IServiceCollection services = null;
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => configuration.Configure(services));
-        }
-
         [Fact]
         public void Configure_NoConfigurationsAdded_ServiceCollectionEmpty()
         {

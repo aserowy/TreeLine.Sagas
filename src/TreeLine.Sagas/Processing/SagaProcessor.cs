@@ -38,16 +38,6 @@ namespace TreeLine.Sagas.Processing
 
         public void AddSteps(ISagaVersion version, IList<ISagaStepConfiguration> configurations)
         {
-            if (version is null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-
-            if (configurations is null)
-            {
-                throw new ArgumentNullException(nameof(configurations));
-            }
-
             if (_steps.ContainsKey(version))
             {
                 _steps[version] = configurations;
@@ -62,11 +52,6 @@ namespace TreeLine.Sagas.Processing
 
         public async Task<IEnumerable<ISagaCommand>> RunAsync(ISagaEvent sagaEvent)
         {
-            if (sagaEvent is null)
-            {
-                throw new ArgumentNullException(nameof(sagaEvent));
-            }
-
             if (_steps.Count.Equals(0))
             {
                 throw new InvalidOperationException($"No steps configured for reference id {sagaEvent.ProcessId}.");

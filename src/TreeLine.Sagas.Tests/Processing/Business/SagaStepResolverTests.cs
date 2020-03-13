@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using TreeLine.Sagas.Building;
-using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Messaging;
 using TreeLine.Sagas.Processing.Business;
+using TreeLine.Sagas.ReferenceStore;
 using TreeLine.Sagas.Tests.Mocks;
 using TreeLine.Sagas.Versioning;
 using Xunit;
@@ -12,35 +12,6 @@ namespace TreeLine.Sagas.Tests.Processing.Business
 {
     public class SagaStepResolverTests
     {
-        [Fact]
-        public void Create_ConfigurationsNull_ThrowArgumentNull()
-        {
-            // Arrange
-            var func = new SagaStepResolver().Create();
-            var sagaEvent = new SagaEvent01();
-
-            IList<ISagaStepConfiguration> configurations = null;
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => func(sagaEvent, null, configurations));
-        }
-
-        [Fact]
-        public void Create_EventNull_ThrowArgumentNull()
-        {
-            // Arrange
-            var func = new SagaStepResolver().Create();
-            var configurations = new List<ISagaStepConfiguration>
-            {
-                new SagaStepConfiguration<SagaEvent01, SagaStep01Mock>(new SagaVersion("1.0.0"), 0, null)
-            };
-
-            ISagaEvent sagaEvent = null;
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => func(sagaEvent, null, configurations));
-        }
-
         [Fact]
         public void Create_RefsNullOneStepWithCorrectEvent_ReturnStep()
         {

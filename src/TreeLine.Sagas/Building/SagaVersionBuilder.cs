@@ -18,7 +18,7 @@ namespace TreeLine.Sagas.Building
 
         public SagaVersionBuilder(ISagaVersion version)
         {
-            Version = version ?? throw new ArgumentNullException(nameof(version));
+            Version = version;
 
             Steps = new List<ISagaStepConfiguration>();
         }

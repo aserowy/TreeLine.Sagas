@@ -12,7 +12,7 @@ namespace TreeLine.Sagas.DependencyInjection.Tests.Mocks
             throw new NotImplementedException();
         }
 
-        public Task<IList<ISagaReference>> GetReferencesAsync(Guid referenceId)
+        public Task<IList<ISagaReference>?> GetReferencesAsync(Guid referenceId)
         {
             throw new NotImplementedException();
         }

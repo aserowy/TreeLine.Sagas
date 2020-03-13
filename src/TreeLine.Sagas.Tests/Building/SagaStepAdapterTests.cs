@@ -33,20 +33,6 @@ namespace TreeLine.Sagas.Tests.Building
         }
 
         [Fact]
-        public void Ctor_SagaStepIsNull_ThrowArgumentNull()
-        {
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => new SagaStepAdapter<SagaEvent01>(new SagaVersion("1.0.0"), 0, null));
-        }
-
-        [Fact]
-        public void Ctor_VersionIsNull_ThrowArgumentNull()
-        {
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => new SagaStepAdapter<SagaEvent01>(null, 0, new SagaStep01Mock()));
-        }
-
-        [Fact]
         public async Task RunAsync_EventIsNotOfGivenType_ThrowsArgumentOutOfRange()
         {
             // Arrange
@@ -56,19 +42,6 @@ namespace TreeLine.Sagas.Tests.Building
             // Assert
             await Assert
                 .ThrowsAsync<ArgumentOutOfRangeException>(() => sagaStepAdapter.RunAsync(sagaEvent))
-                .ConfigureAwait(false);
-        }
-
-        [Fact]
-        public async Task RunAsync_EventIsNull_ThrowsArgumentNull()
-        {
-            // Arrange
-            var sagaStepAdapter = CreateSagaStepAdapter();
-            SagaEvent01 sagaEvent = null;
-
-            // Assert
-            await Assert
-                .ThrowsAsync<ArgumentNullException>(() => sagaStepAdapter.RunAsync(sagaEvent))
                 .ConfigureAwait(false);
         }
 

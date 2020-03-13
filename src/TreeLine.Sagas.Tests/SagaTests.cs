@@ -43,7 +43,7 @@ namespace TreeLine.Sagas.Tests
         {
             // Arrange
             var saga = CreateSaga();
-            ISagaEvent sagaEvent = null;
+            ISagaEvent? sagaEvent = null;
 
             // Assert
             await Assert
