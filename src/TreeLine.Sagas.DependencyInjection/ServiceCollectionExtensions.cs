@@ -5,9 +5,9 @@ using TreeLine.Sagas.Building;
 using TreeLine.Sagas.Processing;
 using TreeLine.Sagas.Processing.Business;
 using TreeLine.Sagas.ReferenceStore;
-using TreeLine.Sagas.Validation;
-using TreeLine.Sagas.Validation.Analyzing;
-using TreeLine.Sagas.Validation.Rules;
+using TreeLine.Sagas.Validating;
+using TreeLine.Sagas.Validating.Analyzing;
+using TreeLine.Sagas.Validating.Rules;
 using TreeLine.Sagas.Versioning;
 
 namespace TreeLine.Sagas.DependencyInjection

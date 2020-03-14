@@ -20,4 +20,12 @@ namespace TreeLine.Sagas.Tests.Mocks
             return Task.FromResult(new[] { new SagaCommand() }.AsEnumerable<ISagaCommand>());
         }
     }
+
+    internal sealed class SagaStep03Mock : ISagaStep<SagaEvent02>
+    {
+        public Task<IEnumerable<ISagaCommand>> RunAsync(SagaEvent02 sagaEvent)
+        {
+            return Task.FromResult(new[] { new SagaCommand() }.AsEnumerable<ISagaCommand>());
+        }
+    }
 }

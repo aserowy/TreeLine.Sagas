@@ -17,10 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CodeMetricsConfig.txt = CodeMetricsConfig.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Validation", "TreeLine.Sagas.Validation\TreeLine.Sagas.Validation.csproj", "{6E2339B5-9534-4B35-9E7E-55DECA86FBC2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Validation.Tests", "TreeLine.Sagas.Validation.Tests\TreeLine.Sagas.Validation.Tests.csproj", "{AC333BCE-03B8-4623-AE46-03F4D72919FA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.ReferenceStore", "TreeLine.Sagas.ReferenceStore\TreeLine.Sagas.ReferenceStore.csproj", "{624C53B2-4320-477D-8BFE-598BEAAF5E62}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeLine.Sagas.Abstractions", "TreeLine.Sagas.Abstractions\TreeLine.Sagas.Abstractions.csproj", "{0F6121FE-CEC8-40A7-A89D-0A8A90DD9EFD}"
@@ -53,14 +49,6 @@ Global
 		{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FCC556E-84CD-44ED-A901-0E95F2C5C3E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E2339B5-9534-4B35-9E7E-55DECA86FBC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E2339B5-9534-4B35-9E7E-55DECA86FBC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E2339B5-9534-4B35-9E7E-55DECA86FBC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E2339B5-9534-4B35-9E7E-55DECA86FBC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC333BCE-03B8-4623-AE46-03F4D72919FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC333BCE-03B8-4623-AE46-03F4D72919FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC333BCE-03B8-4623-AE46-03F4D72919FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC333BCE-03B8-4623-AE46-03F4D72919FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{624C53B2-4320-477D-8BFE-598BEAAF5E62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{624C53B2-4320-477D-8BFE-598BEAAF5E62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{624C53B2-4320-477D-8BFE-598BEAAF5E62}.Release|Any CPU.ActiveCfg = Release|Any CPU
